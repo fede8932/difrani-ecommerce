@@ -1,0 +1,15 @@
+import { ISend } from "../../redux/reducers/acountReducer";
+import axiosInstances from "../config";
+const apiUrl = import.meta.env.VITE_MY_URL_BACKEND;
+
+export const GetCurrentAcount = async (sendData: ISend) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    const { clientId, page, rows } = sendData;
+    let url: string = `${apiUrl}/api/client/acount/pages/${clientId}?page=${page}&rows=${rows}`;
+    const { data } = await axiosInstances.api.get(url);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};

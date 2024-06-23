@@ -1,0 +1,28 @@
+/* eslint-disable no-useless-catch */
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+export interface IProduct {
+  id: number;
+  article: string;
+  description: string;
+  brand: { id: number; name: string; code: string; rentabilidad: number };
+  price: { price: number; endPrice: number };
+  stock: { stock: number; minStock: number };
+  images: string[];
+}
+
+const initialState: { value: string } = { value: "" };
+
+const searchInputSlice = createSlice({
+  name: "search_input",
+  initialState: initialState,
+  reducers: {
+    setSearchInput: (state, action: PayloadAction<string>) => {
+      state.value = action.payload;
+    },
+  }, // Puedes definir acciones síncronas aquí si es necesario
+});
+
+export const { setSearchInput } = searchInputSlice.actions;
+
+export default searchInputSlice.reducer;

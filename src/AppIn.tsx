@@ -1,0 +1,87 @@
+import styled from "styled-components";
+import "./App.css";
+import View from "./components/atoms/view/View";
+import Navbar from "./components/organisms/navbar/Navbar";
+import { Route, Routes } from "react-router-dom";
+import Catalogo from "./views/catalogo/Catalogo";
+import "@mantine/core/styles.css";
+import { Toaster } from "react-hot-toast";
+import { useEffect } from "react";
+import { AppDispatch, RootState } from "./redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { GetAllCartItemsState } from "./redux/reducers/cartListReducer";
+import { GetAllDiscountState } from "./redux/reducers/discountsReducer";
+import { GetAllRentaPercentState } from "./redux/reducers/rentabReducer";
+import Footer from "./components/organisms/footer/Footer";
+import Contacto from "./views/contacto/Contacto";
+import Pedidos from "./views/pedidos/Pedidos";
+import Resumen from "./views/resumen/Resumen";
+import Carrito from "./views/carrito/Carrito";
+import { GetAllBrandsState } from "./redux/reducers/brandListReducers";
+
+const AppContainer = styled(View)`
+  justify-content: space-between;
+  min-height: 100vh;
+  /* width: 100vw; */
+  background: rgba(80, 255, 181, 0.28);
+  background: -moz-linear-gradient(
+    top,
+    rgba(80, 255, 181, 0.28) 0%,
+    #f8feff 100%
+  );
+  background: -webkit-linear-gradient(
+    top,
+    rgba(80, 255, 181, 0.28) 0%,
+    #f8feff 100%
+  );
+  background: linear-gradient(
+    to bottom,
+    rgba(80, 255, 181, 0.28) 0%,
+    #f8feff 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(80,255,181,0.28)', endColorstr='#f8feff',GradientType=0 );
+`;
+
+function AppIn() {
+  const dispatch: AppDispatch = useDispatch();
+
+  const userState = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    if (userState.data) {
+      dispatch(GetAllCartItemsState(userState.data.cartId));
+      dispatch(GetAllDiscountState(userState.data.clientId));
+      dispatch(GetAllRentaPercentState(userState.data.clientId));
+    }
+    dispatch(GetAllBrandsState());
+  }, [userState.data]);
+  return (
+    <AppContainer>
+      <Navbar />
+      <View>
+        <Routes>
+          <Route path="/" element={<Catalogo />} />
+          <Route path="/catalogo" element={<Catalogo />} />
+          <Route path="/pedidos" element={<Pedidos />} />
+          <Route path="/contacto" element={<Contacto />} />
+          <Route path="/resumen" element={<Resumen />} />
+          <Route path="/carrito" element={<Carrito />} />
+        </Routes>
+      </View>
+      <Footer />
+      <Toaster
+        gutter={-100}
+        position="top-right"
+        reverseOrder={false}
+        toastOptions={{
+          className: "",
+          style: {
+            margin: "55px 5px",
+          },
+        }}
+      />
+    </AppContainer>
+  );
+}
+
+export default AppIn;
