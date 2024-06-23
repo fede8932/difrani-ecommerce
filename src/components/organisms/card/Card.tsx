@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 import { AppDispatch, RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { AddCartItemsState } from "../../../redux/reducers/cartListReducer";
-import { calcularPrice } from "../../../aux/prices";
+import { calcularSellPrice } from "../../../aux/prices";
 
 interface Props {
   product: IProduct;
@@ -101,6 +101,7 @@ function Card(props: Props): React.ReactNode {
 
   const dispatch: AppDispatch = useDispatch();
   const discountsState = useSelector((state: RootState) => state.discounts);
+  const rentabState = useSelector((state: RootState) => state.rentabilidad);
 
   const addCartItem = () => {
     dispatch(
@@ -175,7 +176,7 @@ function Card(props: Props): React.ReactNode {
         ) : (
           <ProductDetails product={product}>
             <StyledSpan size="15px" color="secundary" weight={700}>
-              ${calcularPrice(product, discountsState.data, "price")}
+              ${calcularSellPrice(product, discountsState.data, rentabState)}
             </StyledSpan>
           </ProductDetails>
         )}
