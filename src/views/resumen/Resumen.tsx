@@ -74,7 +74,7 @@ const Icon = styled.span`
   color: ${({ theme }) => theme.colors.wideText};
 `;
 
-function Resumen(props: Props): React.ReactNode {
+function Resumen(_props: Props): React.ReactNode {
   const userState = useSelector((state: RootState) => state.user);
 
   const [page, setPage] = useState(1);
