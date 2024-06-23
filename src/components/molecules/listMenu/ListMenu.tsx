@@ -38,7 +38,7 @@ const InvertStyledButton = styled.button`
   }
 `;
 
-function ListMenu(props: Props): React.ReactNode {
+function ListMenu(_props: Props): React.ReactNode {
   const userState: IUserState = useSelector((state: RootState) => state.user);
   const logOut = async () => {
     // Remove cookies with path and domain
