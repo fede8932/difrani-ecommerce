@@ -67,7 +67,7 @@ const ErrorMessage = styled.span`
   position: absolute;
 `;
 
-function Login(props: Props): React.ReactNode {
+function Login(_props: Props): React.ReactNode {
   const [cuit, setCuit] = useState("");
   const [pass, setPass] = useState("");
   const [cuitError, setCuitError] = useState("");

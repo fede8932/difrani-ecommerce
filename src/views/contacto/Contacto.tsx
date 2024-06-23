@@ -41,7 +41,7 @@ const ContactDataContainer = styled(View)`
   justify-content: center;
 `;
 
-function Contacto(props: Props): React.ReactNode {
+function Contacto(_props: Props): React.ReactNode {
   return (
     <ContactoContainer>
       <TitleStyled>

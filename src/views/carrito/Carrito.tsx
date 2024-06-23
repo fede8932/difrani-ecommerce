@@ -86,7 +86,7 @@ const Icon = styled.span<{ active: boolean; size?: string; color?: string }>`
   }
 `;
 
-function Carrito(props: Props): React.ReactNode {
+function Carrito(_props: Props): React.ReactNode {
   const dispatch: AppDispatch = useDispatch();
   const cartState = useSelector((state: RootState) => state.cartList);
   const discountsState = useSelector((state: RootState) => state.discounts);

@@ -57,7 +57,7 @@ const ContactDataContainer = styled(View)`
   justify-content: space-between;
 `;
 
-function Pedidos(props: Props): React.ReactNode {
+function Pedidos(_props: Props): React.ReactNode {
   const userState = useSelector((state: RootState) => state.user);
   const [page, setPage] = useState(1);
   const dispatch: AppDispatch = useDispatch();

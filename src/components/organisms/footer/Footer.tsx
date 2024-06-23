@@ -23,7 +23,7 @@ const IconCont = styled(View)`
   justify-content: center;
 `;
 
-function Footer(props: Props): React.ReactNode {
+function Footer(_props: Props): React.ReactNode {
   return (
     <Container>
       <View width="33%">

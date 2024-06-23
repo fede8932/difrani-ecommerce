@@ -16,7 +16,6 @@ import { formatDate } from "../../aux/formatDate";
 import {
   GetCurrentAcountState,
   IAcountState,
-  IClient,
 } from "../../redux/reducers/acountReducer";
 import { roundToTwoDecimals } from "../../aux/prices";
 
