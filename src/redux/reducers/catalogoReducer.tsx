@@ -17,7 +17,7 @@ export interface IProduct {
   brand: { id: number; name: string; code: string; rentabilidad: number };
   price: { price: number; endPrice: number };
   stock: { stock: number; minStock: number };
-  images: string[];
+  images: any[];
 }
 
 export interface ISearchProductInitialState {

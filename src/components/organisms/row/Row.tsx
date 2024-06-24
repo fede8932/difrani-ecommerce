@@ -134,7 +134,7 @@ function Row(props: Props): React.ReactNode {
       ) : (
         <ProductDetails product={product}>
           <Img
-            src={product?.images.length > 0 ? product?.images[0] : img}
+            src={product?.images.length > 0 ? product?.images[0].url : img}
             alt="foto"
             width="200px"
             height="97%"
