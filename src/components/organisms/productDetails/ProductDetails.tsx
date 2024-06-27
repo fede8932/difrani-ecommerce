@@ -154,11 +154,13 @@ function ProductDetails(props: Props): React.ReactNode {
           <TextTitleDetail>
             Rentabilidad de la marca:
             <TextDetail>
-              {searchRentab(
-                rentabState?.byBrand,
-                rentabState?.general,
-                product?.brand.id
-              ).surchargePercentage * 100}
+              {(
+                searchRentab(
+                  rentabState?.byBrand,
+                  rentabState?.general,
+                  product?.brand.id
+                ).surchargePercentage * 100
+              ).toFixed(2)}
               %
             </TextDetail>
           </TextTitleDetail>
