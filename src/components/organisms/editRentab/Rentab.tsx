@@ -227,7 +227,7 @@ function Rentab(props: Props): React.ReactNode {
           <BrandCard width="100%">
             <span>{brand.brand?.name}</span>
             <div style={{ display: "flex", alignItems: "center" }}>
-              <span>{brand.surchargePercentage * 100}%</span>
+              <span>{(brand.surchargePercentage * 100).toFixed(2)}%</span>
               <Icon
                 color="alert"
                 className="material-symbols-outlined"
