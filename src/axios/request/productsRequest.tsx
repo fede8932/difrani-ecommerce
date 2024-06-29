@@ -23,3 +23,18 @@ export const SearchCatalogo = async (sendData: ISearchCatalogo) => {
     throw err;
   }
 };
+
+export const getAllProducts = async (clientId: number) => {
+  try {
+    // console.log(clientId);
+    const res = await axiosInstances.api.get(
+      `${apiUrl}/api/productos/all?clientId=${clientId}`,
+      {
+        responseType: "blob", // Configura el tipo de respuesta esperado como 'blob'
+      }
+    );
+    return res;
+  } catch (err: any) {
+    throw err;
+  }
+};

@@ -4,7 +4,7 @@ import Card from "../../components/organisms/card/Card";
 import Row from "../../components/organisms/row/Row";
 import Icon from "../../components/atoms/icon/Icon";
 import { useEffect, useState } from "react";
-import { Pagination, Popup } from "semantic-ui-react";
+import { Loader, Pagination, Popup } from "semantic-ui-react";
 import Select from "../../components/atoms/select/Select";
 import { hexToRgba } from "../../aux/rgbaConverter";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +19,8 @@ import {
 } from "../../redux/reducers/brandListReducers";
 import { brandsSelectTab } from "../../aux/brandsSelectTab";
 import { IRentaState } from "../../redux/reducers/rentabReducer";
+import { getAllProducts } from "../../axios/request/productsRequest";
+import { IUserState } from "../../redux/reducers/userReducer";
 
 interface Props {}
 
@@ -84,7 +86,9 @@ function Catalogo(_props: Props): React.ReactNode {
 
   const [vehMarc, setVehMarc] = useState("");
   const [activePage, setActivePage] = useState(1);
+  const [listDownloadPending, setListDownloadPending] = useState(false);
 
+  const userState: IUserState = useSelector((state: RootState) => state.user);
   const catalogState: ISearchProductInitialState = useSelector(
     (state: RootState) => state.catalogo
   );
@@ -112,6 +116,32 @@ function Catalogo(_props: Props): React.ReactNode {
     ).then(() => {
       setVehMarc("");
     });
+  };
+
+  const downloadList = async () => {
+    setListDownloadPending(true);
+    const response = await getAllProducts(userState.data?.clientId!);
+
+    // Crea un objeto URL a partir del objeto Blob
+    const fileURL = URL.createObjectURL(new Blob([response.data]));
+
+    // Extrae el nombre del archivo de la cabecera 'content-disposition'
+    const fileName = response.headers["content-disposition"]
+      ? response.headers["content-disposition"]
+          .split(";")
+          .find((n: any) => n.includes("filename="))
+          .replace("filename=", "")
+          .replace(/"/g, "") // Elimina las comillas del nombre del archivo
+      : "products.xlsx"; // Nombre predeterminado del archivo
+
+    // Crea un enlace (a) para descargar el archivo
+    const link = document.createElement("a");
+    link.href = fileURL;
+    link.setAttribute("download", fileName); // Establece el nombre del archivo
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setListDownloadPending(false);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -175,7 +205,7 @@ function Catalogo(_props: Props): React.ReactNode {
       </DescriptionStyled>
       <CardProductContainer width="94%">
         <FilterView width="100%" justifyContent="space-between">
-          <FilterView width="618px" justifyContent="space-between">
+          <FilterView width="640px" justifyContent="space-between">
             <Popup
               content="Ver en forma de grilla"
               trigger={
@@ -247,6 +277,23 @@ function Catalogo(_props: Props): React.ReactNode {
                 </Icon>
               }
             />
+            {listDownloadPending ? (
+              <Loader size="mini" active inline="centered" />
+            ) : (
+              <Popup
+                content="Descargar catátalogo"
+                trigger={
+                  <Icon
+                    color="wideText"
+                    size="25px"
+                    active={false}
+                    onClick={downloadList}
+                  >
+                    download
+                  </Icon>
+                }
+              />
+            )}
           </FilterView>
           <FilterView>
             <FilterView flexDirection="row">
