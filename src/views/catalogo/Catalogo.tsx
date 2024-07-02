@@ -310,7 +310,7 @@ function Catalogo(_props: Props): React.ReactNode {
             </FilterView>
           </FilterView>
         </FilterView>
-        {catalogState.data.products.map((product, i) =>
+        {catalogState.data.products?.map((product, i) =>
           grid ? (
             <Card key={i} product={product} loading={catalogState.loading} />
           ) : (

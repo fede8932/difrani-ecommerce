@@ -4,7 +4,10 @@ import Img from "../../atoms/img/Img";
 import img from "../../../assets/amortiguador-de-coche.jpg"; // aca va la imagen sin imagen
 import { hexToRgba } from "../../../aux/rgbaConverter";
 import IconButton from "../../atoms/iconButton/IconButton";
-import { IProduct } from "../../../redux/reducers/catalogoReducer";
+import {
+  IProduct,
+  SearchEquivalencesState,
+} from "../../../redux/reducers/catalogoReducer";
 import Skeleton from "@mui/material/Skeleton";
 import ProductDetails from "../productDetails/ProductDetails";
 import { AddCartItemsState } from "../../../redux/reducers/cartListReducer";
@@ -105,6 +108,10 @@ function Row(props: Props): React.ReactNode {
   const discountsState = useSelector((state: RootState) => state.discounts);
   const rentabState = useSelector((state: RootState) => state.rentabilidad);
 
+  const searchEquiv = (id: number) => {
+    dispatch(SearchEquivalencesState(id));
+  };
+
   const addCartItem = () => {
     dispatch(
       AddCartItemsState({
@@ -183,7 +190,26 @@ function Row(props: Props): React.ReactNode {
               </StyledSpan>
             </ProductDetails>
           )}
-          <IconButton icon="shopping_cart" size="20px" onClick={addCartItem} />
+          <div
+            style={{
+              width: "60px",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <IconButton
+              icon="balance"
+              size="20px"
+              onClick={() => {
+                searchEquiv(product.id);
+              }}
+            />
+            <IconButton
+              icon="shopping_cart"
+              size="20px"
+              onClick={addCartItem}
+            />
+          </div>
         </PriceContainer>
       </DescripCont>
     </RowContainer>

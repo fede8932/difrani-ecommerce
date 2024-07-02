@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-catch */
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import * as productsRequest from "../../axios/request/productsRequest";
+import * as equivalencesRequest from "../../axios/request/equivalenceRequest";
 
 interface ISearchProductState {
   page: number;
@@ -8,6 +9,13 @@ interface ISearchProductState {
   text?: string;
   vMarc?: string;
   pMarc?: string;
+}
+
+interface ISearchEquiv {
+  id: number;
+  description: string;
+  images: any;
+  products: IProduct[];
 }
 
 export interface IProduct {
@@ -44,6 +52,18 @@ export const SearchProductState = createAsyncThunk<
   }
 });
 
+export const SearchEquivalencesState = createAsyncThunk<
+  ISearchEquiv,
+  number /*primero es el tipo que devuelve y segundo el tipo que recibe*/
+>("CATALOGO_EQUIV_LIST", async (id) => {
+  try {
+    const response = await equivalencesRequest.SearchEquivalences(id);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+});
+
 const catalogoSlice = createSlice({
   name: "catalogo",
   initialState: initialState,
@@ -68,6 +88,20 @@ const catalogoSlice = createSlice({
         ) => {
           state.loading = false;
           state.data = action.payload;
+        }
+      )
+      .addCase(SearchEquivalencesState.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(SearchEquivalencesState.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message ?? "Error desconocido";
+      })
+      .addCase(
+        SearchEquivalencesState.fulfilled,
+        (state, action: PayloadAction<ISearchEquiv>) => {
+          state.loading = false;
+          state.data = { pages: 1, products: action.payload.products };
         }
       );
   },
