@@ -15,6 +15,7 @@ import { AppDispatch, RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { calcularSellPrice } from "../../../aux/prices";
+import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
 
 interface Props {
   product: IProduct;
@@ -204,11 +205,13 @@ function Row(props: Props): React.ReactNode {
                 searchEquiv(product.id);
               }}
             />
-            <IconButton
-              icon="shopping_cart"
-              size="20px"
-              onClick={addCartItem}
-            />
+            <RoleProtectedComponent accessList={[4]}>
+              <IconButton
+                icon="shopping_cart"
+                size="20px"
+                onClick={addCartItem}
+              />
+            </RoleProtectedComponent>
           </div>
         </PriceContainer>
       </DescripCont>

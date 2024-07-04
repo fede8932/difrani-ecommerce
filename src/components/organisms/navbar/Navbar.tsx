@@ -14,6 +14,7 @@ import { ISearchProductInitialState } from "../../../redux/reducers/catalogoRedu
 import ItemsCount from "../../molecules/cartItemCount/ItemsCount";
 import Rentab from "../editRentab/Rentab";
 import ListMenu from "../../molecules/listMenu/ListMenu";
+import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
 
 interface Props {}
 
@@ -135,18 +136,22 @@ function Navbar(_props: Props): React.ReactNode {
             icon="search"
             onChange={handleChange}
           />
-          <Rentab>
-            <IconButton icon="manufacturing" size="24px" />
-          </Rentab>
-          <ItemsCount>
-            <IconButton
-              icon="shopping_cart"
-              size="24px"
-              onClick={() => {
-                navigate("/carrito");
-              }}
-            />
-          </ItemsCount>
+          <RoleProtectedComponent accessList={[4]}>
+            <Rentab>
+              <IconButton icon="manufacturing" size="24px" />
+            </Rentab>
+          </RoleProtectedComponent>
+          <RoleProtectedComponent accessList={[4]}>
+            <ItemsCount>
+              <IconButton
+                icon="shopping_cart"
+                size="24px"
+                onClick={() => {
+                  navigate("/carrito");
+                }}
+              />
+            </ItemsCount>
+          </RoleProtectedComponent>
           <Menu
             position="left"
             button={<IconButton icon="account_circle" size="24px" />}

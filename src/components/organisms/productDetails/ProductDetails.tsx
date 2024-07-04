@@ -18,6 +18,7 @@ import {
 import { searchRentab } from "../../../aux/searchRentab";
 import { AddCartItemsState } from "../../../redux/reducers/cartListReducer";
 import toast from "react-hot-toast";
+import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
 
 interface Props {
   children: React.ReactNode;
@@ -170,38 +171,44 @@ function ProductDetails(props: Props): React.ReactNode {
               ${calcularSellPrice(product, discountState.data, rentabState)}
             </TextDetail>
           </TextTitleDetail>
-          <TextTitleDetail>
-            Cantidad:
-            <TextDetail>
-              <AmountInput
-                add={handleAdd}
-                minus={handleMinus}
-                width="40px"
-                height="27px"
-                value={value}
-                onChange={handleChange}
-              />
-            </TextDetail>
-          </TextTitleDetail>
-          <TextTitleDetail style={{ marginBottom: "25px" }}>
-            Subtotal:
-            <TextDetail>
-              $
-              {calcularSubTotal(
-                product,
-                discountState.data,
-                rentabState,
-                value
-              )}
-            </TextDetail>
-          </TextTitleDetail>
-          <Button
-            icon="add_shopping_cart"
-            text="Agregar al carrito"
-            color="primary"
-            height="30px"
-            onClick={addCartItem}
-          />
+          <RoleProtectedComponent accessList={[4]}>
+            <TextTitleDetail>
+              Cantidad:
+              <TextDetail>
+                <AmountInput
+                  add={handleAdd}
+                  minus={handleMinus}
+                  width="40px"
+                  height="27px"
+                  value={value}
+                  onChange={handleChange}
+                />
+              </TextDetail>
+            </TextTitleDetail>
+          </RoleProtectedComponent>
+          <RoleProtectedComponent accessList={[4]}>
+            <TextTitleDetail style={{ marginBottom: "25px" }}>
+              Subtotal:
+              <TextDetail>
+                $
+                {calcularSubTotal(
+                  product,
+                  discountState.data,
+                  rentabState,
+                  value
+                )}
+              </TextDetail>
+            </TextTitleDetail>
+          </RoleProtectedComponent>
+          <RoleProtectedComponent accessList={[4]}>
+            <Button
+              icon="add_shopping_cart"
+              text="Agregar al carrito"
+              color="primary"
+              height="30px"
+              onClick={addCartItem}
+            />
+          </RoleProtectedComponent>
         </DetailsInfo>
       </DetailsContainer>
     </ModalComponent>

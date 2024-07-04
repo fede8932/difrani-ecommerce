@@ -18,6 +18,7 @@ import Pedidos from "./views/pedidos/Pedidos";
 import Resumen from "./views/resumen/Resumen";
 import Carrito from "./views/carrito/Carrito";
 import { GetAllBrandsState } from "./redux/reducers/brandListReducers";
+import RoleProtectedView from "./protected/RoleProtectedView";
 
 const AppContainer = styled(View)`
   justify-content: space-between;
@@ -60,12 +61,54 @@ function AppIn() {
       <Navbar />
       <View>
         <Routes>
-          <Route path="/" element={<Catalogo />} />
-          <Route path="/catalogo" element={<Catalogo />} />
-          <Route path="/pedidos" element={<Pedidos />} />
-          <Route path="/contacto" element={<Contacto />} />
-          <Route path="/resumen" element={<Resumen />} />
-          <Route path="/carrito" element={<Carrito />} />
+          <Route
+            path="/"
+            element={
+              <RoleProtectedView accessList={[3, 4]}>
+                <Catalogo />
+              </RoleProtectedView>
+            }
+          />
+          <Route
+            path="/catalogo"
+            element={
+              <RoleProtectedView accessList={[3, 4]}>
+                <Catalogo />
+              </RoleProtectedView>
+            }
+          />
+          <Route
+            path="/pedidos"
+            element={
+              <RoleProtectedView accessList={[4]}>
+                <Pedidos />
+              </RoleProtectedView>
+            }
+          />
+          <Route
+            path="/contacto"
+            element={
+              <RoleProtectedView accessList={[3, 4]}>
+                <Contacto />
+              </RoleProtectedView>
+            }
+          />
+          <Route
+            path="/resumen"
+            element={
+              <RoleProtectedView accessList={[4]}>
+                <Resumen />
+              </RoleProtectedView>
+            }
+          />
+          <Route
+            path="/carrito"
+            element={
+              <RoleProtectedView accessList={[4]}>
+                <Carrito />
+              </RoleProtectedView>
+            }
+          />
         </Routes>
       </View>
       <Footer />

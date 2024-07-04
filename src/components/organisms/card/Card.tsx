@@ -15,6 +15,7 @@ import { AppDispatch, RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { AddCartItemsState } from "../../../redux/reducers/cartListReducer";
 import { calcularSellPrice } from "../../../aux/prices";
+import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
 
 interface Props {
   product: IProduct;
@@ -201,7 +202,13 @@ function Card(props: Props): React.ReactNode {
               searchEquiv(product.id);
             }}
           />
-          <IconButton icon="shopping_cart" size="20px" onClick={addCartItem} />
+          <RoleProtectedComponent accessList={[4]}>
+            <IconButton
+              icon="shopping_cart"
+              size="20px"
+              onClick={addCartItem}
+            />
+          </RoleProtectedComponent>
         </div>
       </PriceContainer>
     </CardContainer>

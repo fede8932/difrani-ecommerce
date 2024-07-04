@@ -21,6 +21,7 @@ import { brandsSelectTab } from "../../aux/brandsSelectTab";
 import { IRentaState } from "../../redux/reducers/rentabReducer";
 import { getAllProducts } from "../../axios/request/productsRequest";
 import { IUserState } from "../../redux/reducers/userReducer";
+import RoleProtectedComponent from "../../protected/RoleProtectedComponent";
 
 interface Props {}
 
@@ -246,10 +247,31 @@ function Catalogo(_props: Props): React.ReactNode {
               width="250px"
               height="31px"
               options={[
-                { key: "FIAT", value: "fiat" },
-                { key: "VOLKSWAGEN", value: "volkswagen" },
-                { key: "FORD", value: "ford" },
+                { key: "ALFA ROMEO", value: "alfa-romeo" },
+                { key: "AUDI", value: "audi" },
+                { key: "BMW", value: "bmw" },
                 { key: "CHEVROLET", value: "chevrolet" },
+                { key: "CITROËN", value: "citroen" },
+                { key: "FIAT", value: "fiat" },
+                { key: "FORD", value: "ford" },
+                { key: "HONDA", value: "honda" },
+                { key: "HYUNDAI", value: "hyundai" },
+                { key: "JEEP", value: "jeep" },
+                { key: "KIA", value: "kia" },
+                { key: "LAND ROVER", value: "land-rover" },
+                { key: "LEXUS", value: "lexus" },
+                { key: "MAZDA", value: "mazda" },
+                { key: "MERCEDES-BENZ", value: "mercedes-benz" },
+                { key: "MITSUBISHI", value: "mitsubishi" },
+                { key: "NISSAN", value: "nissan" },
+                { key: "PEUGEOT", value: "peugeot" },
+                { key: "PORSCHE", value: "porsche" },
+                { key: "RENAULT", value: "renault" },
+                { key: "SUBARU", value: "subaru" },
+                { key: "SUZUKI", value: "suzuki" },
+                { key: "TOYOTA", value: "toyota" },
+                { key: "VOLKSWAGEN", value: "volkswagen" },
+                { key: "VOLVO", value: "volvo" },
               ]}
               onSelect={(value) => {
                 setActivePage(1);
@@ -280,19 +302,21 @@ function Catalogo(_props: Props): React.ReactNode {
             {listDownloadPending ? (
               <Loader size="mini" active inline="centered" />
             ) : (
-              <Popup
-                content="Descargar catátalogo"
-                trigger={
-                  <Icon
-                    color="wideText"
-                    size="25px"
-                    active={false}
-                    onClick={downloadList}
-                  >
-                    download
-                  </Icon>
-                }
-              />
+              <RoleProtectedComponent accessList={[4]}>
+                <Popup
+                  content="Descargar catátalogo"
+                  trigger={
+                    <Icon
+                      color="wideText"
+                      size="25px"
+                      active={false}
+                      onClick={downloadList}
+                    >
+                      download
+                    </Icon>
+                  }
+                />
+              </RoleProtectedComponent>
             )}
           </FilterView>
           <FilterView>
