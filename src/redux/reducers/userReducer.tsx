@@ -57,7 +57,13 @@ export const MeState = createAsyncThunk<IDataUser>("ME", async () => {
 const userSlice = createSlice({
   name: "user",
   initialState: initialState,
-  reducers: {}, // Puedes definir acciones síncronas aquí si es necesario
+  reducers: {
+    setClientId: (state, action: PayloadAction<number>) => {
+      const user = state.data;
+      user!.clientId = action.payload;
+      state.data = user;
+    },
+  }, // Puedes definir acciones síncronas aquí si es necesario
   extraReducers: (builder) => {
     builder
       .addCase(LoginState.pending, (state) => {
@@ -95,5 +101,6 @@ const userSlice = createSlice({
       });
   },
 });
+export const { setClientId } = userSlice.actions;
 
 export default userSlice.reducer;

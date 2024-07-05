@@ -22,6 +22,7 @@ import { IRentaState } from "../../redux/reducers/rentabReducer";
 import { getAllProducts } from "../../axios/request/productsRequest";
 import { IUserState } from "../../redux/reducers/userReducer";
 import RoleProtectedComponent from "../../protected/RoleProtectedComponent";
+import ClientFilter from "../../components/molecules/clientFilter/ClientFilter";
 
 interface Props {}
 
@@ -319,20 +320,27 @@ function Catalogo(_props: Props): React.ReactNode {
               </RoleProtectedComponent>
             )}
           </FilterView>
-          <FilterView>
-            <FilterView flexDirection="row">
-              <MuestraColor color="primary" opac={0.5}></MuestraColor>
-              <span style={{ margin: "0px 2px" }}>Stock disponible</span>
+          <RoleProtectedComponent accessList={[3]}>
+            <FilterView>
+              <ClientFilter userId={userState.data?.userId} />
             </FilterView>
-            <FilterView flexDirection="row">
-              <MuestraColor color="warning" opac={0.5}></MuestraColor>
-              <span style={{ margin: "0px 2px" }}>Bajo stock</span>
+          </RoleProtectedComponent>
+          <RoleProtectedComponent accessList={[4]}>
+            <FilterView>
+              <FilterView flexDirection="row">
+                <MuestraColor color="primary" opac={0.5}></MuestraColor>
+                <span style={{ margin: "0px 2px" }}>Stock disponible</span>
+              </FilterView>
+              <FilterView flexDirection="row">
+                <MuestraColor color="warning" opac={0.5}></MuestraColor>
+                <span style={{ margin: "0px 2px" }}>Bajo stock</span>
+              </FilterView>
+              <FilterView flexDirection="row">
+                <MuestraColor color="alert" opac={0.5}></MuestraColor>
+                <span style={{ margin: "0px 2px" }}>Stock limitado</span>
+              </FilterView>
             </FilterView>
-            <FilterView flexDirection="row">
-              <MuestraColor color="alert" opac={0.5}></MuestraColor>
-              <span style={{ margin: "0px 2px" }}>Stock limitado</span>
-            </FilterView>
-          </FilterView>
+          </RoleProtectedComponent>
         </FilterView>
         {catalogState.data.products?.map((product, i) =>
           grid ? (

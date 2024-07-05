@@ -19,6 +19,7 @@ import { searchRentab } from "../../../aux/searchRentab";
 import { AddCartItemsState } from "../../../redux/reducers/cartListReducer";
 import toast from "react-hot-toast";
 import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
+import PricesProtected from "../../../protected/PricesProtected";
 
 interface Props {
   children: React.ReactNode;
@@ -143,34 +144,44 @@ function ProductDetails(props: Props): React.ReactNode {
           <TextTitleDetail>
             Precio de lista:
             <TextDetail>
-              ${calcularPrice(product, discountState.data, "price")}
+              $
+              <PricesProtected>
+                {calcularPrice(product, discountState.data, "price")}
+              </PricesProtected>
             </TextDetail>
           </TextTitleDetail>
           <TextTitleDetail>
             Precio de lista con IVA:
             <TextDetail>
-              ${calcularPrice(product, discountState.data, "endPrice")}
+              $
+              <PricesProtected>
+                {calcularPrice(product, discountState.data, "endPrice")}
+              </PricesProtected>
             </TextDetail>
           </TextTitleDetail>
-          <TextTitleDetail>
-            Rentabilidad de la marca:
-            <TextDetail>
-              {(
-                searchRentab(
-                  rentabState?.byBrand,
-                  rentabState?.general,
-                  product?.brand.id
-                ).surchargePercentage * 100
-              ).toFixed(2)}
-              %
-            </TextDetail>
-          </TextTitleDetail>
-          <TextTitleDetail>
-            Precio de venta sin IVA:
-            <TextDetail>
-              ${calcularSellPrice(product, discountState.data, rentabState)}
-            </TextDetail>
-          </TextTitleDetail>
+          <RoleProtectedComponent accessList={[4]}>
+            <TextTitleDetail>
+              Rentabilidad de la marca:
+              <TextDetail>
+                {(
+                  searchRentab(
+                    rentabState?.byBrand,
+                    rentabState?.general,
+                    product?.brand.id
+                  ).surchargePercentage * 100
+                ).toFixed(2)}
+                %
+              </TextDetail>
+            </TextTitleDetail>
+          </RoleProtectedComponent>
+          <RoleProtectedComponent accessList={[4]}>
+            <TextTitleDetail>
+              Precio de venta sin IVA:
+              <TextDetail>
+                ${calcularSellPrice(product, discountState.data, rentabState)}
+              </TextDetail>
+            </TextTitleDetail>
+          </RoleProtectedComponent>
           <RoleProtectedComponent accessList={[4]}>
             <TextTitleDetail>
               Cantidad:

@@ -9,6 +9,7 @@ import rentabReducer from "./reducers/rentabReducer";
 import ordersReducer from "./reducers/ordersReducer";
 import acountsReducer from "./reducers/acountReducer";
 import userReducer from "./reducers/userReducer";
+import sellerReducer from "./reducers/sellerReducer";
 
 const store = configureStore({
   middleware: (getDefaultMiddleware) =>
@@ -23,6 +24,7 @@ const store = configureStore({
     rentabilidad: rentabReducer,
     orders: ordersReducer,
     acount: acountsReducer,
+    clientsBySeller: sellerReducer,
   },
 });
 

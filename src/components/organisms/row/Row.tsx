@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { calcularSellPrice } from "../../../aux/prices";
 import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
+import PricesProtected from "../../../protected/PricesProtected";
 
 interface Props {
   product: IProduct;
@@ -187,7 +188,10 @@ function Row(props: Props): React.ReactNode {
           ) : (
             <ProductDetails product={product}>
               <StyledSpan size="15px" color="secundary" weight={700}>
-                ${calcularSellPrice(product, discountsState.data, rentabState)}
+                $
+                <PricesProtected>
+                  {calcularSellPrice(product, discountsState.data, rentabState)}
+                </PricesProtected>
               </StyledSpan>
             </ProductDetails>
           )}
