@@ -110,14 +110,15 @@ function Catalogo(_props: Props): React.ReactNode {
   );
 
   const resetSearch = () => {
-    dispatch(
-      SearchProductState({
-        page: 1,
-        rows: grid ? 35 : 15,
-      })
-    ).then(() => {
-      setVehMarc("");
-    });
+    window.location.reload();
+    // dispatch(
+    //   SearchProductState({
+    //     page: 1,
+    //     rows: grid ? 35 : 15,
+    //   })
+    // ).then(() => {
+    //   setVehMarc("");
+    // });
   };
 
   const downloadList = async () => {
