@@ -81,10 +81,14 @@ const CurrentAcountInfoContainer = styled.div`
 const PagContainer = styled(View)`
   width: 100%;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   margin-top: 5px;
-  flex-direction: column-reverse;
-  align-items: center;
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
 `;
 
 const TagInfo = styled.div`
@@ -194,16 +198,18 @@ function Resumen(_props: Props): React.ReactNode {
         </div>
         <PagContainer>
           <span>{`Se encontaron ${acountStatus.data.pages} páginas con resultados`}</span>
-          <Pagination
-            boundaryRange={0}
-            activePage={page}
-            ellipsisItem={null}
-            firstItem={null}
-            lastItem={null}
-            siblingRange={1}
-            onPageChange={handleChange}
-            totalPages={acountStatus.data.pages}
-          />
+          <div>
+            <Pagination
+              boundaryRange={0}
+              activePage={page}
+              ellipsisItem={null}
+              firstItem={null}
+              lastItem={null}
+              siblingRange={1}
+              onPageChange={handleChange}
+              totalPages={acountStatus.data.pages}
+            />
+          </div>
         </PagContainer>
       </ContactDataContainer>
     </ContactoContainer>

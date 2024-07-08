@@ -69,10 +69,14 @@ const ContactDataContainer = styled(View)`
 const PagContainer = styled(View)`
   width: 100%;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   margin-top: 5px;
-  flex-direction: column-reverse;
-  align-items: center;
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
 `;
 
 function Pedidos(_props: Props): React.ReactNode {
@@ -139,16 +143,18 @@ function Pedidos(_props: Props): React.ReactNode {
         </div>
         <PagContainer>
           <span>{`Se encontaron ${orderStatus.data.totalPages} páginas con resultados`}</span>
-          <Pagination
-            boundaryRange={0}
-            activePage={page}
-            ellipsisItem={null}
-            firstItem={null}
-            lastItem={null}
-            siblingRange={1}
-            onPageChange={handleChange}
-            totalPages={orderStatus.data.totalPages}
-          />
+          <div>
+            <Pagination
+              boundaryRange={0}
+              activePage={page}
+              ellipsisItem={null}
+              firstItem={null}
+              lastItem={null}
+              siblingRange={1}
+              onPageChange={handleChange}
+              totalPages={orderStatus.data.totalPages}
+            />
+          </div>
         </PagContainer>
       </ContactDataContainer>
     </ContactoContainer>
