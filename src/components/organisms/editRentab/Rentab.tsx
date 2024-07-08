@@ -18,6 +18,7 @@ import {
   changeGralInput,
 } from "../../../redux/reducers/rentabReducer";
 import toast from "react-hot-toast";
+import { breakpoints } from "../../../resolutions";
 
 interface Props {
   children: React.ReactNode;
@@ -56,6 +57,12 @@ const AddContainer = styled(View)`
   align-items: center;
   width: 50%;
   justify-content: space-between;
+
+  @media (max-width: ${breakpoints.mobileSmall}px) {
+    flex-direction: column;
+    align-items: flex-start;
+    height: 110px;
+  }
 `;
 
 const ListBrandContainer = styled(View)`

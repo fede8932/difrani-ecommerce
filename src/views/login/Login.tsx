@@ -11,6 +11,7 @@ import { AppDispatch, RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { LoginState } from "../../redux/reducers/userReducer";
 import toast from "react-hot-toast";
+import { breakpoints } from "../../resolutions";
 
 interface Props {}
 
@@ -35,11 +36,23 @@ const BodyCont = styled(View)`
   flex-direction: row;
   justify-content: space-between;
   color: ${({ theme }) => theme.colors.line};
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    flex-direction: column;
+  }
 `;
 
 const Text = styled.p`
   width: 630px;
   font-size: 15px;
+`;
+
+const Container = styled(View)`
+  margin: 200px 0px 0px 50px;
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    display: none;
+  }
 `;
 
 const Form = styled.form`
@@ -58,6 +71,16 @@ const Form = styled.form`
   box-shadow: 0px 0px 17px -1px rgba(0, 0, 0, 0.28);
   -webkit-box-shadow: 0px 0px 17px -1px rgba(0, 0, 0, 0.28);
   -moz-box-shadow: 0px 0px 17px -1px rgba(0, 0, 0, 0.28);
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    width: 95%;
+  }
+`;
+
+const Input = styled(CustomInput)`
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    width: 100%;
+  }
 `;
 
 const ErrorMessage = styled.span`
@@ -111,7 +134,7 @@ function Login(_props: Props): React.ReactNode {
     <LoginContainer>
       <Logo alt="logo" src={logo} />
       <BodyCont>
-        <View margin="200px 0px 0px 50px">
+        <Container>
           <h3>Bienvenido</h3>
           <Text>
             En Blase Distribuidora, nos enorgullece ser líderes en la
@@ -137,12 +160,12 @@ function Login(_props: Props): React.ReactNode {
             sus necesidades de repuestos para automóviles y experimente la
             diferencia que marca la excelencia en el servicio.
           </Text>
-        </View>
+        </Container>
         <Form onSubmit={handleSubmit}>
           <h3 style={{ marginBottom: "35px" }}>Iniciar sesión</h3>
-          <div>
+          <div style={{ width: "100%" }}>
             <label>Número de CUIT</label>
-            <CustomInput
+            <Input
               onChange={(value) => setCuit(value)}
               background="background"
               type="text"
@@ -154,9 +177,9 @@ function Login(_props: Props): React.ReactNode {
           <div style={{ position: "relative", width: "100%", display: "flex" }}>
             {cuitError != "" ? <ErrorMessage>{cuitError}</ErrorMessage> : null}
           </div>
-          <div style={{ marginTop: "28px" }}>
+          <div style={{ marginTop: "28px", width: "100%" }}>
             <label>Contraseña</label>
-            <CustomInput
+            <Input
               onChange={(value) => setPass(value)}
               background="background"
               type="password"
