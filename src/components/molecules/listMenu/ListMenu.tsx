@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { hexToRgba } from "../../../aux/rgbaConverter";
 import { LogOut } from "../../../axios/request/userRequest";
+import { breakpoints } from "../../../resolutions";
 
 interface Props {}
 
@@ -20,6 +21,9 @@ const MyDivider = styled.div`
 
 const Title = styled.span`
   color: ${({ theme }) => theme.colors.wideText};
+  width: 100&;
+  display: flex;
+  justify-content: center;
 `;
 
 const InvertStyledButton = styled.button`
@@ -27,7 +31,7 @@ const InvertStyledButton = styled.button`
   padding: 3px 7px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   border-radius: 2px;
   cursor: pointer;
   transition: background-color 0.5s ease;
@@ -35,6 +39,12 @@ const InvertStyledButton = styled.button`
 
   &:hover {
     background-color: ${({ theme }) => hexToRgba(theme.colors.secundary, 0.18)};
+  }
+`;
+
+const MobileButtonOnly = styled(InvertStyledButton)`
+  @media (min-width: ${breakpoints.desktopSmall}px) {
+    display: none;
   }
 `;
 
@@ -50,8 +60,12 @@ function ListMenu(_props: Props): React.ReactNode {
 
   return (
     <ListContainer>
-      <Title>{`${userState.data?.name} ${userState.data?.lastName}`}</Title>
+      <Title>{`${userState.data?.name.toUpperCase()}`}</Title>
       <MyDivider></MyDivider>
+      <MobileButtonOnly onClick={() => {}}>Catálogo</MobileButtonOnly>
+      <MobileButtonOnly onClick={() => {}}>Pedidos</MobileButtonOnly>
+      <MobileButtonOnly onClick={() => {}}>Cuenta</MobileButtonOnly>
+      <MobileButtonOnly onClick={() => {}}>Contacto</MobileButtonOnly>
       <InvertStyledButton onClick={logOut}>Cerrar sesión</InvertStyledButton>
     </ListContainer>
   );
