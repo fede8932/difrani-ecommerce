@@ -114,7 +114,7 @@ function Select(props: Props): React.ReactNode {
     };
   }, []);
   return (
-    <div ref={selectRef}>
+    <div ref={selectRef} style={{ marginTop: "5px" }}>
       <SelectClick
         {...rest}
         onClick={() => {

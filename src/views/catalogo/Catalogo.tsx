@@ -23,6 +23,7 @@ import { getAllProducts } from "../../axios/request/productsRequest";
 import { IUserState } from "../../redux/reducers/userReducer";
 import RoleProtectedComponent from "../../protected/RoleProtectedComponent";
 import ClientFilter from "../../components/molecules/clientFilter/ClientFilter";
+import { breakpoints } from "../../resolutions";
 
 interface Props {}
 
@@ -41,34 +42,19 @@ const CardProductContainer = styled(View)`
   flex-wrap: wrap;
 `;
 
-const TitleStyled = styled.p`
-  margin-top: 30px;
-  margin-bottom: 10px;
-  font-size: 48px;
-  font-weight: 500;
-  transform: scaleY(1.03);
-  transform: scalex(0.95);
-  color: ${({ theme }) => theme.colors.wideText};
-`;
-
-const TitleStyledSpan = styled.span`
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.primary};
-`;
-
-const DescriptionStyled = styled.p`
-  font-size: 13px;
-  text-align: center;
-  margin: 0px;
-  width: 600px;
-  color: ${({ theme }) => theme.colors.text};
-`;
-
-const FilterView = styled(View)<{ justifyContent?: string }>`
+const FilterView = styled(View)<{ justifyContent?: string; top?: string }>`
   flex-direction: row;
   align-items: center;
+  margin-top: ${({ top }) => top || "0px"};
   justify-content: ${({ justifyContent }) => justifyContent || "flex-start"};
   padding: 0px 15px 15px 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 
 const MuestraColor = styled.div<{ color: string; opac: number }>`
@@ -78,6 +64,10 @@ const MuestraColor = styled.div<{ color: string; opac: number }>`
   border-radius: 15px;
   background-color: ${({ theme, color, opac }) =>
     hexToRgba(theme.colors[color], opac)};
+`;
+
+const DivCont = styled(View)`
+  flex-direction: row;
 `;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -197,52 +187,45 @@ function Catalogo(_props: Props): React.ReactNode {
   }, [dispatch]);
   return (
     <CatalogoContainer>
-      <TitleStyled>
-        Catalogo de <TitleStyledSpan>Productos</TitleStyledSpan>
-      </TitleStyled>
-      <DescriptionStyled>
-        En la vista de catálogo de productos, puedes explorar una variedad de
-        artículos disponibles para la compra. Cada producto incluye una
-        descripción, precio y opción para agregarlo al carrito de compras con un
-        solo clic.
-      </DescriptionStyled>
       <CardProductContainer width="94%">
         <FilterView width="100%" justifyContent="space-between">
           <FilterView width="640px" justifyContent="space-between">
-            <Popup
-              content="Ver en forma de grilla"
-              trigger={
-                <Icon
-                  color="wideText"
-                  size="22px"
-                  active={grid}
-                  onClick={() => {
-                    setActivePage(1);
-                    setGrid(true);
-                    localStorage.setItem("grill", true.toString());
-                  }}
-                >
-                  grid_view
-                </Icon>
-              }
-            />
-            <Popup
-              content="Ver en forma de lista"
-              trigger={
-                <Icon
-                  color="wideText"
-                  size="25px"
-                  active={!grid}
-                  onClick={() => {
-                    setActivePage(1);
-                    setGrid(false);
-                    localStorage.setItem("grill", false.toString());
-                  }}
-                >
-                  view_list
-                </Icon>
-              }
-            />
+            <DivCont>
+              <Popup
+                content="Ver en forma de grilla"
+                trigger={
+                  <Icon
+                    color="wideText"
+                    size="22px"
+                    active={grid}
+                    onClick={() => {
+                      setActivePage(1);
+                      setGrid(true);
+                      localStorage.setItem("grill", true.toString());
+                    }}
+                  >
+                    grid_view
+                  </Icon>
+                }
+              />
+              <Popup
+                content="Ver en forma de lista"
+                trigger={
+                  <Icon
+                    color="wideText"
+                    size="25px"
+                    active={!grid}
+                    onClick={() => {
+                      setActivePage(1);
+                      setGrid(false);
+                      localStorage.setItem("grill", false.toString());
+                    }}
+                  >
+                    view_list
+                  </Icon>
+                }
+              />
+            </DivCont>
             <Select
               validate={false}
               placeholder="Filtro por marca del vehículo"
@@ -288,38 +271,40 @@ function Catalogo(_props: Props): React.ReactNode {
               options={brandsSelectTab(brandsState)}
               onSelect={(value) => dispatch(selectBrandById(Number(value)))}
             />
-            <Popup
-              content="Limpiar criterios"
-              trigger={
-                <Icon
-                  color="wideText"
-                  size="25px"
-                  active={false}
-                  onClick={resetSearch}
-                >
-                  search_off
-                </Icon>
-              }
-            />
-            {listDownloadPending ? (
-              <Loader size="mini" active inline="centered" />
-            ) : (
-              <RoleProtectedComponent accessList={[4]}>
-                <Popup
-                  content="Descargar catátalogo"
-                  trigger={
-                    <Icon
-                      color="wideText"
-                      size="25px"
-                      active={false}
-                      onClick={downloadList}
-                    >
-                      download
-                    </Icon>
-                  }
-                />
-              </RoleProtectedComponent>
-            )}
+            <DivCont>
+              <Popup
+                content="Limpiar criterios"
+                trigger={
+                  <Icon
+                    color="wideText"
+                    size="25px"
+                    active={false}
+                    onClick={resetSearch}
+                  >
+                    search_off
+                  </Icon>
+                }
+              />
+              {listDownloadPending ? (
+                <Loader size="mini" active inline="centered" />
+              ) : (
+                <RoleProtectedComponent accessList={[4]}>
+                  <Popup
+                    content="Descargar catátalogo"
+                    trigger={
+                      <Icon
+                        color="wideText"
+                        size="25px"
+                        active={false}
+                        onClick={downloadList}
+                      >
+                        download
+                      </Icon>
+                    }
+                  />
+                </RoleProtectedComponent>
+              )}
+            </DivCont>
           </FilterView>
           <RoleProtectedComponent accessList={[3]}>
             <FilterView>
@@ -327,19 +312,21 @@ function Catalogo(_props: Props): React.ReactNode {
             </FilterView>
           </RoleProtectedComponent>
           <RoleProtectedComponent accessList={[4]}>
-            <FilterView>
-              <FilterView flexDirection="row">
-                <MuestraColor color="primary" opac={0.5}></MuestraColor>
-                <span style={{ margin: "0px 2px" }}>Stock disponible</span>
-              </FilterView>
-              <FilterView flexDirection="row">
-                <MuestraColor color="warning" opac={0.5}></MuestraColor>
-                <span style={{ margin: "0px 2px" }}>Bajo stock</span>
-              </FilterView>
-              <FilterView flexDirection="row">
-                <MuestraColor color="alert" opac={0.5}></MuestraColor>
-                <span style={{ margin: "0px 2px" }}>Stock limitado</span>
-              </FilterView>
+            <FilterView top="20px">
+              <DivCont>
+                <FilterView flexDirection="row">
+                  <MuestraColor color="primary" opac={0.5}></MuestraColor>
+                  <span style={{ margin: "0px 2px" }}>Stock disponible</span>
+                </FilterView>
+                <FilterView flexDirection="row">
+                  <MuestraColor color="warning" opac={0.5}></MuestraColor>
+                  <span style={{ margin: "0px 2px" }}>Bajo stock</span>
+                </FilterView>
+                <FilterView flexDirection="row">
+                  <MuestraColor color="alert" opac={0.5}></MuestraColor>
+                  <span style={{ margin: "0px 2px" }}>Stock limitado</span>
+                </FilterView>
+              </DivCont>
             </FilterView>
           </RoleProtectedComponent>
         </FilterView>

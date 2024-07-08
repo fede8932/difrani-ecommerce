@@ -15,6 +15,7 @@ import ItemsCount from "../../molecules/cartItemCount/ItemsCount";
 import Rentab from "../editRentab/Rentab";
 import ListMenu from "../../molecules/listMenu/ListMenu";
 import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
+import { breakpoints } from "../../../resolutions";
 
 interface Props {}
 
@@ -28,6 +29,16 @@ const NavbarContainer = styled(View)`
   z-index: 20;
 `;
 
+const LinkContainer = styled(View)`
+  width: 375px;
+  flex-direction: row;
+  justify-content: space-between;
+
+  @media (max-width: ${breakpoints.desktopSmall - 1}px) {
+    display: none;
+  }
+`;
+
 const ButtonContainer = styled(View)`
   flex-direction: row;
   align-items: center;
@@ -39,11 +50,27 @@ const ButtonContainer = styled(View)`
   box-shadow: 0px 0px 5px 0px rgba(7, 197, 155, 0.1);
   background: rgba(255, 255, 255, 0.5); /* Fondo semitransparente */
   backdrop-filter: blur(10px); /* Desenfoque del fondo */
+
+  @media (max-width: ${breakpoints.desktopSmall}px) {
+    width: 100%;
+  }
+`;
+
+const Search = styled(CustomInput)`
+  @media (max-width: ${breakpoints.mobileSmall}px) {
+    width: 85%;
+  }
 `;
 
 const ButtonImgContainer = styled(View)`
   flex-direction: row;
   align-items: center;
+`;
+
+const Logo = styled(Img)`
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    width: 85px;
+  }
 `;
 
 const ButtonSearchContainer = styled(View)`
@@ -71,11 +98,18 @@ function Navbar(_props: Props): React.ReactNode {
     (state: RootState) => state.catalogo
   );
 
+  const ActionsCont = styled(View)`
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100px;
+    min-width: 100px;
+  `;
+
   return (
     <NavbarContainer height="54px">
       <ButtonContainer width="1500px" height="54px">
         <ButtonImgContainer>
-          <Img
+          <Logo
             src={logo}
             alt="logo"
             width="155px"
@@ -83,13 +117,7 @@ function Navbar(_props: Props): React.ReactNode {
               navigate("/");
             }}
           />
-          <div
-            style={{
-              width: "375px",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
+          <LinkContainer>
             <Button
               invert
               color="primary"
@@ -126,38 +154,40 @@ function Navbar(_props: Props): React.ReactNode {
                 navigate("/contacto");
               }}
             />
-          </div>
+          </LinkContainer>
         </ButtonImgContainer>
         <ButtonSearchContainer>
-          <CustomInput
+          <Search
             loading={catalogState.loading}
             placeholder="Buscar..."
             width="300px"
             icon="search"
             onChange={handleChange}
           />
-          <RoleProtectedComponent accessList={[4]}>
-            <Rentab>
-              <IconButton icon="manufacturing" size="24px" />
-            </Rentab>
-          </RoleProtectedComponent>
-          <RoleProtectedComponent accessList={[4]}>
-            <ItemsCount>
-              <IconButton
-                icon="shopping_cart"
-                size="24px"
-                onClick={() => {
-                  navigate("/carrito");
-                }}
-              />
-            </ItemsCount>
-          </RoleProtectedComponent>
-          <Menu
-            position="left"
-            button={<IconButton icon="account_circle" size="24px" />}
-          >
-            <ListMenu />
-          </Menu>
+          <ActionsCont>
+            <RoleProtectedComponent accessList={[4]}>
+              <Rentab>
+                <IconButton icon="manufacturing" size="24px" />
+              </Rentab>
+            </RoleProtectedComponent>
+            <RoleProtectedComponent accessList={[4]}>
+              <ItemsCount>
+                <IconButton
+                  icon="shopping_cart"
+                  size="24px"
+                  onClick={() => {
+                    navigate("/carrito");
+                  }}
+                />
+              </ItemsCount>
+            </RoleProtectedComponent>
+            <Menu
+              position="left"
+              button={<IconButton icon="account_circle" size="24px" />}
+            >
+              <ListMenu />
+            </Menu>
+          </ActionsCont>
         </ButtonSearchContainer>
       </ButtonContainer>
     </NavbarContainer>
