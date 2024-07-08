@@ -20,6 +20,7 @@ import { AddCartItemsState } from "../../../redux/reducers/cartListReducer";
 import toast from "react-hot-toast";
 import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
 import PricesProtected from "../../../protected/PricesProtected";
+import { breakpoints } from "../../../resolutions";
 
 interface Props {
   children: React.ReactNode;
@@ -30,11 +31,21 @@ const DetailsContainer = styled(View)`
   flex-direction: row;
   justify-content: space-between;
   border-top: 1px solid ${({ theme }) => hexToRgba(theme.colors.medium, 0.8)};
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const DetailsInfo = styled(View)`
   max-width: 49%;
   flex-direction: column;
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    max-width: 95%;
+    padding-bottom: 15px;
+  }
 `;
 
 const TextTitleDetail = styled.span`

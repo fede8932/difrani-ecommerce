@@ -66,6 +66,15 @@ const ContactDataContainer = styled(View)`
   }
 `;
 
+const PagContainer = styled(View)`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  flex-direction: column-reverse;
+  align-items: center;
+`;
+
 function Pedidos(_props: Props): React.ReactNode {
   const userState = useSelector((state: RootState) => state.user);
   const [page, setPage] = useState(1);
@@ -128,14 +137,7 @@ function Pedidos(_props: Props): React.ReactNode {
             </TableBody>
           </Table>
         </div>
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: "5px",
-          }}
-        >
+        <PagContainer>
           <span>{`Se encontaron ${orderStatus.data.totalPages} páginas con resultados`}</span>
           <Pagination
             boundaryRange={0}
@@ -147,7 +149,7 @@ function Pedidos(_props: Props): React.ReactNode {
             onPageChange={handleChange}
             totalPages={orderStatus.data.totalPages}
           />
-        </div>
+        </PagContainer>
       </ContactDataContainer>
     </ContactoContainer>
   );
