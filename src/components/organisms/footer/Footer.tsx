@@ -5,6 +5,7 @@ import Img from "../../atoms/img/Img";
 import faceboook from "../../../assets/redesIcon/facebook.svg";
 import instagram from "../../../assets/redesIcon/instagram.png";
 import whatsapp from "../../../assets/redesIcon/whatsapp.png";
+import { breakpoints } from "../../../resolutions";
 
 interface Props {}
 
@@ -16,24 +17,35 @@ const Container = styled(View)`
   color: white;
   flex-direction: row;
   justify-content: space-between;
+
+  @media (max-width: ${breakpoints.desktopSmall}px) {
+    flex-direction: column;
+    align-items: center;
+    height: 450px;
+  }
 `;
 const IconCont = styled(View)`
   width: 100%;
   flex-direction: row;
   justify-content: center;
 `;
+const InfoCont = styled(View)`
+  @media (max-width: ${breakpoints.desktopSmall}px) {
+    width: 100%;
+  }
+`;
 
 function Footer(_props: Props): React.ReactNode {
   return (
     <Container>
-      <View width="33%">
+      <InfoCont width="33%">
         <span>Blase distribuidora</span>
         <a href="https://maps.app.goo.gl/NPSodGsCbev2stoHA" target="_blank">
           B1708FHL, Av. Don Bosco 2175, B1708FHB Morón, Provincia de Buenos
           Aires
         </a>
         <p>Tel.: (011) 4460-5972</p>
-      </View>
+      </InfoCont>
       <div
         style={{
           width: "150px",
@@ -54,14 +66,7 @@ function Footer(_props: Props): React.ReactNode {
           <Img width="31px" src={whatsapp} alt={"whatsapp"} margin="0px 5px" />
         </IconCont>
       </div>
-      <div
-        style={{
-          width: "33%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-end",
-        }}
-      >
+      <InfoCont>
         <span>
           Whatsapp.:{" "}
           <a
@@ -83,7 +88,7 @@ function Footer(_props: Props): React.ReactNode {
             ventas@blasedistribuidora.com
           </a>
         </p>
-      </div>
+      </InfoCont>
     </Container>
   );
 }

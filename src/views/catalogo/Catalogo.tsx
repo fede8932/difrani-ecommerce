@@ -27,6 +27,17 @@ import { breakpoints } from "../../resolutions";
 
 interface Props {}
 
+const PaginationContainer = styled(View)`
+  display: flex;
+  width: 65%;
+  justify-content: space-between;
+  margin: 20px 0px;
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+`;
 const CatalogoContainer = styled(View)`
   width: 100%;
   align-items: center;
@@ -68,6 +79,7 @@ const MuestraColor = styled.div<{ color: string; opac: number }>`
 
 const DivCont = styled(View)`
   flex-direction: row;
+  align-items: flex-start;
 `;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -338,27 +350,22 @@ function Catalogo(_props: Props): React.ReactNode {
           )
         )}
       </CardProductContainer>
-      <div
-        style={{
-          display: "flex",
-          width: "65%",
-          justifyContent: "space-between",
-          margin: "20px 0px",
-        }}
-      >
+      <PaginationContainer>
         <span>{`Se han encontrado ${catalogState.data.pages} páginas con resultados.`}</span>
-        <Pagination
-          boundaryRange={0}
-          defaultActivePage={1}
-          activePage={activePage}
-          ellipsisItem={null}
-          firstItem={null}
-          lastItem={null}
-          siblingRange={1}
-          totalPages={catalogState.data.pages}
-          onPageChange={handlePageChange}
-        />
-      </div>
+        <div>
+          <Pagination
+            boundaryRange={0}
+            defaultActivePage={1}
+            activePage={activePage}
+            ellipsisItem={null}
+            firstItem={null}
+            lastItem={null}
+            siblingRange={1}
+            totalPages={catalogState.data.pages}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      </PaginationContainer>
     </CatalogoContainer>
   );
 }
