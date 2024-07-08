@@ -60,6 +60,10 @@ const ContactDataContainer = styled(View)`
   margin-top: 17px;
   margin-bottom: 10px;
   justify-content: space-between;
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    height: auto;
+  }
 `;
 
 function Pedidos(_props: Props): React.ReactNode {
@@ -129,6 +133,7 @@ function Pedidos(_props: Props): React.ReactNode {
             width: "100%",
             display: "flex",
             justifyContent: "space-between",
+            marginTop: "5px",
           }}
         >
           <span>{`Se encontaron ${orderStatus.data.totalPages} páginas con resultados`}</span>

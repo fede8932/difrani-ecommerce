@@ -18,6 +18,7 @@ import {
   IAcountState,
 } from "../../redux/reducers/acountReducer";
 import { roundToTwoDecimals } from "../../aux/prices";
+import { breakpoints } from "../../resolutions";
 
 interface Props {}
 
@@ -48,6 +49,10 @@ const DescriptionStyled = styled.p`
   margin: 0px;
   width: 600px;
   color: ${({ theme }) => theme.colors.text};
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    display: none;
+  }
 `;
 
 const ContactDataContainer = styled(View)`
@@ -56,6 +61,10 @@ const ContactDataContainer = styled(View)`
   margin-top: 17px;
   margin-bottom: 10px;
   justify-content: space-between;
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    height: auto;
+  }
 `;
 
 const CurrentAcountInfoContainer = styled.div`
@@ -63,6 +72,10 @@ const CurrentAcountInfoContainer = styled.div`
   display: flex;
   width: 75%;
   justify-content: space-between;
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    flex-direction: column;
+  }
 `;
 
 const TagInfo = styled.div`
@@ -175,6 +188,7 @@ function Resumen(_props: Props): React.ReactNode {
             width: "100%",
             display: "flex",
             justifyContent: "space-between",
+            marginTop: "5px",
           }}
         >
           <span>{`Se encontaron ${acountStatus.data.pages} páginas con resultados`}</span>
