@@ -19,6 +19,7 @@ import Resumen from "./views/resumen/Resumen";
 import Carrito from "./views/carrito/Carrito";
 import { GetAllBrandsState } from "./redux/reducers/brandListReducers";
 import RoleProtectedView from "./protected/RoleProtectedView";
+import { breakpoints } from "./resolutions";
 
 const AppContainer = styled(View)`
   justify-content: space-between;

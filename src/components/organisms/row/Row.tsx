@@ -17,6 +17,7 @@ import toast from "react-hot-toast";
 import { calcularSellPrice } from "../../../aux/prices";
 import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
 import PricesProtected from "../../../protected/PricesProtected";
+import { breakpoints } from "../../../resolutions";
 
 interface Props {
   product: IProduct;
@@ -99,6 +100,16 @@ const StyledDescription = styled.p`
   &:hover {
     color: ${({ theme }) => theme.colors.text};
   }
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    font-size: 9px;
+  }
+`;
+
+const MyImg = styled(Img)`
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    display: none;
+  }
 `;
 
 function Row(props: Props): React.ReactNode {
@@ -142,7 +153,7 @@ function Row(props: Props): React.ReactNode {
         <Skeleton variant="rectangular" width="200px" height="97%" />
       ) : (
         <ProductDetails product={product}>
-          <Img
+          <MyImg
             src={product?.images.length > 0 ? product?.images[0].url : img}
             alt="foto"
             width="200px"

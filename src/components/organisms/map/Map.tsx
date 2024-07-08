@@ -1,5 +1,9 @@
-const Map = (): React.ReactNode => {
-  const mapHtml = `<div style="max-width:100%;overflow:hidden;color:red;width:950px;height:570px;margin-bottom:15px">
+interface Props {
+  width: string;
+}
+
+const Map = ({ width }: Props): React.ReactNode => {
+  const mapHtml = `<div style="max-width:100%;overflow:hidden;color:red;width:${width};height:570px;margin-bottom:15px">
       <div id="embed-map-canvas" style="height:100%; width:100%;max-width:100%;">
         <iframe style="height:100%;width:100%;border:0;" frameborder="0" 
           src="https://www.google.com/maps/embed/v1/place?q=av.+Don+Bosco+2175,+Morón,+Buenos+Aires&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8">

@@ -17,6 +17,7 @@ import {
 } from "../../redux/reducers/ordersReducer";
 import { AppDispatch, RootState } from "../../redux/store";
 import { formatDate } from "../../aux/formatDate";
+import { breakpoints } from "../../resolutions";
 
 interface Props {}
 
@@ -47,6 +48,10 @@ const DescriptionStyled = styled.p`
   margin: 0px;
   width: 600px;
   color: ${({ theme }) => theme.colors.text};
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    display: none;
+  }
 `;
 
 const ContactDataContainer = styled(View)`
@@ -91,7 +96,7 @@ function Pedidos(_props: Props): React.ReactNode {
       </DescriptionStyled>
       <ContactDataContainer>
         <div>
-          <Table singleLine selectable>
+          <Table singleLine selectable padded>
             <TableHeader>
               <TableRow>
                 <TableHeaderCell>Número de orden</TableHeaderCell>

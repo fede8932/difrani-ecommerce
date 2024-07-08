@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import View from "../../components/atoms/view/View";
 import Map from "../../components/organisms/map/Map";
+import { breakpoints } from "../../resolutions";
 
 interface Props {}
 
@@ -31,6 +32,10 @@ const DescriptionStyled = styled.p`
   margin: 0px;
   width: 600px;
   color: ${({ theme }) => theme.colors.text};
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    display: none;
+  }
 `;
 
 const ContactDataContainer = styled(View)`
@@ -39,6 +44,10 @@ const ContactDataContainer = styled(View)`
   margin-top: 17px;
   flex-direction: row;
   justify-content: center;
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    width: 100%;
+  }
 `;
 
 function Contacto(_props: Props): React.ReactNode {
@@ -54,7 +63,7 @@ function Contacto(_props: Props): React.ReactNode {
         con gusto te asistiremos!
       </DescriptionStyled>
       <ContactDataContainer>
-        <Map />
+        <Map width="90vw" />
       </ContactDataContainer>
     </ContactoContainer>
   );

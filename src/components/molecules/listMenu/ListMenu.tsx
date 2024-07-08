@@ -6,6 +6,7 @@ import { RootState } from "../../../redux/store";
 import { hexToRgba } from "../../../aux/rgbaConverter";
 import { LogOut } from "../../../axios/request/userRequest";
 import { breakpoints } from "../../../resolutions";
+import { useNavigate } from "react-router-dom";
 
 interface Props {}
 
@@ -57,15 +58,40 @@ function ListMenu(_props: Props): React.ReactNode {
     // Reload the page to reflect changes
     window.location.reload();
   };
+  const navigate = useNavigate();
 
   return (
     <ListContainer>
       <Title>{`${userState.data?.name.toUpperCase()}`}</Title>
       <MyDivider></MyDivider>
-      <MobileButtonOnly onClick={() => {}}>Catálogo</MobileButtonOnly>
-      <MobileButtonOnly onClick={() => {}}>Pedidos</MobileButtonOnly>
-      <MobileButtonOnly onClick={() => {}}>Cuenta</MobileButtonOnly>
-      <MobileButtonOnly onClick={() => {}}>Contacto</MobileButtonOnly>
+      <MobileButtonOnly
+        onClick={() => {
+          navigate("/catalogo");
+        }}
+      >
+        Catálogo
+      </MobileButtonOnly>
+      <MobileButtonOnly
+        onClick={() => {
+          navigate("/pedidos");
+        }}
+      >
+        Pedidos
+      </MobileButtonOnly>
+      <MobileButtonOnly
+        onClick={() => {
+          navigate("/resumen");
+        }}
+      >
+        Cuenta
+      </MobileButtonOnly>
+      <MobileButtonOnly
+        onClick={() => {
+          navigate("/contacto");
+        }}
+      >
+        Contacto
+      </MobileButtonOnly>
       <InvertStyledButton onClick={logOut}>Cerrar sesión</InvertStyledButton>
     </ListContainer>
   );
