@@ -7,6 +7,7 @@ import { hexToRgba } from "../../../aux/rgbaConverter";
 import { LogOut } from "../../../axios/request/userRequest";
 import { breakpoints } from "../../../resolutions";
 import { useNavigate } from "react-router-dom";
+import PricesProtected from "../../../protected/PricesProtected";
 
 interface Props {}
 
@@ -64,34 +65,42 @@ function ListMenu(_props: Props): React.ReactNode {
     <ListContainer>
       <Title>{`${userState.data?.name.toUpperCase()}`}</Title>
       <MyDivider></MyDivider>
-      <MobileButtonOnly
-        onClick={() => {
-          navigate("/catalogo");
-        }}
-      >
-        Catálogo
-      </MobileButtonOnly>
-      <MobileButtonOnly
-        onClick={() => {
-          navigate("/pedidos");
-        }}
-      >
-        Pedidos
-      </MobileButtonOnly>
-      <MobileButtonOnly
-        onClick={() => {
-          navigate("/resumen");
-        }}
-      >
-        Cuenta
-      </MobileButtonOnly>
-      <MobileButtonOnly
-        onClick={() => {
-          navigate("/contacto");
-        }}
-      >
-        Contacto
-      </MobileButtonOnly>
+      <PricesProtected>
+        <MobileButtonOnly
+          onClick={() => {
+            navigate("/catalogo");
+          }}
+        >
+          Catálogo
+        </MobileButtonOnly>
+      </PricesProtected>
+      <PricesProtected>
+        <MobileButtonOnly
+          onClick={() => {
+            navigate("/pedidos");
+          }}
+        >
+          Pedidos
+        </MobileButtonOnly>
+      </PricesProtected>
+      <PricesProtected>
+        <MobileButtonOnly
+          onClick={() => {
+            navigate("/resumen");
+          }}
+        >
+          Cuenta
+        </MobileButtonOnly>
+      </PricesProtected>
+      <PricesProtected>
+        <MobileButtonOnly
+          onClick={() => {
+            navigate("/contacto");
+          }}
+        >
+          Contacto
+        </MobileButtonOnly>
+      </PricesProtected>
       <InvertStyledButton onClick={logOut}>Cerrar sesión</InvertStyledButton>
     </ListContainer>
   );

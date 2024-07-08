@@ -80,7 +80,7 @@ function AppIn() {
           <Route
             path="/pedidos"
             element={
-              <RoleProtectedView accessList={[4]}>
+              <RoleProtectedView accessList={[3, 4]}>
                 <Pedidos />
               </RoleProtectedView>
             }
@@ -96,7 +96,7 @@ function AppIn() {
           <Route
             path="/resumen"
             element={
-              <RoleProtectedView accessList={[4]}>
+              <RoleProtectedView accessList={[3, 4]}>
                 <Resumen />
               </RoleProtectedView>
             }
