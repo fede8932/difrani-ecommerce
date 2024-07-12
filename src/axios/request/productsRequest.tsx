@@ -13,7 +13,7 @@ export const SearchCatalogo = async (sendData: ISearchCatalogo) => {
   // eslint-disable-next-line no-useless-catch
   try {
     const { text, rows, page, vMarc, pMarc } = sendData;
-    let url: string = `${apiUrl}/api/productos/search/prod?page=${page}&cant=${rows}`;
+    let url: string = `${apiUrl}/api/productos/search/prod?ecomm=true&page=${page}&cant=${rows}`;
     url = text ? `${url}&data=${text}` : url;
     url = vMarc ? `${url}&vmarc=${vMarc}` : url;
     url = pMarc ? `${url}&pmarc=${pMarc}` : url;

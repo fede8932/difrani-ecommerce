@@ -7,6 +7,7 @@ export interface IBrand {
   name: string;
   code: string;
   rentabilidad: number;
+  ecommerce: boolean;
 }
 
 export interface IGetBrandsInitialState {
@@ -59,7 +60,7 @@ const brandSlice = createSlice({
         GetAllBrandsState.fulfilled,
         (state, action: PayloadAction<IBrand[]>) => {
           state.loading = false;
-          state.list = action.payload;
+          state.list = action.payload.filter((brand) => brand.ecommerce);
         }
       );
   },
