@@ -180,7 +180,7 @@ function Rentab(props: Props): React.ReactNode {
   const { pathname } = useLocation();
 
   const close = () => {
-    if (pathname == "/catalogo") {
+    if (pathname == "/catalogo" || pathname == "/") {
       window.location.reload();
     }
   };
