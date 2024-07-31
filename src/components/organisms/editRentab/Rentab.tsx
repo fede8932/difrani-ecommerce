@@ -19,6 +19,7 @@ import {
 } from "../../../redux/reducers/rentabReducer";
 import toast from "react-hot-toast";
 import { breakpoints } from "../../../resolutions";
+import { useLocation } from "react-router-dom";
 
 interface Props {
   children: React.ReactNode;
@@ -42,7 +43,7 @@ const GeneralCard = styled(View)`
 
 const BrandCard = styled(View)`
   margin: 2px 0px;
-  /* height: 42px; */
+  height: 42px;
   flex-direction: row;
   padding: 0px 15px;
   align-items: center;
@@ -176,12 +177,20 @@ function Rentab(props: Props): React.ReactNode {
   const brandsState: IGetBrandsInitialState = useSelector(
     (state: RootState) => state.brands
   );
+  const { pathname } = useLocation();
+
+  const close = () => {
+    if (pathname == "/catalogo") {
+      window.location.reload();
+    }
+  };
 
   return (
     <ModalComponent
       title="CONFIGURACIÓN DE RENTABILIDAD"
       button={children}
       size="1000px"
+      closeFn={close}
     >
       <GeneralCard>
         <span>Coeficiente de rentabilidad general</span>
@@ -222,7 +231,6 @@ function Rentab(props: Props): React.ReactNode {
           onChange={(value) => setPercentValue(value)}
         />
         <Button
-          type="button"
           invert
           color="wideText"
           text="Agregar"
@@ -231,8 +239,8 @@ function Rentab(props: Props): React.ReactNode {
         />
       </AddContainer>
       <ListBrandContainer>
-        {rentabState.byBrand.map((brand) => (
-          <BrandCard width="100%">
+        {rentabState.byBrand.map((brand, i) => (
+          <BrandCard width="100%" key={i}>
             <span>{brand.brand?.name}</span>
             <div style={{ display: "flex", alignItems: "center" }}>
               <span>{(brand.surchargePercentage * 100).toFixed(2)}%</span>

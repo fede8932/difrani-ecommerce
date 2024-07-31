@@ -9,11 +9,17 @@ interface Props {
   children: React.ReactNode;
   title: string;
   size?: string;
+  closeFn?: () => void;
 }
 
 function ModalComponent(props: Props) {
-  const { children, button, title, size } = props;
+  const { children, button, title, size, closeFn } = props;
   const [opened, { open, close }] = useDisclosure(false);
+
+  const onClose = () => {
+    closeFn ? closeFn() : null;
+    close();
+  };
 
   // Define a new button element with the onClick handler attached
   const triggerButton = React.isValidElement(button) ? (
@@ -27,7 +33,7 @@ function ModalComponent(props: Props) {
       <Modal.Root
         centered
         opened={opened}
-        onClose={close}
+        onClose={onClose}
         size={size}
         transitionProps={{
           transition: "fade-down",

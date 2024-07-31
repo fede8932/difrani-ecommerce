@@ -192,7 +192,7 @@ function Catalogo(_props: Props): React.ReactNode {
     vehMarc,
     activePage,
     searchInput,
-    rentabState.loading,
+    // rentabState.loading,
   ]);
   useEffect(() => {
     getGril();
