@@ -18,7 +18,7 @@ import {
   selectBrandById,
 } from "../../redux/reducers/brandListReducers";
 import { brandsSelectTab } from "../../aux/brandsSelectTab";
-import { IRentaState } from "../../redux/reducers/rentabReducer";
+// import { IRentaState } from "../../redux/reducers/rentabReducer";
 import { getAllProducts } from "../../axios/request/productsRequest";
 import { IUserState } from "../../redux/reducers/userReducer";
 import RoleProtectedComponent from "../../protected/RoleProtectedComponent";
