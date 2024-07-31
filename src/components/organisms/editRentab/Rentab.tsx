@@ -42,7 +42,7 @@ const GeneralCard = styled(View)`
 
 const BrandCard = styled(View)`
   margin: 2px 0px;
-  height: 42px;
+  /* height: 42px; */
   flex-direction: row;
   padding: 0px 15px;
   align-items: center;
@@ -222,6 +222,7 @@ function Rentab(props: Props): React.ReactNode {
           onChange={(value) => setPercentValue(value)}
         />
         <Button
+          type="button"
           invert
           color="wideText"
           text="Agregar"
