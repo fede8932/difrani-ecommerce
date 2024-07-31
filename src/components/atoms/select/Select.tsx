@@ -4,8 +4,6 @@ import styled, { keyframes } from "styled-components";
 import Icon from "../icon/Icon";
 import { hexToRgba } from "../../../aux/rgbaConverter";
 
-// AL METERLO EN UN FORM, AGREGAR LOGICA PARA EL SUBMIT VACIO
-
 interface Props {
   placeholder: string;
   options: { key: string; value: string }[];
@@ -37,8 +35,7 @@ const slideUp = keyframes`
   }
 `;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const SelectClick: any = styled.div<{ width?: string; height?: string }>`
+const SelectClick = styled.div<{ width?: string; height?: string }>`
   border-radius: 15px;
   display: flex;
   align-items: center;
@@ -95,12 +92,10 @@ function Select(props: Props): React.ReactNode {
   const [optionSelected, setOptionSelected] = useState({ key: "", value: "" });
 
   const selectRef = useRef<HTMLDivElement>(null); // Ref para el componente Select
-
-  // console.log(optionSelected);
+  const boxOptionsRef = useRef<HTMLDivElement>(null); // Ref para el contenedor de opciones
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      // Verificar si el clic ocurrió fuera del componente
       if (
         selectRef.current &&
         !selectRef.current.contains(event.target as Node)
@@ -108,11 +103,43 @@ function Select(props: Props): React.ReactNode {
         setOpen(false);
       }
     }
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (!open) return;
+
+      if (event.key === "Escape") {
+        setOpen(false);
+      } else if (/^[a-zA-Z0-9]$/.test(event.key)) {
+        const index = options.findIndex((option) =>
+          option.key.toLowerCase().startsWith(event.key.toLowerCase())
+        );
+        if (index !== -1 && boxOptionsRef.current) {
+          const optionElement = boxOptionsRef.current.children[
+            index
+          ] as HTMLElement;
+          if (optionElement) {
+            optionElement.scrollIntoView({
+              behavior: "smooth",
+              block: "nearest",
+            });
+          }
+        }
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open, options]);
+
   return (
     <div ref={selectRef} style={{ marginTop: "5px" }}>
       <SelectClick
@@ -122,21 +149,21 @@ function Select(props: Props): React.ReactNode {
         }}
       >
         <span>
-          {optionSelected.key != "" ? optionSelected.key : placeholder}
+          {optionSelected.key !== "" ? optionSelected.key : placeholder}
         </span>
         <Icon active={false} color={"wideText"}>
           {open ? "arrow_drop_up" : "arrow_drop_down"}
         </Icon>
       </SelectClick>
-      {open ? (
-        <BoxOptions {...rest} open={open}>
+      {open && (
+        <BoxOptions {...rest} open={open} ref={boxOptionsRef}>
           {options.map((option, i) => (
             <Option
               optionCount={options.length}
               key={i}
               onClick={() => {
                 setOptionSelected({ key: option.key, value: option.value });
-                onSelect ? onSelect(option.value) : null;
+                if (onSelect) onSelect(option.value);
                 setOpen(false);
               }}
             >
@@ -144,7 +171,7 @@ function Select(props: Props): React.ReactNode {
             </Option>
           ))}
         </BoxOptions>
-      ) : null}
+      )}
     </div>
   );
 }
