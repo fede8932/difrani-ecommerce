@@ -103,9 +103,9 @@ function Catalogo(_props: Props): React.ReactNode {
     (state: RootState) => state.brands
   );
 
-  const rentabState: IRentaState = useSelector(
-    (state: RootState) => state.rentabilidad
-  );
+  // const rentabState: IRentaState = useSelector(
+  //   (state: RootState) => state.rentabilidad
+  // );
 
   const searchInput: { value: string } = useSelector(
     (state: RootState) => state.searchInput
