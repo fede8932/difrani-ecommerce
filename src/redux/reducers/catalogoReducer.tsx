@@ -30,18 +30,18 @@ export interface IProduct {
 
 export interface ISearchProductInitialState {
   loading: boolean;
-  data: { pages: number; products: IProduct[] };
+  data: { totalPages: number; list: IProduct[] };
   error: string;
 }
 
 const initialState: ISearchProductInitialState = {
   loading: false,
-  data: { pages: 0, products: [] },
+  data: { totalPages: 0, list: [] },
   error: "",
 };
 
 export const SearchProductState = createAsyncThunk<
-  { pages: number; products: IProduct[] },
+  { totalPages: number; list: IProduct[] },
   ISearchProductState /*primero es el tipo que devuelve y segundo el tipo que recibe*/
 >("CATALOGO_LIST", async (data) => {
   try {
@@ -82,8 +82,8 @@ const catalogoSlice = createSlice({
         (
           state,
           action: PayloadAction<{
-            pages: number;
-            products: IProduct[];
+            totalPages: number;
+            list: IProduct[];
           }>
         ) => {
           state.loading = false;
@@ -101,7 +101,7 @@ const catalogoSlice = createSlice({
         SearchEquivalencesState.fulfilled,
         (state, action: PayloadAction<ISearchEquiv>) => {
           state.loading = false;
-          state.data = { pages: 1, products: action.payload.products };
+          state.data = { totalPages: 1, list: action.payload.products };
         }
       );
   },

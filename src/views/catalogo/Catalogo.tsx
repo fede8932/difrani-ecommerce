@@ -342,7 +342,7 @@ function Catalogo(_props: Props): React.ReactNode {
             </FilterView>
           </RoleProtectedComponent>
         </FilterView>
-        {catalogState.data.products?.map((product, i) =>
+        {catalogState.data.list?.map((product, i) =>
           grid ? (
             <Card key={i} product={product} loading={catalogState.loading} />
           ) : (
@@ -351,7 +351,7 @@ function Catalogo(_props: Props): React.ReactNode {
         )}
       </CardProductContainer>
       <PaginationContainer>
-        <span>{`Se han encontrado ${catalogState.data.pages} páginas con resultados.`}</span>
+        <span>{`Se han encontrado ${catalogState.data.totalPages} páginas con resultados.`}</span>
         <div>
           <Pagination
             boundaryRange={0}
@@ -361,7 +361,7 @@ function Catalogo(_props: Props): React.ReactNode {
             firstItem={null}
             lastItem={null}
             siblingRange={1}
-            totalPages={catalogState.data.pages}
+            totalPages={catalogState.data.totalPages}
             onPageChange={handlePageChange}
           />
         </div>
