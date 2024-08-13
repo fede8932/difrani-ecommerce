@@ -31,6 +31,8 @@ function CartInput(props: Props): React.ReactNode {
       setAmount(initialValue);
     } else if (amount == "" || amount == "0") {
       setAmount(initialValue);
+    } else if (Number(amount) == initialValue) {
+      return;
     } else {
       const sendInfo: ISendItemChange = {
         itemId: itemId,
