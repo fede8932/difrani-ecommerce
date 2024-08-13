@@ -24,6 +24,7 @@ import { IUserState } from "../../redux/reducers/userReducer";
 import RoleProtectedComponent from "../../protected/RoleProtectedComponent";
 import ClientFilter from "../../components/molecules/clientFilter/ClientFilter";
 import { breakpoints } from "../../resolutions";
+import { setSearchPage } from "../../redux/reducers/searchInputReducer";
 
 interface Props {}
 
@@ -89,7 +90,6 @@ function Catalogo(_props: Props): React.ReactNode {
   const dispatch: AppDispatch = useDispatch();
 
   const [vehMarc, setVehMarc] = useState("");
-  const [activePage, setActivePage] = useState(1);
   const [listDownloadPending, setListDownloadPending] = useState(false);
 
   const userState: IUserState = useSelector((state: RootState) => state.user);
@@ -107,7 +107,7 @@ function Catalogo(_props: Props): React.ReactNode {
   //   (state: RootState) => state.rentabilidad
   // );
 
-  const searchInput: { value: string } = useSelector(
+  const searchInput: { value: string; page: number } = useSelector(
     (state: RootState) => state.searchInput
   );
 
@@ -151,16 +151,18 @@ function Catalogo(_props: Props): React.ReactNode {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handlePageChange = (_e: unknown, data: any) => {
-    if (activePage < data.activePage) {
+    console.log("te4:", searchInput.page, data.activePage);
+    if (searchInput.page < data.activePage) {
       window.scrollTo({
-        top: 138,
+        top: 25,
         behavior: "smooth", // Opcional: hace que el desplazamiento sea suave
       });
       setTimeout(() => {
-        setActivePage(data.activePage);
+        console.log("ok");
+        dispatch(setSearchPage(data.activePage));
       }, 800);
     } else {
-      setActivePage(data.activePage);
+      dispatch(setSearchPage(data.activePage));
     }
   };
   const getGril = (): void => {
@@ -178,7 +180,7 @@ function Catalogo(_props: Props): React.ReactNode {
   useEffect(() => {
     dispatch(
       SearchProductState({
-        page: activePage,
+        page: searchInput.page,
         rows: grid ? 35 : 15,
         pMarc: brandsState.select?.name,
         vMarc: vehMarc != "" ? vehMarc : undefined,
@@ -190,7 +192,6 @@ function Catalogo(_props: Props): React.ReactNode {
     grid,
     brandsState.select,
     vehMarc,
-    activePage,
     searchInput,
     // rentabState.loading,
   ]);
@@ -211,7 +212,7 @@ function Catalogo(_props: Props): React.ReactNode {
                     size="22px"
                     active={grid}
                     onClick={() => {
-                      setActivePage(1);
+                      dispatch(setSearchPage(1));
                       setGrid(true);
                       localStorage.setItem("grill", true.toString());
                     }}
@@ -228,7 +229,7 @@ function Catalogo(_props: Props): React.ReactNode {
                     size="25px"
                     active={!grid}
                     onClick={() => {
-                      setActivePage(1);
+                      dispatch(setSearchPage(1));
                       setGrid(false);
                       localStorage.setItem("grill", false.toString());
                     }}
@@ -271,7 +272,7 @@ function Catalogo(_props: Props): React.ReactNode {
                 { key: "VOLVO", value: "volvo" },
               ]}
               onSelect={(value) => {
-                setActivePage(1);
+                dispatch(setSearchPage(1));
                 setVehMarc(value);
               }}
             />
@@ -356,7 +357,7 @@ function Catalogo(_props: Props): React.ReactNode {
           <Pagination
             boundaryRange={0}
             defaultActivePage={1}
-            activePage={activePage}
+            activePage={searchInput.page}
             ellipsisItem={null}
             firstItem={null}
             lastItem={null}

@@ -11,7 +11,7 @@ export interface IProduct {
   images: any[];
 }
 
-const initialState: { value: string } = { value: "" };
+const initialState: { value: string; page: number } = { value: "", page: 1 };
 
 const searchInputSlice = createSlice({
   name: "search_input",
@@ -19,10 +19,15 @@ const searchInputSlice = createSlice({
   reducers: {
     setSearchInput: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
+      state.page = 1;
+    },
+    setSearchPage: (state, action: PayloadAction<number>) => {
+      console.log(action.payload);
+      state.page = action.payload;
     },
   }, // Puedes definir acciones síncronas aquí si es necesario
 });
 
-export const { setSearchInput } = searchInputSlice.actions;
+export const { setSearchInput, setSearchPage } = searchInputSlice.actions;
 
 export default searchInputSlice.reducer;
