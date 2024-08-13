@@ -151,7 +151,6 @@ function Catalogo(_props: Props): React.ReactNode {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handlePageChange = (_e: unknown, data: any) => {
-    console.log("te4:", searchInput.page, data.activePage);
     if (searchInput.page < data.activePage) {
       window.scrollTo({
         top: 25,

@@ -27,7 +27,7 @@ export const Me = async () => {
 export const LogOut = async () => {
   // eslint-disable-next-line no-useless-catch
   try {
-    let url: string = `${apiUrl}/api/users/login/logout`;
+    let url: string = `${apiUrl}/api/users/login/logout/shop`;
     const { data } = await axiosInstances.api.get(url);
     return data;
   } catch (err) {

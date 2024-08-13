@@ -22,7 +22,6 @@ const searchInputSlice = createSlice({
       state.page = 1;
     },
     setSearchPage: (state, action: PayloadAction<number>) => {
-      console.log(action.payload);
       state.page = action.payload;
     },
   }, // Puedes definir acciones síncronas aquí si es necesario
