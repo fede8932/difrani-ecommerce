@@ -50,6 +50,21 @@ export const DeleteCartItem = async (itemId: number): Promise<number> => {
   }
 };
 
+export const ChangeAmountCartItem = async (sendInfo: {
+  itemId: number;
+  amount: number;
+}): Promise<IResAddItem> => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    const { itemId, amount } = sendInfo;
+    const url: string = `${apiUrl}/api/cart?itemId=${itemId}&cant=${amount}`;
+    const { data }: { data: IResAddItem } = await axiosInstances.api.patch(url);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
 export const SendOrder = async (cartId: number): Promise<string> => {
   try {
     const url: string = `${apiUrl}/api/sale/order/${cartId}`;

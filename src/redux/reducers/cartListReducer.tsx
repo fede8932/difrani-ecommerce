@@ -9,6 +9,11 @@ export interface ISendItemData {
   brandId: number;
 }
 
+export interface ISendItemChange {
+  itemId: number;
+  amount: number;
+}
+
 export interface IResAddItem {
   id: number;
   amount: number;
@@ -64,6 +69,22 @@ export const AddCartItemsState = createAsyncThunk<IResAddItem, ISendItemData>(
     }
   }
 );
+
+export const ChangeAmountCartItemsState = createAsyncThunk<
+  IResAddItem,
+  ISendItemChange
+>("UPDATE_CART_ITEM", async (send: ISendItemChange) => {
+  try {
+    const { itemId, amount } = send;
+    const response: IResAddItem = await cartRequest.ChangeAmountCartItem({
+      itemId: itemId,
+      amount: amount,
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+});
 
 export const DelCartItemsState = createAsyncThunk<number, number>(
   "DEL_CART_ITEM",
@@ -167,6 +188,24 @@ const cartSlice = createSlice({
         state.error = "";
         state.data = [];
         state.itemsAmount = 0;
+      })
+      .addCase(ChangeAmountCartItemsState.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(ChangeAmountCartItemsState.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message ?? "Error desconocido";
+      })
+      .addCase(ChangeAmountCartItemsState.fulfilled, (state, action) => {
+        const newData = state.data.map((item) => {
+          if (item.id == action.payload.id) {
+            return action.payload;
+          }
+          return item;
+        });
+        state.loading = false;
+        state.error = "";
+        state.data = newData;
       });
   },
 });

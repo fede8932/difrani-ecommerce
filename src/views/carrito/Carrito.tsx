@@ -25,6 +25,7 @@ import {
   calcularItemSubTotal,
 } from "../../aux/prices";
 import Button from "../../components/atoms/button/Button";
+import CartInput from "../../components/atoms/cartInput/CartInput";
 
 interface Props {}
 
@@ -152,7 +153,7 @@ function Carrito(_props: Props): React.ReactNode {
                 <TableHeaderCell>Código</TableHeaderCell>
                 <TableHeaderCell>Marca</TableHeaderCell>
                 <TableHeaderCell>Precio sin IVA</TableHeaderCell>
-                <TableHeaderCell>Catidad</TableHeaderCell>
+                <TableHeaderCell>Cantidad</TableHeaderCell>
                 <TableHeaderCell>Subtotal</TableHeaderCell>
                 <TableHeaderCell>Acciones</TableHeaderCell>
               </TableRow>
@@ -174,7 +175,9 @@ function Carrito(_props: Props): React.ReactNode {
                       discountsState.data
                     )}
                   </TableCell>
-                  <TableCell>{item.amount}</TableCell>
+                  <TableCell>
+                    <CartInput initialValue={item.amount} itemId={item.id} />
+                  </TableCell>
                   <TableCell>
                     $
                     {calcularItemSubTotal(
