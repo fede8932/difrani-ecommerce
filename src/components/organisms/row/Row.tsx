@@ -185,7 +185,7 @@ function Row(props: Props): React.ReactNode {
             </>
           ) : (
             <ProductDetails product={product}>
-              <span>{product?.description.toUpperCase()}</span>
+              <span>{`${product?.brand.name.toUpperCase()}-${product?.description.toUpperCase()}`}</span>
             </ProductDetails>
           )}
         </StyledDescription>
