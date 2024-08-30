@@ -46,10 +46,10 @@ const PriceContainer = styled(View)<{ stock: number }>`
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   background-color: ${({ theme, stock }) =>
     stock > 4
-      ? hexToRgba(theme.colors.primary, 0.1)
+      ? hexToRgba(theme.colors.primary, 0.5)
       : stock > 0
-      ? hexToRgba(theme.colors.warning, 0.1)
-      : hexToRgba(theme.colors.alert, 0.1)};
+      ? hexToRgba(theme.colors.warning, 0.5)
+      : hexToRgba(theme.colors.alert, 0.4)};
   border-radius: 10px;
   padding: 5px 10px;
   color: ${({ theme }) => theme.colors.text};

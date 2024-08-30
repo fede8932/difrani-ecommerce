@@ -45,10 +45,10 @@ const CardContainer = styled(View)`
 const PriceContainer = styled(View)<{ stock: number }>`
   background-color: ${({ theme, stock }) =>
     stock > 4
-      ? hexToRgba(theme.colors.primary, 0.2)
+      ? hexToRgba(theme.colors.primary, 0.5)
       : stock > 0
-      ? hexToRgba(theme.colors.warning, 0.2)
-      : hexToRgba(theme.colors.alert, 0.2)};
+      ? hexToRgba(theme.colors.warning, 0.5)
+      : hexToRgba(theme.colors.alert, 0.4)};
   margin: -10px -6px;
   border-radius: 10px;
   padding: 5px 10px;
