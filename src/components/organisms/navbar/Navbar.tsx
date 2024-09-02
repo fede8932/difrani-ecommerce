@@ -16,6 +16,8 @@ import Rentab from "../editRentab/Rentab";
 import ListMenu from "../../molecules/listMenu/ListMenu";
 import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
 import { breakpoints } from "../../../resolutions";
+import { useCallback } from "react";
+import { debounce } from "lodash";
 
 interface Props {}
 
@@ -87,11 +89,18 @@ function Navbar(_props: Props): React.ReactNode {
 
   const { pathname } = useLocation();
 
+  const debouncedDispatch = useCallback(
+    debounce((value) => {
+      dispatch(setSearchInput(value));
+    }, 300), // 300 ms de espera para el debounce
+    [dispatch]
+  );
+
   const handleChange = (value: string) => {
     if (pathname != "/") {
       navigate("/");
     }
-    dispatch(setSearchInput(value));
+    debouncedDispatch(value);
   };
 
   const catalogState: ISearchProductInitialState = useSelector(
