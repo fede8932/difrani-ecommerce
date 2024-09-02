@@ -1,3 +1,4 @@
+import axios, { CancelTokenSource } from "axios";
 import axiosInstances from "../config";
 const apiUrl = import.meta.env.VITE_MY_URL_BACKEND;
 
@@ -9,18 +10,41 @@ interface ISearchCatalogo {
   pMarc?: string;
 }
 
+let cancelTokenSource: CancelTokenSource | null = null;
+
 export const SearchCatalogo = async (sendData: ISearchCatalogo) => {
-  // eslint-disable-next-line no-useless-catch
+  // Cancelar la solicitud anterior si existe
+  if (cancelTokenSource) {
+    cancelTokenSource.cancel("Operation canceled due to new request.");
+  }
+
+  // Crear un nuevo token de cancelación para la nueva solicitud
+  cancelTokenSource = axios.CancelToken.source();
+
   try {
     const { text, rows, page, vMarc, pMarc } = sendData;
     let url: string = `${apiUrl}/api/productos/search/prod?ecomm=true&page=${page}&cant=${rows}`;
     url = text ? `${url}&data=${text}` : url;
     url = vMarc ? `${url}&vmarc=${vMarc}` : url;
     url = pMarc ? `${url}&pmarc=${pMarc}` : url;
-    const { data } = await axiosInstances.api.get(url);
+
+    // Hacer la solicitud con el nuevo token de cancelación
+    const { data } = await axiosInstances.api.get(url, {
+      cancelToken: cancelTokenSource.token,
+    });
+
+    // Limpiar el token de cancelación una vez completada la solicitud
+    cancelTokenSource = null;
+
     return data;
   } catch (err) {
-    throw err;
+    // Manejar el error si es una cancelación
+    if (axios.isCancel(err)) {
+      console.log("Request canceled", err.message);
+      return { totalPages: 0, list: [] }; // O manejar de alguna forma adecuada en tu aplicación
+    } else {
+      throw err;
+    }
   }
 };
 
