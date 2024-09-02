@@ -92,7 +92,7 @@ function Navbar(_props: Props): React.ReactNode {
   const debouncedDispatch = useCallback(
     debounce((value) => {
       dispatch(setSearchInput(value));
-    }, 300), // 300 ms de espera para el debounce
+    }, 600), // 600 ms de espera para el debounce
     [dispatch]
   );
 
