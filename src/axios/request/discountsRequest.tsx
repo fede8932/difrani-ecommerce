@@ -12,7 +12,10 @@ export const GetAllCustomerDiscounts = async (
       url
     );
     return data;
-  } catch (err) {
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
     throw err;
   }
 };

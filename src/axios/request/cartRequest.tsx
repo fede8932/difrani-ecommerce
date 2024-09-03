@@ -34,7 +34,10 @@ export const GetAllCartItem = async (
     const url: string = `${apiUrl}/api/cart?cartId=${cartId}`;
     const { data }: { data: IResAddItem[] } = await axiosInstances.api.get(url);
     return data;
-  } catch (err) {
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
     throw err;
   }
 };
@@ -45,7 +48,10 @@ export const DeleteCartItem = async (itemId: number): Promise<number> => {
     const url: string = `${apiUrl}/api/cart?id=${itemId}`;
     const { data }: { data: number } = await axiosInstances.api.delete(url);
     return data;
-  } catch (err) {
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
     throw err;
   }
 };

@@ -7,7 +7,10 @@ export const GetAllBrands = async () => {
     const url: string = `${apiUrl}/api/brand`;
     const { data } = await axiosInstances.api.get(url);
     return data;
-  } catch (err) {
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
     throw err;
   }
 };

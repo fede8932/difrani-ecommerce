@@ -16,7 +16,10 @@ export const GetAllCustomerRentab = async (
       url
     );
     return data;
-  } catch (err) {
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
     throw err;
   }
 };
@@ -43,7 +46,10 @@ export const DeleteBrandRentab = async (id: number): Promise<number> => {
     const url: string = `${apiUrl}/api/percentage/sale?id=${id}`;
     const { data }: { data: number } = await axiosInstances.api.delete(url);
     return data;
-  } catch (err) {
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
     throw err;
   }
 };

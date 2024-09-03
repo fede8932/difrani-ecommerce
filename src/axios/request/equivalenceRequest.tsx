@@ -7,7 +7,10 @@ export const SearchEquivalences = async (productId: number) => {
     const url: string = `${apiUrl}/api/equivalences/${productId}`;
     const { data } = await axiosInstances.api.get(url);
     return data;
-  } catch (err) {
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
     throw err;
   }
 };

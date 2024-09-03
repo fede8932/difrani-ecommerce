@@ -7,7 +7,10 @@ export const GetClientsBySeller = async (userId: number) => {
     let url: string = `${apiUrl}/api/seller/clients/${userId}`;
     const { data } = await axiosInstances.api.get(url);
     return data;
-  } catch (err) {
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
     throw err;
   }
 };

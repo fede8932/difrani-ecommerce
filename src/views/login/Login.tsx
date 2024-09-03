@@ -124,6 +124,7 @@ function Login(_props: Props): React.ReactNode {
           return;
         }
         toast.success("Login OK!");
+        window.location.reload();
       })
       .catch((err: any) => {
         toast.error(err.message);

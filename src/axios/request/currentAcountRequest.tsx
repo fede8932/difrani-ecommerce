@@ -9,7 +9,10 @@ export const GetCurrentAcount = async (sendData: ISend) => {
     let url: string = `${apiUrl}/api/client/acount/pages/${clientId}?page=${page}&rows=${rows}`;
     const { data } = await axiosInstances.api.get(url);
     return data;
-  } catch (err) {
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
     throw err;
   }
 };

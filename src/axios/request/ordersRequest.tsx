@@ -12,7 +12,10 @@ export const GetAllOrders = async (sendData: IGetOrders) => {
     }: { data: { totalPages: number; totalRows: number; list: any[] } } =
       await axiosInstances.api.get(url);
     return data;
-  } catch (err) {
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
     throw err;
   }
 };

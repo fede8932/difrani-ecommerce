@@ -37,11 +37,13 @@ export const SearchCatalogo = async (sendData: ISearchCatalogo) => {
     cancelTokenSource = null;
 
     return data;
-  } catch (err) {
+  } catch (err: any) {
     // Manejar el error si es una cancelación
     if (axios.isCancel(err)) {
       console.log("Request canceled", err.message);
       return { totalPages: 0, list: [] }; // O manejar de alguna forma adecuada en tu aplicación
+    } else if (err.response?.status == 401) {
+      window.location.reload();
     } else {
       throw err;
     }
@@ -59,6 +61,9 @@ export const getAllProducts = async (clientId: number) => {
     );
     return res;
   } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
     throw err;
   }
 };
