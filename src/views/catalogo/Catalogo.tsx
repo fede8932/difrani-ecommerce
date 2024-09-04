@@ -22,7 +22,6 @@ import { brandsSelectTab } from "../../aux/brandsSelectTab";
 import { getAllProducts } from "../../axios/request/productsRequest";
 import { IUserState } from "../../redux/reducers/userReducer";
 import RoleProtectedComponent from "../../protected/RoleProtectedComponent";
-import ClientFilter from "../../components/molecules/clientFilter/ClientFilter";
 import { breakpoints } from "../../resolutions";
 import { setSearchPage } from "../../redux/reducers/searchInputReducer";
 
@@ -42,7 +41,6 @@ const PaginationContainer = styled(View)`
 const CatalogoContainer = styled(View)`
   width: 100%;
   align-items: center;
-  margin-top: 75px;
 `;
 
 const CardProductContainer = styled(View)`
@@ -64,7 +62,7 @@ const FilterView = styled(View)<{ justifyContent?: string; top?: string }>`
   justify-content: center;
 
   @media (max-width: ${breakpoints.mobileLarge}px) {
-    flex-direction: column;
+    flex-direction: column-reverse;
     width: 100%;
   }
 `;
@@ -207,6 +205,7 @@ function Catalogo(_props: Props): React.ReactNode {
                 content="Ver en forma de grilla"
                 trigger={
                   <Icon
+                    margin="5px 0px 0px 0px"
                     color="wideText"
                     size="22px"
                     active={grid}
@@ -224,6 +223,7 @@ function Catalogo(_props: Props): React.ReactNode {
                 content="Ver en forma de lista"
                 trigger={
                   <Icon
+                    margin="3px 0px 0px 2px"
                     color="wideText"
                     size="25px"
                     active={!grid}
@@ -318,11 +318,11 @@ function Catalogo(_props: Props): React.ReactNode {
               )}
             </DivCont>
           </FilterView>
-          <RoleProtectedComponent accessList={[3]}>
+          {/* <RoleProtectedComponent accessList={[3]}>
             <FilterView>
               <ClientFilter userId={userState.data?.userId} />
             </FilterView>
-          </RoleProtectedComponent>
+          </RoleProtectedComponent> */}
           <RoleProtectedComponent accessList={[4]}>
             <FilterView top="20px">
               <DivCont>

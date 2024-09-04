@@ -56,6 +56,7 @@ const BoxOptions = styled.div<{
   open: boolean;
 }>`
   position: absolute;
+  z-index: 100;
   max-height: 270px;
   overflow-y: auto;
   padding: 2px;

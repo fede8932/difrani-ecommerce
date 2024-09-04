@@ -5,11 +5,13 @@ interface Props {
   active: boolean;
   color: string;
   size?: string;
+  margin?: string;
   onClick?: () => void;
 }
 
 const StylesIcon = styled.span<{
   size?: string;
+  margin?: string;
   active: boolean;
   color: string;
 }>`
@@ -17,6 +19,7 @@ const StylesIcon = styled.span<{
   display: flex;
   align-items: center;
   font-size: ${({ size }) => size || "20px"};
+  margin: ${({ margin }) => margin || "0px"};
   color: ${({ theme, color, active }) =>
     active ? theme.colors.primary : theme.colors[color]};
 

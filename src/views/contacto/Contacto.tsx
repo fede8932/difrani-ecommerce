@@ -8,7 +8,6 @@ interface Props {}
 const ContactoContainer = styled(View)`
   width: 100%;
   align-items: center;
-  margin-top: 75px;
 `;
 
 const TitleStyled = styled.p`

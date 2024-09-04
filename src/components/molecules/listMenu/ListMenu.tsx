@@ -77,6 +77,15 @@ function ListMenu(_props: Props): React.ReactNode {
       <PricesProtected>
         <MobileButtonOnly
           onClick={() => {
+            navigate("/carrito");
+          }}
+        >
+          Carrito
+        </MobileButtonOnly>
+      </PricesProtected>
+      <PricesProtected>
+        <MobileButtonOnly
+          onClick={() => {
             navigate("/pedidos");
           }}
         >

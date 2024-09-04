@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 interface Props {
   children: React.ReactNode;
+  position?: string;
   padding?: string;
   margin?: string;
   width?: string;
@@ -18,12 +19,14 @@ interface Props {
 }
 
 const ViewContainer = styled.div<{
+  position?: string;
   padding?: string;
   margin?: string;
   width?: string;
   height?: string;
   flexDirection?: string;
 }>`
+  position: ${(props) => (props.position ? props.position : "static")};
   padding: ${(props) => (props.padding ? props.padding : "0px")};
   margin: ${(props) => (props.margin ? props.margin : "0px")};
   width: ${(props) => (props.width ? props.width : "")};

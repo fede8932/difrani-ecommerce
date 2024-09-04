@@ -58,9 +58,13 @@ const userSlice = createSlice({
   name: "user",
   initialState: initialState,
   reducers: {
-    setClientId: (state, action: PayloadAction<number>) => {
+    setClientId: (
+      state,
+      action: PayloadAction<{ clientId: number; cartId: number }>
+    ) => {
       const user = state.data;
-      user!.clientId = action.payload;
+      user!.clientId = action.payload.clientId;
+      user!.cartId = action.payload.cartId;
       state.data = user;
     },
   }, // Puedes definir acciones síncronas aquí si es necesario

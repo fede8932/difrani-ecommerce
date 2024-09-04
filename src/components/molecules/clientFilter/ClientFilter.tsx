@@ -21,9 +21,18 @@ function ClientFilter(props: Props): React.ReactNode {
     (state: RootState) => state.clientsBySeller
   );
 
+  // console.log(clients);
+
   const user: IUserState = useSelector((state: RootState) => state.user);
 
   console.log(user);
+
+  const handleSelect = (value: number): void => {
+    const selectClient = clients.list.find((client) => client.id == value);
+    dispatch(
+      setClientId({ clientId: Number(value), cartId: selectClient!.cart.id })
+    );
+  };
 
   useEffect(() => {
     dispatch(GetAllClientState(userId || 0));
@@ -37,9 +46,7 @@ function ClientFilter(props: Props): React.ReactNode {
         width="250px"
         height="31px"
         options={tabClientsBySelect(clients.list)}
-        onSelect={(value: string) => {
-          dispatch(setClientId(Number(value)));
-        }}
+        onSelect={handleSelect}
       />
     </>
   );

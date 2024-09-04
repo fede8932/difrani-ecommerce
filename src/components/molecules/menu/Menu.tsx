@@ -5,7 +5,7 @@ import React from "react";
 
 interface Props {
   button: React.ReactElement;
-  children: React.ReactNode;
+  children: React.ReactElement;
   position: "left" | "right"; // Nuevo prop para definir la posición
 }
 
@@ -64,7 +64,9 @@ function Menu(props: Props): React.ReactNode {
   });
 
   const handleClickOutside = () => {
-    setOpen(false);
+    setTimeout(() => {
+      setOpen(false);
+    }, 2500);
   };
 
   useEffect(() => {
@@ -79,7 +81,7 @@ function Menu(props: Props): React.ReactNode {
       {extendButton}
       {open || open === false ? (
         <BoxContainer position={position} open={open}>
-          {children}
+          {open ? children : null}
         </BoxContainer>
       ) : null}
     </MenuContainer>

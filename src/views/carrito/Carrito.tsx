@@ -32,7 +32,6 @@ interface Props {}
 const ContactoContainer = styled(View)`
   width: 100%;
   align-items: center;
-  margin-top: 75px;
 `;
 
 const TitleStyled = styled.p`
@@ -54,8 +53,10 @@ const DescriptionStyled = styled.p`
   font-size: 13px;
   text-align: center;
   margin: 0px;
+  max-width: 100%;
   width: 600px;
   color: ${({ theme }) => theme.colors.text};
+  padding: 0px 3px;
 `;
 
 const ContactDataContainer = styled(View)`

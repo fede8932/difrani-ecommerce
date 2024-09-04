@@ -25,7 +25,6 @@ interface Props {}
 const ContactoContainer = styled(View)`
   width: 100%;
   align-items: center;
-  margin-top: 75px;
 `;
 
 const TitleStyled = styled.p`
@@ -70,7 +69,6 @@ const ContactDataContainer = styled(View)`
 const CurrentAcountInfoContainer = styled.div`
   margin-top: 15px;
   display: flex;
-  width: 75%;
   justify-content: space-between;
 
   @media (max-width: ${breakpoints.mobileLarge}px) {

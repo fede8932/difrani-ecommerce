@@ -206,12 +206,14 @@ function Card(props: Props): React.ReactNode {
               searchEquiv(product.id);
             }}
           />
-          <RoleProtectedComponent accessList={[4]}>
-            <IconButton
-              icon="shopping_cart"
-              size="20px"
-              onClick={addCartItem}
-            />
+          <RoleProtectedComponent accessList={[3, 4]}>
+            <PricesProtected>
+              <IconButton
+                icon="shopping_cart"
+                size="20px"
+                onClick={addCartItem}
+              />
+            </PricesProtected>
           </RoleProtectedComponent>
         </div>
       </PriceContainer>

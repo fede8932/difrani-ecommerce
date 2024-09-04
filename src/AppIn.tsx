@@ -19,6 +19,9 @@ import Resumen from "./views/resumen/Resumen";
 import Carrito from "./views/carrito/Carrito";
 import { GetAllBrandsState } from "./redux/reducers/brandListReducers";
 import RoleProtectedView from "./protected/RoleProtectedView";
+import RoleProtectedComponent from "./protected/RoleProtectedComponent";
+import { breakpoints } from "./resolutions";
+import ClientFilter from "./components/molecules/clientFilter/ClientFilter";
 
 const AppContainer = styled(View)`
   justify-content: space-between;
@@ -43,6 +46,20 @@ const AppContainer = styled(View)`
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(80,255,181,0.28)', endColorstr='#f8feff',GradientType=0 );
 `;
 
+const FilterView = styled(View)<{ justifyContent?: string; top?: string }>`
+  flex-direction: row;
+  align-items: center;
+  justify-content: ${({ justifyContent }) => justifyContent || "flex-start"};
+  padding: 0px 15px 15px 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    flex-direction: column;
+    width: 100%;
+  }
+`;
+
 function AppIn() {
   const dispatch: AppDispatch = useDispatch();
 
@@ -59,7 +76,12 @@ function AppIn() {
   return (
     <AppContainer>
       <Navbar />
-      <View>
+      <View position="relative" margin="75px 0px">
+        <RoleProtectedComponent accessList={[3]}>
+          <FilterView>
+            <ClientFilter userId={userState.data?.userId} />
+          </FilterView>
+        </RoleProtectedComponent>
         <Routes>
           <Route
             path="/"
@@ -104,7 +126,7 @@ function AppIn() {
           <Route
             path="/carrito"
             element={
-              <RoleProtectedView accessList={[4]}>
+              <RoleProtectedView accessList={[3, 4]}>
                 <Carrito />
               </RoleProtectedView>
             }

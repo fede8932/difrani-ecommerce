@@ -6,6 +6,7 @@ export interface IClient {
   id: number;
   razonSocial: string;
   cuit: string;
+  cart: { id: number };
 }
 
 export interface IClientsState {
