@@ -20,7 +20,7 @@ export const Me = async () => {
     const { data } = await axiosInstances.api.get(url);
     return data;
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     throw err;
   }
 };

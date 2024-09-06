@@ -35,7 +35,10 @@ export const UploadGeneralRentab = async (
       AddGralData
     );
     return data;
-  } catch (err) {
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
     throw err;
   }
 };
@@ -65,7 +68,10 @@ export const AddBrandRentab = async (
       addRentab
     );
     return data;
-  } catch (err) {
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
     throw err;
   }
 };

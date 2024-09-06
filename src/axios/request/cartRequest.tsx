@@ -21,7 +21,10 @@ export const AddCartItem = async (
       itemData
     );
     return data;
-  } catch (err) {
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
     throw err;
   }
 };
@@ -66,7 +69,10 @@ export const ChangeAmountCartItem = async (sendInfo: {
     const url: string = `${apiUrl}/api/cart?itemId=${itemId}&cant=${amount}`;
     const { data }: { data: IResAddItem } = await axiosInstances.api.patch(url);
     return data;
-  } catch (err) {
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
     throw err;
   }
 };
@@ -76,7 +82,10 @@ export const SendOrder = async (cartId: number): Promise<string> => {
     const url: string = `${apiUrl}/api/sale/order/${cartId}`;
     const { data }: { data: string } = await axiosInstances.api.post(url);
     return data;
-  } catch (err) {
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
     throw err;
   }
 };
