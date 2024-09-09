@@ -263,11 +263,11 @@ function Catalogo(_props: Props): React.ReactNode {
                 { key: "NISSAN", value: "nissan" },
                 { key: "PEUGEOT", value: "peugeot" },
                 { key: "PORSCHE", value: "porsche" },
-                { key: "RENAULT", value: "reno" },
+                { key: "RENAULT", value: "reno|renault" },
                 { key: "SUBARU", value: "subaru" },
                 { key: "SUZUKI", value: "suzuki" },
                 { key: "TOYOTA", value: "toyota" },
-                { key: "VOLKSWAGEN", value: "vw" },
+                { key: "VOLKSWAGEN", value: "vw|volkswagen" },
                 { key: "VOLVO", value: "volvo" },
               ]}
               onSelect={(value) => {
