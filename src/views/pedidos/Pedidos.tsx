@@ -18,6 +18,9 @@ import {
 import { AppDispatch, RootState } from "../../redux/store";
 import { formatDate } from "../../aux/formatDate";
 import { breakpoints } from "../../resolutions";
+import Icon from "../../components/atoms/icon/Icon";
+import ModalComponent from "../../components/molecules/modal/ModalComponent";
+import OrderDetail from "../../components/organisms/orderDetails/OrderDetail";
 
 interface Props {}
 
@@ -119,6 +122,7 @@ function Pedidos(_props: Props): React.ReactNode {
                 <TableHeaderCell>Fecha de pedido</TableHeaderCell>
                 <TableHeaderCell>Total de la compra</TableHeaderCell>
                 <TableHeaderCell>Estado de la orden</TableHeaderCell>
+                <TableHeaderCell>Acciones</TableHeaderCell>
               </TableRow>
             </TableHeader>
 
@@ -134,6 +138,20 @@ function Pedidos(_props: Props): React.ReactNode {
                       : order.status == "Confirm"
                       ? "Confirmado"
                       : "Abierta"}
+                  </TableCell>
+                  <TableCell>
+                    <ModalComponent
+                      button={<Icon children="info" active color={""} />}
+                      title={"Detalle de orden"}
+                      size="1500px"
+                    >
+                      <OrderDetail
+                        orderId={order.id}
+                        orderSubtotal={order.subTotal}
+                        orderTotal={order.total}
+                        orderNumber={order.numero}
+                      />
+                    </ModalComponent>
                   </TableCell>
                 </TableRow>
               ))}
