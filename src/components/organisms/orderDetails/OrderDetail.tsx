@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import View from "../../atoms/view/View";
-import Icon from "../../atoms/icon/Icon";
 import {
   Pagination,
   Table,
