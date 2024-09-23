@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import View from "../../components/atoms/view/View";
 import {
+  Checkbox,
   Pagination,
   Table,
   TableBody,
@@ -67,6 +68,7 @@ const ContactDataContainer = styled(View)`
 `;
 
 const CurrentAcountInfoContainer = styled.div`
+  width: 72%;
   margin-top: 15px;
   display: flex;
   justify-content: space-between;
@@ -102,6 +104,8 @@ function Resumen(_props: Props): React.ReactNode {
   const userState = useSelector((state: RootState) => state.user);
 
   const [page, setPage] = useState(1);
+  const [check, setCheck] = useState(true);
+
   const dispatch: AppDispatch = useDispatch();
   const acountStatus: IAcountState = useSelector(
     (state: RootState) => state.acount
@@ -111,6 +115,10 @@ function Resumen(_props: Props): React.ReactNode {
   const handleChange = (_e: any, data: any) => {
     setPage(data.activePage);
   };
+  const handleChangeToggle = (_e: any, d: any) => {
+    setPage(1);
+    setCheck(d.checked);
+  };
 
   useEffect(() => {
     dispatch(
@@ -118,9 +126,10 @@ function Resumen(_props: Props): React.ReactNode {
         clientId: userState.data?.clientId || 0,
         rows: 10,
         page: page,
+        pending: check,
       })
     );
-  }, [dispatch, page]);
+  }, [dispatch, page, check]);
   return (
     <ContactoContainer>
       <TitleStyled>
@@ -161,13 +170,21 @@ function Resumen(_props: Props): React.ReactNode {
         </TagInfo>
       </CurrentAcountInfoContainer>
       <ContactDataContainer>
-        <div>
+        <div style={{ marginBottom: "12px" }}>
+          <Checkbox
+            toggle
+            label="Pendiente"
+            onChange={handleChangeToggle}
+            checked={check}
+          />
+        </div>
+        <div style={{ height: "490px" }}>
           <Table singleLine selectable>
             <TableHeader>
               <TableRow>
                 <TableHeaderCell>Fecha</TableHeaderCell>
                 <TableHeaderCell>Concepto</TableHeaderCell>
-                <TableHeaderCell>Subtotal</TableHeaderCell>
+                <TableHeaderCell>Comprobante Vdor</TableHeaderCell>
                 <TableHeaderCell>Total</TableHeaderCell>
               </TableRow>
             </TableHeader>
@@ -178,7 +195,9 @@ function Resumen(_props: Props): React.ReactNode {
                   <TableCell>{formatDate(mov.fecha)}</TableCell>
                   <TableCell>
                     {mov.type == 0
-                      ? "Factura"
+                      ? mov.billType == 0
+                        ? "Factura X"
+                        : "Factura"
                       : mov.type == 1
                       ? "Nota de crédito"
                       : mov.type == 2
@@ -187,7 +206,7 @@ function Resumen(_props: Props): React.ReactNode {
                       ? "Devolución"
                       : "Descuento"}
                   </TableCell>
-                  <TableCell>${roundToTwoDecimals(mov.amount)}</TableCell>
+                  <TableCell>{mov.payDetail?.comprobanteVendedor}</TableCell>
                   <TableCell>${roundToTwoDecimals(mov.total)}</TableCell>
                 </TableRow>
               ))}

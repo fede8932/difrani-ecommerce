@@ -6,6 +6,7 @@ export interface ISend {
   rows: number;
   page: number;
   clientId: number;
+  pending?: boolean;
 }
 
 interface IMovements {
@@ -18,6 +19,7 @@ interface IMovements {
   total: number;
   numComprobante: number;
   apply: boolean;
+  payDetail: { comprobanteVendedor: string };
 }
 
 interface ICurrentAcount {
