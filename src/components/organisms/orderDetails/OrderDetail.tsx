@@ -58,7 +58,7 @@ const Stext = styled.span`
 `;
 
 function OrderDetail(props: IProps): React.ReactNode {
-  const { orderId, orderNumber, orderSubtotal, orderTotal } = props;
+  const { orderId, orderNumber, orderSubtotal } = props;
   const [page, setPage] = useState(1);
   const dispatch: AppDispatch = useDispatch();
   const { list, totalPages } = useSelector(
