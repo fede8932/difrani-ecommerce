@@ -21,6 +21,7 @@ import { breakpoints } from "../../resolutions";
 import Icon from "../../components/atoms/icon/Icon";
 import ModalComponent from "../../components/molecules/modal/ModalComponent";
 import OrderDetail from "../../components/organisms/orderDetails/OrderDetail";
+import { formatNumbers } from "../../aux/formatNumbers";
 
 interface Props {}
 
@@ -131,7 +132,7 @@ function Pedidos(_props: Props): React.ReactNode {
                 <TableRow key={i}>
                   <TableCell>{order.numero}</TableCell>
                   <TableCell>{formatDate(order.date)}</TableCell>
-                  <TableCell>${order.total}</TableCell>
+                  <TableCell>${formatNumbers(order.total)}</TableCell>
                   <TableCell>
                     {order.status == "Sent"
                       ? "Enviado"
