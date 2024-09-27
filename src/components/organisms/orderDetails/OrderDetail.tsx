@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetItemsState } from "../../../redux/reducers/orderItemsReducer";
 import { AppDispatch, RootState } from "../../../redux/store";
 import { roundToTwoDecimals } from "../../../aux/prices";
+import { formatNumbers } from "../../../aux/formatNumbers";
 
 interface IProps {
   orderId: number;
@@ -78,12 +79,12 @@ function OrderDetail(props: IProps): React.ReactNode {
         </Stext>
         <Stext>
           <span className="material-symbols-outlined">payments</span>
-          {` Subtotal: $${orderSubtotal}`}
+          {` Total: $${formatNumbers(orderSubtotal)}`}
         </Stext>
-        <Stext>
+        {/* <Stext>
           <span className="material-symbols-outlined">assured_workload</span>
           {` Total: $${orderTotal}`}
-        </Stext>
+        </Stext> */}
       </OrderGeneralInfoContainer>
       <OrderGeneralInfoContainer
         margin="10px 0px"
@@ -98,7 +99,7 @@ function OrderDetail(props: IProps): React.ReactNode {
               <TableHeaderCell width={5}>Descripción</TableHeaderCell>
               <TableHeaderCell width={1}>Catidad</TableHeaderCell>
               <TableHeaderCell width={1}>Precio</TableHeaderCell>
-              <TableHeaderCell width={1}>Iva</TableHeaderCell>
+              <TableHeaderCell width={1}>Subtotal</TableHeaderCell>
             </TableRow>
           </TableHeader>
 
@@ -113,7 +114,7 @@ function OrderDetail(props: IProps): React.ReactNode {
                 <TableCell>{item.amount}</TableCell>
                 <TableCell>${roundToTwoDecimals(item.sellPrice)}</TableCell>
                 <TableCell>
-                  ${roundToTwoDecimals(item.sellPrice * 0.21)}
+                  ${roundToTwoDecimals(item.sellPrice * item.amount)}
                 </TableCell>
               </TableRow>
             ))}
