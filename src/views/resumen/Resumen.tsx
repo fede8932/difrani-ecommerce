@@ -194,17 +194,21 @@ function Resumen(_props: Props): React.ReactNode {
                 <TableRow key={i}>
                   <TableCell>{formatDate(mov.fecha)}</TableCell>
                   <TableCell>
-                    {mov.type == 0
-                      ? mov.billType == 0
-                        ? "Factura X"
-                        : "Factura"
-                      : mov.type == 1
-                      ? "Nota de crédito"
-                      : mov.type == 2
-                      ? "Pago"
-                      : mov.type == 3
-                      ? "Devolución"
-                      : "Descuento"}
+                    {mov.type == 0 ? (
+                      mov.billType == 0 ? (
+                        "Factura"
+                      ) : (
+                        <span style={{ color: "green" }}>Factura</span>
+                      )
+                    ) : mov.type == 1 ? (
+                      "Nota de crédito"
+                    ) : mov.type == 2 ? (
+                      "Pago"
+                    ) : mov.type == 3 ? (
+                      "Devolución"
+                    ) : (
+                      "Descuento"
+                    )}
                   </TableCell>
                   <TableCell>{mov.payDetail?.comprobanteVendedor}</TableCell>
                   <TableCell>${roundToTwoDecimals(mov.total)}</TableCell>
