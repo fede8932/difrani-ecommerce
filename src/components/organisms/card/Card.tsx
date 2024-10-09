@@ -142,7 +142,13 @@ function Card(props: Props): React.ReactNode {
       ) : (
         <ProductDetails product={product}>
           <Img
-            src={product?.images.length > 0 ? product?.images[0].url : img}
+            src={
+              product?.images.length > 0
+                ? product?.images[0].url
+                : product.equivalence?.image?.url
+                ? product.equivalence?.image?.url
+                : img
+            }
             alt="foto"
             width="100%"
             height="180px"

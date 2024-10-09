@@ -154,7 +154,13 @@ function Row(props: Props): React.ReactNode {
       ) : (
         <ProductDetails product={product}>
           <MyImg
-            src={product?.images.length > 0 ? product?.images[0].url : img}
+            src={
+              product?.images.length > 0
+                ? product?.images[0].url
+                : product.equivalence?.image?.url
+                ? product.equivalence?.image?.url
+                : img
+            }
             alt="foto"
             width="200px"
             height="97%"
