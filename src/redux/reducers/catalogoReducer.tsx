@@ -26,6 +26,7 @@ export interface IProduct {
   price: { price: number; endPrice: number };
   stock: { stock: number; minStock: number };
   images: any[];
+  equivalences: any;
 }
 
 export interface ISearchProductInitialState {
