@@ -100,6 +100,10 @@ function Carrito(_props: Props): React.ReactNode {
       toast.error("No hay productos en el carrito");
       return;
     }
+    if (cartState.loading) {
+      console.log("no se pued eenviar");
+      return;
+    }
     dispatch(SendOrderState(userState.data?.cartId || 0))
       .then((res: any) => {
         if (res?.error) {
