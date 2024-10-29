@@ -202,16 +202,20 @@ function Card(props: Props): React.ReactNode {
           style={{
             width: "60px",
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "end",
           }}
         >
-          <IconButton
-            icon="balance"
-            size="20px"
-            onClick={() => {
-              searchEquiv(product.id);
-            }}
-          />
+          {product?.equivalence ? (
+            <div style={{ marginRight: "3px" }}>
+              <IconButton
+                icon="balance"
+                size="20px"
+                onClick={() => {
+                  searchEquiv(product.id);
+                }}
+              />
+            </div>
+          ) : null}
           <RoleProtectedComponent accessList={[3, 4]}>
             <PricesProtected>
               <IconButton
