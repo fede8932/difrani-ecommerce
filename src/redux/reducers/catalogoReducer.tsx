@@ -14,7 +14,7 @@ interface ISearchProductState {
 interface ISearchEquiv {
   id: number;
   description: string;
-  images: any;
+  image: { id: number; url: string };
   products: IProduct[];
 }
 
@@ -101,8 +101,12 @@ const catalogoSlice = createSlice({
       .addCase(
         SearchEquivalencesState.fulfilled,
         (state, action: PayloadAction<ISearchEquiv>) => {
+          let newList = [...action.payload.products];
+          newList.map((p: IProduct) => {
+            p.equivalence = { image: { url: action.payload.image.url } };
+          });
           state.loading = false;
-          state.data = { totalPages: 1, list: action.payload.products };
+          state.data = { totalPages: 1, list: newList };
         }
       );
   },
