@@ -102,8 +102,10 @@ const catalogoSlice = createSlice({
         SearchEquivalencesState.fulfilled,
         (state, action: PayloadAction<ISearchEquiv>) => {
           let newList = [...action.payload.products];
+          // console.log(action.payload);
           newList.map((p: IProduct) => {
-            p.equivalence = { image: { url: action.payload.image.url } };
+            p.equivalence = { image: { url: null } };
+            p.equivalence.image.url = action.payload.image?.url;
           });
           state.loading = false;
           state.data = { totalPages: 1, list: newList };
