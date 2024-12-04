@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from "styled-components";
 import View from "../../components/atoms/view/View";
 import Card from "../../components/organisms/card/Card";
 import Row from "../../components/organisms/row/Row";
 import Icon from "../../components/atoms/icon/Icon";
 import { useEffect, useState } from "react";
-import { Loader, Pagination, Popup } from "semantic-ui-react";
+import { Checkbox, Loader, Pagination, Popup } from "semantic-ui-react";
 import Select from "../../components/atoms/select/Select";
 import { hexToRgba } from "../../aux/rgbaConverter";
 import { useDispatch, useSelector } from "react-redux";
@@ -84,6 +85,7 @@ const DivCont = styled(View)`
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Catalogo(_props: Props): React.ReactNode {
   const [grid, setGrid] = useState(true);
+  const [sale, setSale] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -108,6 +110,11 @@ function Catalogo(_props: Props): React.ReactNode {
   const searchInput: { value: string; page: number } = useSelector(
     (state: RootState) => state.searchInput
   );
+
+  const changeSale = (_e: any, d: any) => {
+    handlePageChange("", { activePage: 1 });
+    setSale(d.checked);
+  };
 
   const resetSearch = () => {
     window.location.reload();
@@ -182,6 +189,7 @@ function Catalogo(_props: Props): React.ReactNode {
         pMarc: brandsState.select?.name,
         vMarc: vehMarc != "" ? vehMarc : undefined,
         text: searchInput.value != "" ? searchInput.value : undefined,
+        sale: sale,
       })
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -190,6 +198,7 @@ function Catalogo(_props: Props): React.ReactNode {
     brandsState.select,
     vehMarc,
     searchInput,
+    sale,
     // rentabState.loading,
   ]);
   useEffect(() => {
@@ -340,6 +349,14 @@ function Catalogo(_props: Props): React.ReactNode {
                 </FilterView>
               </DivCont>
             </FilterView>
+            <div style={{ marginTop: "-10px" }}>
+              <Checkbox
+                label="Solo ofertas"
+                toggle
+                checked={sale}
+                onChange={changeSale}
+              />
+            </div>
           </RoleProtectedComponent>
         </FilterView>
         {catalogState.data.list?.map((product, i) =>

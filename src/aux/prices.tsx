@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IResAddItem } from "../redux/reducers/cartListReducer";
 import { IResGetDiscounts } from "../redux/reducers/discountsReducer";
 import { IRentaState, IResGetRentab } from "../redux/reducers/rentabReducer";
@@ -91,6 +92,25 @@ export const calcularItemSubTotal = (
   return roundToTwoDecimals(buyPrice * amount);
 };
 
+export const calcularItemSubTotalNumber = (
+  // Sin iva
+  price: number,
+  brandId: number,
+  blaseRent: number,
+  discounts: IResGetDiscounts[],
+  amount: number
+): number => {
+  const discount: IResGetDiscounts | undefined = discounts?.find(
+    (discount) => discount.brandId == brandId
+  );
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const buyPrice: any = discount
+    ? price * (1 + discount.porcentaje) * (1 + blaseRent)
+    : price * (1 + blaseRent);
+
+  return buyPrice * amount;
+};
+
 export const calcularSubTotal = (
   product: IProduct,
   discounts: IResGetDiscounts[],
@@ -118,7 +138,7 @@ export const calcularSubTotal = (
 export const calcularBuyTotal = (
   items: IResAddItem[],
   discounts: IResGetDiscounts[]
-): { subtotal: string; total: string } => {
+): { subtotal: string; total: string; subTotalNumber: number } => {
   let subtotal = 0;
   items.map((item) => {
     const discount: IResGetDiscounts | undefined = discounts.find(
@@ -133,6 +153,7 @@ export const calcularBuyTotal = (
   });
 
   return {
+    subTotalNumber: subtotal,
     subtotal: roundToTwoDecimals(subtotal),
     total: roundToTwoDecimals(subtotal * 1.21),
   };

@@ -18,6 +18,9 @@ import { calcularSellPrice } from "../../../aux/prices";
 import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
 import PricesProtected from "../../../protected/PricesProtected";
 import { breakpoints } from "../../../resolutions";
+import { Label } from "semantic-ui-react";
+import { Tooltip } from "antd";
+import TooltipContent from "../../molecules/TooltipContent/TooltipContent";
 
 interface Props {
   product: IProduct;
@@ -149,6 +152,20 @@ function Row(props: Props): React.ReactNode {
   };
   return (
     <RowContainer width="100%" height="135px">
+      {product.sales?.length > 0 || product.brand.sales?.length > 0 ? (
+        <Tooltip
+          placement="rightBottom"
+          title={<TooltipContent product={product} />}
+        >
+          <div
+            style={{ marginLeft: "10px", position: "absolute", width: "48px" }}
+          >
+            <Label color="red" ribbon>
+              Oferta
+            </Label>
+          </div>
+        </Tooltip>
+      ) : null}
       {loading ? (
         <Skeleton variant="rectangular" width="200px" height="97%" />
       ) : (

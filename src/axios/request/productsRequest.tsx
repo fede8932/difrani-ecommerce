@@ -8,6 +8,7 @@ interface ISearchCatalogo {
   text?: string;
   vMarc?: string;
   pMarc?: string;
+  sale?: boolean;
 }
 
 let cancelTokenSource: CancelTokenSource | null = null;
@@ -22,11 +23,12 @@ export const SearchCatalogo = async (sendData: ISearchCatalogo) => {
   cancelTokenSource = axios.CancelToken.source();
 
   try {
-    const { text, rows, page, vMarc, pMarc } = sendData;
+    const { text, rows, page, vMarc, pMarc, sale } = sendData;
     let url: string = `${apiUrl}/api/productos/search/prod?ecomm=true&page=${page}&cant=${rows}`;
     url = text ? `${url}&data=${text}` : url;
     url = vMarc ? `${url}&vmarc=${vMarc}` : url;
     url = pMarc ? `${url}&pmarc=${pMarc}` : url;
+    url = sale ? `${url}&sale=${sale}` : url;
 
     // Hacer la solicitud con el nuevo token de cancelación
     const { data } = await axiosInstances.api.get(url, {

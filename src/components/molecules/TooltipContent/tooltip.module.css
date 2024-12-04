@@ -1,0 +1,17 @@
+.tooltipContainer{
+    padding: 5px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.title{
+    margin-bottom: 10px;
+}
+.subtitle{
+    font-size: 13px;
+    font-weight: 600;
+}
+.subtitle span{
+    font-size: 13px;
+    font-weight: 500;
+}

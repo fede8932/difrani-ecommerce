@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-useless-catch */
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import * as productsRequest from "../../axios/request/productsRequest";
@@ -9,6 +10,7 @@ interface ISearchProductState {
   text?: string;
   vMarc?: string;
   pMarc?: string;
+  sale?: boolean;
 }
 
 interface ISearchEquiv {
@@ -18,13 +20,30 @@ interface ISearchEquiv {
   products: IProduct[];
 }
 
+export interface ISale {
+  id: number;
+  referencia: string;
+  brand?: { id: number; name: string; code: string };
+  product?: { id: number; article: string; code: string };
+  observations?: string;
+  minUnit: number;
+  percentage: number;
+}
+
 export interface IProduct {
   id: number;
   article: string;
   description: string;
-  brand: { id: number; name: string; code: string; rentabilidad: number };
+  brand: {
+    id: number;
+    name: string;
+    code: string;
+    rentabilidad: number;
+    sales: ISale[];
+  };
   price: { price: number; endPrice: number };
   stock: { stock: number; minStock: number };
+  sales: ISale[];
   images: any[];
   equivalence: any;
 }
@@ -101,6 +120,7 @@ const catalogoSlice = createSlice({
       .addCase(
         SearchEquivalencesState.fulfilled,
         (state, action: PayloadAction<ISearchEquiv>) => {
+          // eslint-disable-next-line prefer-const
           let newList = [...action.payload.products];
           // console.log(action.payload);
           newList.map((p: IProduct) => {

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from "styled-components";
 import View from "../../components/atoms/view/View";
 import styles from "./carrito.module.css";
@@ -15,6 +17,7 @@ import { AppDispatch, RootState } from "../../redux/store";
 import { hexToRgba } from "../../aux/rgbaConverter";
 import {
   DelCartItemsState,
+  discounts,
   GetAllCartItemsState,
   SendOrderState,
 } from "../../redux/reducers/cartListReducer";
@@ -23,6 +26,7 @@ import {
   calcularBuyPrice,
   calcularBuyTotal,
   calcularItemSubTotal,
+  roundToTwoDecimals,
 } from "../../aux/prices";
 import Button from "../../components/atoms/button/Button";
 import CartInput from "../../components/atoms/cartInput/CartInput";
@@ -133,6 +137,12 @@ function Carrito(_props: Props): React.ReactNode {
   };
 
   useEffect(() => {
+    dispatch(
+      discounts({ data: cartState.data, discount: discountsState.data })
+    );
+  }, [cartState.data, discountsState.data, dispatch]);
+
+  useEffect(() => {
     dispatch(GetAllCartItemsState(userState.data?.cartId || 0));
   }, [dispatch]);
 
@@ -174,7 +184,7 @@ function Carrito(_props: Props): React.ReactNode {
                   <TableCell>
                     $
                     {calcularBuyPrice(
-                      item.product?.price.price,
+                      item.product?.price?.price,
                       item.product?.brand.id,
                       item.product?.brand.rentabilidad,
                       discountsState.data
@@ -220,7 +230,22 @@ function Carrito(_props: Props): React.ReactNode {
           <span style={{ fontSize: "15px", fontWeight: "600" }}>
             Subtotal:{" "}
             <span>
-              ${calcularBuyTotal(cartState.data, discountsState.data).subtotal}
+              ${calcularBuyTotal(cartState.data, discountsState.data).subtotal} + iva
+            </span>
+          </span>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "flex-end",
+            borderBottom: "1px solid #373241",
+          }}
+        >
+          <span style={{ fontSize: "15px", fontWeight: "600" }}>
+            Descuentos:{" "}
+            <span>
+              ${roundToTwoDecimals(cartState.totalDiscounts)} + iva
             </span>
           </span>
         </div>
@@ -236,7 +261,7 @@ function Carrito(_props: Props): React.ReactNode {
           <span style={{ fontSize: "15px", fontWeight: "600" }}>
             Total:{" "}
             <span>
-              ${calcularBuyTotal(cartState.data, discountsState.data).total}
+              ${roundToTwoDecimals(calcularBuyTotal(cartState.data, discountsState.data).subTotalNumber - cartState.totalDiscounts)} + iva
             </span>
           </span>
         </div>

@@ -17,6 +17,9 @@ import { AddCartItemsState } from "../../../redux/reducers/cartListReducer";
 import { calcularSellPrice } from "../../../aux/prices";
 import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
 import PricesProtected from "../../../protected/PricesProtected";
+import { Label } from "semantic-ui-react";
+import { Tooltip } from "antd";
+import TooltipContent from "../../molecules/TooltipContent/TooltipContent";
 
 interface Props {
   product: IProduct;
@@ -25,7 +28,7 @@ interface Props {
 
 const CardContainer = styled(View)`
   padding: 8px 5px;
-  margin: 10px 6px;
+  margin: 12px 8px;
   width: 270px;
   height: 390px;
   border-radius: 10px;
@@ -137,6 +140,20 @@ function Card(props: Props): React.ReactNode {
 
   return (
     <CardContainer>
+      {product.sales?.length > 0 || product.brand.sales?.length > 0 ? (
+        <Tooltip
+          placement="rightBottom"
+          title={<TooltipContent product={product} />}
+        >
+          <div
+            style={{ marginLeft: "10px", position: "absolute", width: "48px" }}
+          >
+            <Label color="red" ribbon>
+              Oferta
+            </Label>
+          </div>
+        </Tooltip>
+      ) : null}
       {loading ? (
         <Skeleton variant="rectangular" width="100%" height="180px" />
       ) : (

@@ -1,6 +1,9 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-useless-catch */
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import * as cartRequest from "../../axios/request/cartRequest";
+import * as calcDiscounts from "../../axios/request/calcDiscounts";
 
 export interface ISendItemData {
   cartId: number;
@@ -25,8 +28,9 @@ export interface IResAddItem {
 export interface IProduct {
   id: number;
   article: string;
+  sales: any[];
   description: string;
-  brand: { id: number; name: string; code: string; rentabilidad: number };
+  brand: { id: number; name: string; code: string; rentabilidad: number, sales: any[] };
   price: { price: number; endPrice: number };
   stock: { stock: number; minStock: number };
   images: string[];
@@ -36,6 +40,7 @@ export interface ICartInitialState {
   loading: boolean;
   data: IResAddItem[];
   itemsAmount: number;
+  totalDiscounts: number;
   error: string;
 }
 
@@ -44,6 +49,7 @@ const initialState: ICartInitialState = {
   itemsAmount: 0,
   data: [],
   error: "",
+  totalDiscounts: 0,
 };
 
 export const GetAllCartItemsState = createAsyncThunk<
@@ -113,7 +119,12 @@ export const SendOrderState = createAsyncThunk<string, number>(
 const cartSlice = createSlice({
   name: "carrito",
   initialState: initialState,
-  reducers: {}, // Puedes definir acciones síncronas aquí si es necesario
+  reducers: {
+    discounts: (state, action) => {
+      const { data, discount } = action.payload;
+      state.totalDiscounts = calcDiscounts.calcDiscounts(data, discount);
+    }
+  }, // Puedes definir acciones síncronas aquí si es necesario
   extraReducers: (builder) => {
     builder
       .addCase(GetAllCartItemsState.pending, (state) => {
@@ -209,5 +220,7 @@ const cartSlice = createSlice({
       });
   },
 });
+
+export const { discounts } = cartSlice.actions;
 
 export default cartSlice.reducer;
