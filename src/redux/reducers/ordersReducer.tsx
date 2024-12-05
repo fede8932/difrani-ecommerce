@@ -11,6 +11,7 @@ export interface order {
   iva: number;
   total: number;
   payPending: boolean;
+  saldoOferta?: number;
 }
 export interface IGetOrders {
   page: number;

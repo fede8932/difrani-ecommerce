@@ -132,7 +132,9 @@ function Pedidos(_props: Props): React.ReactNode {
                 <TableRow key={i}>
                   <TableCell>{order.numero}</TableCell>
                   <TableCell>{formatDate(order.date)}</TableCell>
-                  <TableCell>${formatNumbers(order.total)}</TableCell>
+                  <TableCell>
+                    ${formatNumbers(order.subTotal - (order.saldoOferta ?? 0))}
+                  </TableCell>
                   <TableCell>
                     {order.status == "Sent"
                       ? "Enviado"
@@ -151,6 +153,7 @@ function Pedidos(_props: Props): React.ReactNode {
                         orderSubtotal={order.subTotal}
                         orderTotal={order.total}
                         orderNumber={order.numero}
+                        orderDiscount={order.saldoOferta}
                       />
                     </ModalComponent>
                   </TableCell>

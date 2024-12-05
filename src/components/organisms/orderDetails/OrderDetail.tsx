@@ -22,6 +22,7 @@ interface IProps {
   orderNumber: string;
   orderSubtotal: number;
   orderTotal: number;
+  orderDiscount?: number;
 }
 
 const PagContainer = styled(View)`
@@ -58,7 +59,7 @@ const Stext = styled.span`
 `;
 
 function OrderDetail(props: IProps): React.ReactNode {
-  const { orderId, orderNumber, orderSubtotal } = props;
+  const { orderId, orderNumber, orderSubtotal, orderDiscount } = props;
   const [page, setPage] = useState(1);
   const dispatch: AppDispatch = useDispatch();
   const { list, totalPages } = useSelector(
@@ -79,7 +80,9 @@ function OrderDetail(props: IProps): React.ReactNode {
         </Stext>
         <Stext>
           <span className="material-symbols-outlined">payments</span>
-          {` Total: $${formatNumbers(orderSubtotal)}`}
+          {` Total: $${formatNumbers(orderSubtotal - (orderDiscount ?? 0))}  ${
+            orderDiscount ? "(Oferta)" : ""
+          }`}
         </Stext>
         {/* <Stext>
           <span className="material-symbols-outlined">assured_workload</span>
