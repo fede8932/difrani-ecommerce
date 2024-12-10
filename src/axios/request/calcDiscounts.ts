@@ -28,7 +28,7 @@ export function calcDiscounts(
   let totalDiscount = 0;
 
   const listProductControl: IResAddItem[] = listBrandControl?.filter((item) => {
-    if (item.product.brand.sales?.length > 0) {
+    if (item.product?.brand?.sales?.length > 0) {
       const index = brandDiscounts.findIndex(
         (bd) => bd.brandId == item.product.brand.id
       );
@@ -67,7 +67,7 @@ export function calcDiscounts(
 //   console.log(brandDiscounts)
 
   listProductControl.map((item) => {
-    if (item.product.sales?.length > 0) {
+    if (item.product?.sales?.length > 0) {
       const index = productDiscounts.findIndex(
         (pd) => pd.productId == item.product.id
       );
