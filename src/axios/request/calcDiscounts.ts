@@ -23,12 +23,16 @@ export function calcDiscounts(
 ): number {
   let brandDiscounts: IBrandDiscount[] = [];
   let productDiscounts: IProductDiscount[] = [];
-  const listBrandControl: IResAddItem[] = [...data];
+  let listBrandControl: IResAddItem[] = [...data];
+
+  //filtro las ofertas activas
 
   let totalDiscount = 0;
 
   const listProductControl: IResAddItem[] = listBrandControl?.filter((item) => {
     if (item.product?.brand?.sales?.length > 0) {
+      if (!item.product?.brand?.sales.some((s) => s.status === true))
+        return true;
       const index = brandDiscounts.findIndex(
         (bd) => bd.brandId == item.product.brand.id
       );
@@ -36,9 +40,9 @@ export function calcDiscounts(
         brandDiscounts.push({
           brandId: item.product.brand.id,
           totalItems: item.amount,
-          sales: [...item.product.brand.sales].sort(
-            (a, b) => a.prioridad - b.prioridad
-          ),
+          sales: [...item.product.brand.sales]
+            .filter((s) => s.status)
+            .sort((a, b) => a.prioridad - b.prioridad),
           gravado: calcularItemSubTotalNumber(
             item.product?.price.price,
             item.product?.brand.id,
@@ -64,10 +68,12 @@ export function calcDiscounts(
     return true;
   });
 
-//   console.log(brandDiscounts)
-
+  //   console.log(brandDiscounts)
   listProductControl.map((item) => {
-    if (item.product?.sales?.length > 0) {
+    if (
+      item.product?.sales?.length > 0 &&
+      item.product.sales?.some((s) => s.status === true)
+    ) {
       const index = productDiscounts.findIndex(
         (pd) => pd.productId == item.product.id
       );
@@ -75,9 +81,9 @@ export function calcDiscounts(
         productDiscounts.push({
           productId: item.product.id,
           totalItems: item.amount,
-          sales: [...item.product.sales].sort(
-            (a, b) => a.prioridad - b.prioridad
-          ),
+          sales: [...item.product.sales]
+            .filter((s) => s.status)
+            .sort((a, b) => a.prioridad - b.prioridad),
           gravado: calcularItemSubTotalNumber(
             item.product?.price.price,
             item.product?.brand.id,
@@ -110,7 +116,6 @@ export function calcDiscounts(
       }
       lap++;
     }
-
   });
 
   productDiscounts.map((pd) => {
