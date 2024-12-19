@@ -26,6 +26,7 @@ import {
   calcularBuyPrice,
   calcularBuyTotal,
   calcularItemSubTotal,
+  formatNumberToString,
   roundToTwoDecimals,
 } from "../../aux/prices";
 import Button from "../../components/atoms/button/Button";
@@ -245,7 +246,7 @@ function Carrito(_props: Props): React.ReactNode {
           <span style={{ fontSize: "15px", fontWeight: "600" }}>
             Descuentos:{" "}
             <span>
-              ${roundToTwoDecimals(cartState.totalDiscounts)} + iva
+              ${formatNumberToString(cartState.totalDiscounts)} + iva
             </span>
           </span>
         </div>
@@ -261,7 +262,7 @@ function Carrito(_props: Props): React.ReactNode {
           <span style={{ fontSize: "15px", fontWeight: "600" }}>
             Total:{" "}
             <span>
-              ${roundToTwoDecimals(calcularBuyTotal(cartState.data, discountsState.data).subTotalNumber - cartState.totalDiscounts)} + iva
+              ${formatNumberToString(calcularBuyTotal(cartState.data, discountsState.data).subTotalNumber - cartState.totalDiscounts)} + iva
             </span>
           </span>
         </div>

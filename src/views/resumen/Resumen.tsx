@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import styled from "styled-components";
 import View from "../../components/atoms/view/View";
 import {
@@ -18,7 +21,7 @@ import {
   GetCurrentAcountState,
   IAcountState,
 } from "../../redux/reducers/acountReducer";
-import { roundToTwoDecimals } from "../../aux/prices";
+import { formatNumberToString, roundToTwoDecimals } from "../../aux/prices";
 import { breakpoints } from "../../resolutions";
 
 interface Props {}
@@ -162,8 +165,8 @@ function Resumen(_props: Props): React.ReactNode {
             Total:{" "}
             <span>
               $
-              {roundToTwoDecimals(
-                acountStatus.data?.client?.currentAcount.resume!
+              {formatNumberToString(
+                acountStatus.data?.client?.currentAcount.resume
               )}
             </span>
           </span>
@@ -211,7 +214,7 @@ function Resumen(_props: Props): React.ReactNode {
                     )}
                   </TableCell>
                   <TableCell>{mov.payDetail?.comprobanteVendedor}</TableCell>
-                  <TableCell>${roundToTwoDecimals(mov.total)}</TableCell>
+                  <TableCell>${formatNumberToString(mov.total)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

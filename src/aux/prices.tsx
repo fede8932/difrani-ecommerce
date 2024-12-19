@@ -29,7 +29,7 @@ export const calcularPrice = (
       (1 + product.brand.rentabilidad)
     : product.price[type] * (1 + product.brand.rentabilidad);
 
-  return roundToTwoDecimals(price);
+  return formatNumberToString(price);
 };
 
 export const calcularSellPrice = (
@@ -52,7 +52,7 @@ export const calcularSellPrice = (
     : product.price.price * (1 + product.brand.rentabilidad);
   const sellPrice = price * (1 + rentab.surchargePercentage);
 
-  return roundToTwoDecimals(sellPrice);
+  return formatNumberToString(sellPrice);
 };
 
 export const calcularBuyPrice = (
@@ -70,8 +70,20 @@ export const calcularBuyPrice = (
     ? price * (1 + discount.porcentaje) * (1 + blaseRent)
     : price * (1 + blaseRent);
 
-  return roundToTwoDecimals(buyPrice);
+  return formatNumberToString(buyPrice);
 };
+
+export function formatNumberToString(num?: number): string {
+  if (!num) return "";
+  // Convertimos el número a string para poder manipularlo
+  const [integerPart, decimalPart] = num.toFixed(2).split(".");
+
+  // Formateamos la parte entera separando por puntos cada tres dígitos
+  const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+  // Unimos la parte entera formateada con la parte decimal
+  return `${formattedInteger},${decimalPart}`;
+}
 
 export const calcularItemSubTotal = (
   // Sin iva
@@ -89,7 +101,7 @@ export const calcularItemSubTotal = (
     ? price * (1 + discount.porcentaje) * (1 + blaseRent)
     : price * (1 + blaseRent);
 
-  return roundToTwoDecimals(buyPrice * amount);
+  return formatNumberToString(buyPrice * amount);
 };
 
 export const calcularItemSubTotalNumber = (
@@ -154,7 +166,7 @@ export const calcularBuyTotal = (
 
   return {
     subTotalNumber: subtotal,
-    subtotal: roundToTwoDecimals(subtotal),
-    total: roundToTwoDecimals(subtotal * 1.21),
+    subtotal: formatNumberToString(subtotal),
+    total: formatNumberToString(subtotal * 1.21),
   };
 };
