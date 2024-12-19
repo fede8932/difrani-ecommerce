@@ -21,7 +21,7 @@ import {
   GetCurrentAcountState,
   IAcountState,
 } from "../../redux/reducers/acountReducer";
-import { formatNumberToString, roundToTwoDecimals } from "../../aux/prices";
+import { formatNumberToString } from "../../aux/prices";
 import { breakpoints } from "../../resolutions";
 
 interface Props {}

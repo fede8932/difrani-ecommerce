@@ -27,7 +27,6 @@ import {
   calcularBuyTotal,
   calcularItemSubTotal,
   formatNumberToString,
-  roundToTwoDecimals,
 } from "../../aux/prices";
 import Button from "../../components/atoms/button/Button";
 import CartInput from "../../components/atoms/cartInput/CartInput";
@@ -231,7 +230,8 @@ function Carrito(_props: Props): React.ReactNode {
           <span style={{ fontSize: "15px", fontWeight: "600" }}>
             Subtotal:{" "}
             <span>
-              ${calcularBuyTotal(cartState.data, discountsState.data).subtotal} + iva
+              ${calcularBuyTotal(cartState.data, discountsState.data).subtotal}{" "}
+              + iva
             </span>
           </span>
         </div>
@@ -245,9 +245,7 @@ function Carrito(_props: Props): React.ReactNode {
         >
           <span style={{ fontSize: "15px", fontWeight: "600" }}>
             Descuentos:{" "}
-            <span>
-              ${formatNumberToString(cartState.totalDiscounts)} + iva
-            </span>
+            <span>${formatNumberToString(cartState.totalDiscounts)} + iva</span>
           </span>
         </div>
         <div
@@ -262,7 +260,12 @@ function Carrito(_props: Props): React.ReactNode {
           <span style={{ fontSize: "15px", fontWeight: "600" }}>
             Total:{" "}
             <span>
-              ${formatNumberToString(calcularBuyTotal(cartState.data, discountsState.data).subTotalNumber - cartState.totalDiscounts)} + iva
+              $
+              {formatNumberToString(
+                calcularBuyTotal(cartState.data, discountsState.data)
+                  .subTotalNumber - cartState.totalDiscounts
+              )}{" "}
+              + iva
             </span>
           </span>
         </div>
