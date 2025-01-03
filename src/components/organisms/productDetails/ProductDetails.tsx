@@ -7,7 +7,7 @@ import Img from "../../atoms/img/Img";
 import { hexToRgba } from "../../../aux/rgbaConverter";
 import Button from "../../atoms/button/Button";
 import AmountInput from "../../molecules/amountInput/AmountInput";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store";
 import {
@@ -21,6 +21,7 @@ import toast from "react-hot-toast";
 import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
 import PricesProtected from "../../../protected/PricesProtected";
 import { breakpoints } from "../../../resolutions";
+import Swal from "sweetalert2";
 
 interface Props {
   children: React.ReactNode;
@@ -67,6 +68,14 @@ function ProductDetails(props: Props): React.ReactNode {
   const { children, product } = props;
 
   const userState = useSelector((state: RootState) => state.user);
+  const cartState = useSelector((state: RootState) => state.cartList);
+
+  const amountProdInCart = useMemo(
+    () => cartState.data.find((item) => item.productId == product.id),
+    [cartState.data, product.id]
+  );
+
+  // console.log(amountProdInCart)
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -99,6 +108,27 @@ function ProductDetails(props: Props): React.ReactNode {
       number--;
       setValue(number.toString());
     }
+  };
+
+  const confirmAddCartItem = () => {
+    if (amountProdInCart) {
+      Swal.fire({
+        title: "Deseas agregar mas unidades?",
+        text: "El artículo ya se encuentra en el carrito",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#4fe187",
+        cancelButtonColor: "grey",
+        confirmButtonText: "Confirmar",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          addCartItem();
+        }
+      });
+      return;
+    }
+    addCartItem();
   };
 
   const addCartItem = () => {
@@ -195,7 +225,15 @@ function ProductDetails(props: Props): React.ReactNode {
           </RoleProtectedComponent>
           <RoleProtectedComponent accessList={[4]}>
             <TextTitleDetail>
-              Cantidad:
+              <span>
+                Cantidad{" "}
+                <span style={{ color: "grey", fontSize: "10px" }}>
+                  {amountProdInCart
+                    ? `(${amountProdInCart.amount} en carrito)`
+                    : ""}
+                </span>
+                :
+              </span>
               <TextDetail>
                 <AmountInput
                   add={handleAdd}
@@ -228,7 +266,7 @@ function ProductDetails(props: Props): React.ReactNode {
               text="Agregar al carrito"
               color="primary"
               height="30px"
-              onClick={addCartItem}
+              onClick={confirmAddCartItem}
             />
           </RoleProtectedComponent>
         </DetailsInfo>
