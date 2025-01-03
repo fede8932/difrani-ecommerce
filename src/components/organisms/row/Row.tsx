@@ -21,6 +21,7 @@ import { breakpoints } from "../../../resolutions";
 import { Label } from "semantic-ui-react";
 import { Tooltip } from "antd";
 import TooltipContent from "../../molecules/TooltipContent/TooltipContent";
+import Swal from "sweetalert2";
 
 interface Props {
   product: IProduct;
@@ -119,6 +120,7 @@ function Row(props: Props): React.ReactNode {
   const { product, loading } = props;
 
   const userState = useSelector((state: RootState) => state.user);
+  const cartState = useSelector((state: RootState) => state.cartList);
 
   const dispatch: AppDispatch = useDispatch();
   const discountsState = useSelector((state: RootState) => state.discounts);
@@ -126,6 +128,27 @@ function Row(props: Props): React.ReactNode {
 
   const searchEquiv = (id: number) => {
     dispatch(SearchEquivalencesState(id));
+  };
+
+  const confirmAddCartItem = () => {
+    if (cartState.data.some((element) => element.productId == product.id)) {
+      Swal.fire({
+        title: "Deseas agregar mas unidades?",
+        text: "El artículo ya se encuentra en el carrito",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#4fe187",
+        cancelButtonColor: "grey",
+        confirmButtonText: "Confirmar",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          addCartItem();
+        }
+      });
+      return;
+    }
+    addCartItem();
   };
 
   const addCartItem = () => {
@@ -252,7 +275,7 @@ function Row(props: Props): React.ReactNode {
                 <IconButton
                   icon="shopping_cart"
                   size="20px"
-                  onClick={addCartItem}
+                  onClick={confirmAddCartItem}
                 />
               </PricesProtected>
             </RoleProtectedComponent>
