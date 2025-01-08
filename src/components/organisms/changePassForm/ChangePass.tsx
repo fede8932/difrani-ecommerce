@@ -10,7 +10,10 @@ import { useDispatch } from "react-redux";
 import { changePassOmit } from "../../../redux/reducers/userReducer";
 
 function ChangePass() {
-  const dispatch: AppDispatch = useDispatch()
+  const [passView, setPassView] = useState(false);
+  const [newPassView, setNewPassView] = useState(false);
+  const [newPasswView, setNewPasswView] = useState(false);
+  const dispatch: AppDispatch = useDispatch();
   const [formInput, setFormInput] = useState({
     pass: "",
     newPass: "",
@@ -53,17 +56,24 @@ function ChangePass() {
   };
 
   const omitChange = () => {
-    dispatch(changePassOmit())
-  }
+    dispatch(changePassOmit());
+  };
 
   return (
     <div>
       <div className={styles.inputCont}>
         <label>Contraseña actual</label>
+        <span
+          className={`material-symbols-outlined ${styles.icon}`}
+          onClick={() => setPassView(!passView)}
+        >
+          {!passView ? "visibility" : "visibility_off"}
+        </span>
         <Input
+          icon
           width="65%"
           height="29px"
-          type="password"
+          type={!passView ? "password" : "text"}
           placeholder="Ingresá tu contraseña actual"
           value={formInput.pass}
           onChange={(v) => {
@@ -78,10 +88,17 @@ function ChangePass() {
           Nueva contraseña{" "}
           <span className={styles.req}>* Mínimo 8 dígitos</span>
         </label>
+        <span
+          className={`material-symbols-outlined ${styles.icon}`}
+          onClick={() => setNewPassView(!newPassView)}
+        >
+          {!newPassView ? "visibility" : "visibility_off"}
+        </span>
         <Input
+          icon
+          type={!newPassView ? "password" : "text"}
           width="65%"
           height="29px"
-          type="password"
           placeholder="Ingresá tu nueva contraseña"
           value={formInput.newPass}
           onChange={(v) => {
@@ -96,10 +113,17 @@ function ChangePass() {
           Nueva contraseña{" "}
           <span className={styles.req}>* Debe ser igual al campo anterior</span>
         </label>
+        <span
+          className={`material-symbols-outlined ${styles.icon}`}
+          onClick={() => setNewPasswView(!newPasswView)}
+        >
+          {!newPasswView ? "visibility" : "visibility_off"}
+        </span>
         <Input
+          icon
+          type={!newPasswView ? "password" : "text"}
           width="65%"
           height="29px"
-          type="password"
           placeholder="Volvé a ingresar tu nueva contraseña"
           value={formInput.newPassw}
           onChange={(v) => {
@@ -111,11 +135,7 @@ function ChangePass() {
       </div>
       <Divider />
       <div className={styles.buttonContainer}>
-        <Button
-          color="yellow"
-          onClick={omitChange}
-          className={styles.but}
-        >
+        <Button color="yellow" onClick={omitChange} className={styles.but}>
           Omitir
         </Button>
         <Button
