@@ -10,7 +10,6 @@
 }
 .modalContainer {
   width: 650px;
-  height: 430px;
   z-index: 310;
   background-color: #efefef;
   border-radius: 3px;
