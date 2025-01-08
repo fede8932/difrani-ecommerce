@@ -1,0 +1,16 @@
+.inputCont {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+.req {
+  font-size: 9px;
+}
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+.but{
+  width: 130px;
+}

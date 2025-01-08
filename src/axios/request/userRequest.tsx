@@ -28,8 +28,28 @@ export const Me = async () => {
 export const LogOut = async () => {
   // eslint-disable-next-line no-useless-catch
   try {
-    let url: string = `${apiUrl}/api/users/login/logout/shop`;
+    const url: string = `${apiUrl}/api/users/login/logout/shop`;
     const { data } = await axiosInstances.api.get(url);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const ChangePassReq = async (sendData: {
+  pass: string;
+  newPass: string;
+}) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    const url: string = `${apiUrl}/api/users/login/update/pass`;
+    const { data } = await axiosInstances.api.post(
+      url,
+      { password: sendData.pass, newPassword: sendData.newPass },
+      {
+        withCredentials: true,
+      }
+    );
     return data;
   } catch (err) {
     throw err;

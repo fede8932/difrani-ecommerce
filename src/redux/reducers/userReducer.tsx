@@ -15,6 +15,7 @@ export interface IDataUser {
   name: string;
   lastName: string;
   razonSocial: string;
+  firstEntry: boolean;
 }
 
 export interface IUserState {
