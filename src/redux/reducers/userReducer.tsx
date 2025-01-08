@@ -68,6 +68,11 @@ const userSlice = createSlice({
       user!.cartId = action.payload.cartId;
       state.data = user;
     },
+    changePassOmit: (state) => {
+      if (state.data) {
+        state.data.firstEntry = false;
+      }
+    },
   }, // Puedes definir acciones síncronas aquí si es necesario
   extraReducers: (builder) => {
     builder
@@ -106,6 +111,6 @@ const userSlice = createSlice({
       });
   },
 });
-export const { setClientId } = userSlice.actions;
+export const { setClientId, changePassOmit } = userSlice.actions;
 
 export default userSlice.reducer;

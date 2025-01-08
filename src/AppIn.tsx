@@ -22,8 +22,8 @@ import RoleProtectedView from "./protected/RoleProtectedView";
 import RoleProtectedComponent from "./protected/RoleProtectedComponent";
 import { breakpoints } from "./resolutions";
 import ClientFilter from "./components/molecules/clientFilter/ClientFilter";
-// import BloquedModal from "./components/organisms/bloquedModal/BloquedModal";
-// import ChangePass from "./components/organisms/changePassForm/ChangePass";
+import BloquedModal from "./components/organisms/bloquedModal/BloquedModal";
+import ChangePass from "./components/organisms/changePassForm/ChangePass";
 
 const AppContainer = styled(View)`
   justify-content: space-between;
@@ -77,9 +77,11 @@ function AppIn() {
   }, [userState.data]);
   return (
     <AppContainer>
-      {/* <BloquedModal title="Cambiar contraseña">
-        <ChangePass />
-      </BloquedModal> */}
+      {
+        <BloquedModal title="Cambiar contraseña">
+          <ChangePass />
+        </BloquedModal>
+      }
       <Navbar />
       <View position="relative" margin="75px 0px">
         <RoleProtectedComponent accessList={[3]}>

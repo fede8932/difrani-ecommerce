@@ -5,8 +5,12 @@ import styles from "./changePass.module.css";
 import { useMemo, useState } from "react";
 import { ChangePassReq } from "../../../axios/request/userRequest";
 import toast from "react-hot-toast";
+import { AppDispatch } from "../../../redux/store";
+import { useDispatch } from "react-redux";
+import { changePassOmit } from "../../../redux/reducers/userReducer";
 
 function ChangePass() {
+  const dispatch: AppDispatch = useDispatch()
   const [formInput, setFormInput] = useState({
     pass: "",
     newPass: "",
@@ -47,6 +51,10 @@ function ChangePass() {
       })
       .finally(() => setLoading(false));
   };
+
+  const omitChange = () => {
+    dispatch(changePassOmit())
+  }
 
   return (
     <div>
@@ -103,6 +111,13 @@ function ChangePass() {
       </div>
       <Divider />
       <div className={styles.buttonContainer}>
+        <Button
+          color="yellow"
+          onClick={omitChange}
+          className={styles.but}
+        >
+          Omitir
+        </Button>
         <Button
           disabled={disabled}
           color="green"
