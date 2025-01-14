@@ -2,6 +2,7 @@ import styles from "./bloquedModal.module.css";
 import { Divider } from "semantic-ui-react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
+import { useEffect } from "react";
 
 interface Iprops {
   children: React.ReactNode;
@@ -14,6 +15,19 @@ function BloquedModal(props: Iprops) {
   const dataUser = useSelector((state: RootState) => state.user.data);
 
   // console.log(dataUser);
+
+  useEffect(() => {
+    if (dataUser?.firstEntry) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      // Restaurar scroll al desmontar el componente
+      document.body.style.overflow = "auto";
+    };
+  }, [dataUser]);
 
   return (
     <>
