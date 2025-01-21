@@ -235,7 +235,7 @@ function Carrito(_props: Props): React.ReactNode {
         <div
           style={{
             display: "flex",
-            width: "100%",
+            width: "95%",
             justifyContent: "flex-end",
             borderBottom: "1px solid #373241",
           }}
@@ -251,7 +251,7 @@ function Carrito(_props: Props): React.ReactNode {
         <div
           style={{
             display: "flex",
-            width: "100%",
+            width: "95%",
             justifyContent: "flex-end",
             borderBottom: "1px solid #373241",
           }}
@@ -264,7 +264,7 @@ function Carrito(_props: Props): React.ReactNode {
         <div
           style={{
             display: "flex",
-            width: "100%",
+            width: "95%",
             justifyContent: "flex-end",
             borderBottom: "2px solid #373241",
             marginTop: "10px",
