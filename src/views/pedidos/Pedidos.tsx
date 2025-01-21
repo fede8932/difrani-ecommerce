@@ -125,10 +125,10 @@ function Pedidos(_props: Props): React.ReactNode {
           <Table selectable unstackable>
             <TableHeader>
               <TableRow>
-                <TableHeaderCell>Número de orden</TableHeaderCell>
-                <TableHeaderCell>Fecha de pedido</TableHeaderCell>
-                <TableHeaderCell>Total de la compra</TableHeaderCell>
-                <TableHeaderCell>Estado de la orden</TableHeaderCell>
+                <TableHeaderCell>{window.innerWidth > breakpoints.mobileSmall ? "Número de orden" : "Orden"}</TableHeaderCell>
+                <TableHeaderCell>{window.innerWidth > breakpoints.mobileSmall ? "Fecha de pedido" : "Fecha"}</TableHeaderCell>
+                <TableHeaderCell>{window.innerWidth > breakpoints.mobileSmall ? "Total de la compra" : "Total"}</TableHeaderCell>
+                <TableHeaderCell>{window.innerWidth > breakpoints.mobileSmall ? "Estado de la orden" : "Estado"}</TableHeaderCell>
                 <TableHeaderCell>Acciones</TableHeaderCell>
               </TableRow>
             </TableHeader>
