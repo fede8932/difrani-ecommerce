@@ -174,7 +174,7 @@ function Resumen(_props: Props): React.ReactNode {
         </TagInfo>
       </CurrentAcountInfoContainer>
       <ContactDataContainer>
-        <div style={{ marginBottom: "12px", marginLeft: "20px"}}>
+        <div style={{ marginBottom: "12px", marginLeft: "20px" }}>
           <Checkbox
             toggle
             label="Pendiente"
@@ -188,7 +188,11 @@ function Resumen(_props: Props): React.ReactNode {
               <TableRow>
                 <TableHeaderCell>Fecha</TableHeaderCell>
                 <TableHeaderCell>Concepto</TableHeaderCell>
-                <TableHeaderCell>Comprobante Vdor</TableHeaderCell>
+                <TableHeaderCell>
+                  {window.innerWidth > breakpoints.mobileSmall
+                    ? "Comprobante Vdor"
+                    : "Comprobante"}
+                </TableHeaderCell>
                 <TableHeaderCell>Total</TableHeaderCell>
               </TableRow>
             </TableHeader>
