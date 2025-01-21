@@ -11,6 +11,7 @@ import {
   TableHeaderCell,
   TableRow,
 } from "semantic-ui-react";
+import styles from "./pedidos.module.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -70,7 +71,7 @@ const ContactDataContainer = styled(View)`
     height: auto;
   }
 
-  @media (max-width: ${breakpoints.mobileLarge -1 }px) {
+  @media (max-width: ${breakpoints.mobileLarge - 1}px) {
     width: 100%;
   }
 `;
@@ -121,21 +122,48 @@ function Pedidos(_props: Props): React.ReactNode {
         compras. ¡Revisa tus pedidos y mantente informado!
       </DescriptionStyled>
       <ContactDataContainer>
-        <div style={{overflowX: "auto"}}>
+        <div style={{ overflowX: "auto" }}>
           <Table selectable unstackable>
             <TableHeader>
               <TableRow>
-                <TableHeaderCell>{window.innerWidth > breakpoints.mobileSmall ? "Número de orden" : "Orden"}</TableHeaderCell>
-                <TableHeaderCell>{window.innerWidth > breakpoints.mobileSmall ? "Fecha de pedido" : "Fecha"}</TableHeaderCell>
-                <TableHeaderCell>{window.innerWidth > breakpoints.mobileSmall ? "Total de la compra" : "Total"}</TableHeaderCell>
-                <TableHeaderCell>{window.innerWidth > breakpoints.mobileSmall ? "Estado de la orden" : "Estado"}</TableHeaderCell>
-                <TableHeaderCell>Acciones</TableHeaderCell>
+                <TableHeaderCell>
+                  {window.innerWidth > breakpoints.mobileSmall
+                    ? "Número de orden"
+                    : "Orden"}
+                </TableHeaderCell>
+                <TableHeaderCell>
+                  {window.innerWidth > breakpoints.mobileSmall
+                    ? "Fecha de pedido"
+                    : "Fecha"}
+                </TableHeaderCell>
+                <TableHeaderCell>
+                  {window.innerWidth > breakpoints.mobileSmall
+                    ? "Total de la compra"
+                    : "Total"}
+                </TableHeaderCell>
+                <TableHeaderCell>
+                  {window.innerWidth > breakpoints.mobileSmall
+                    ? "Estado de la orden"
+                    : "Estado"}
+                </TableHeaderCell>
+                <TableHeaderCell>
+                  {window.innerWidth > breakpoints.mobileSmall
+                    ? "Acciones"
+                    : "Acc"}
+                </TableHeaderCell>
               </TableRow>
             </TableHeader>
 
             <TableBody>
               {orderStatus.data.list.map((order, i) => (
-                <TableRow key={i}>
+                <TableRow
+                  key={i}
+                  className={
+                    window.innerWidth > breakpoints.mobileSmall
+                      ? ""
+                      : `${styles.rowTable}`
+                  }
+                >
                   <TableCell>{order.numero}</TableCell>
                   <TableCell>{formatDate(order.date)}</TableCell>
                   <TableCell>
