@@ -62,6 +62,10 @@ const DescriptionStyled = styled.p`
   width: 600px;
   color: ${({ theme }) => theme.colors.text};
   padding: 0px 3px;
+
+  @media (max-width: ${breakpoints.mobileSmall}px) {
+    display: none;
+  }
 `;
 
 const ContactDataContainer = styled(View)`
@@ -174,7 +178,9 @@ function Carrito(_props: Props): React.ReactNode {
                 <TableHeaderCell>Marca</TableHeaderCell>
                 <TableHeaderCell>Precio s/IVA</TableHeaderCell>
                 <TableHeaderCell>Cantidad</TableHeaderCell>
-                <TableHeaderCell>Subtotal</TableHeaderCell>
+                {window.innerWidth > breakpoints.mobileSmall ? (
+                  <TableHeaderCell>Subtotal</TableHeaderCell>
+                ) : null}
                 <TableHeaderCell>Acciones</TableHeaderCell>
               </TableRow>
             </TableHeader>
@@ -198,16 +204,18 @@ function Carrito(_props: Props): React.ReactNode {
                   <TableCell>
                     <CartInput initialValue={item.amount} itemId={item.id} />
                   </TableCell>
-                  <TableCell>
-                    $
-                    {calcularItemSubTotal(
-                      item.product?.price.price,
-                      item.product?.brand.id,
-                      item.product?.brand.rentabilidad,
-                      discountsState.data,
-                      item.amount
-                    )}
-                  </TableCell>
+                  {window.innerWidth > breakpoints.mobileSmall ? (
+                    <TableCell>
+                      $
+                      {calcularItemSubTotal(
+                        item.product?.price.price,
+                        item.product?.brand.id,
+                        item.product?.brand.rentabilidad,
+                        discountsState.data,
+                        item.amount
+                      )}
+                    </TableCell>
+                  ) : null}
                   <TableCell>
                     <Icon
                       active
