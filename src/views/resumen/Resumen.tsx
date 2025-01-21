@@ -67,6 +67,7 @@ const ContactDataContainer = styled(View)`
 
   @media (max-width: ${breakpoints.mobileLarge}px) {
     height: auto;
+    width: 99%;
   }
 `;
 
@@ -173,7 +174,7 @@ function Resumen(_props: Props): React.ReactNode {
         </TagInfo>
       </CurrentAcountInfoContainer>
       <ContactDataContainer>
-        <div style={{ marginBottom: "12px" }}>
+        <div style={{ marginBottom: "12px", marginLeft: "20px"}}>
           <Checkbox
             toggle
             label="Pendiente"
@@ -182,7 +183,7 @@ function Resumen(_props: Props): React.ReactNode {
           />
         </div>
         <div style={{ height: "490px" }}>
-          <Table singleLine selectable>
+          <Table unstackable selectable>
             <TableHeader>
               <TableRow>
                 <TableHeaderCell>Fecha</TableHeaderCell>
