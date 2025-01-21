@@ -237,7 +237,7 @@ function Carrito(_props: Props): React.ReactNode {
             display: "flex",
             width: "95%",
             justifyContent: "flex-end",
-            borderBottom: "1px solid #373241",
+            borderBottom: "1px solid #d8d8d8",
           }}
         >
           <span style={{ fontSize: "15px", fontWeight: "600" }}>
@@ -253,7 +253,7 @@ function Carrito(_props: Props): React.ReactNode {
             display: "flex",
             width: "95%",
             justifyContent: "flex-end",
-            borderBottom: "1px solid #373241",
+            borderBottom: "1px solid #d8d8d8",
           }}
         >
           <span style={{ fontSize: "15px", fontWeight: "600" }}>
@@ -266,7 +266,7 @@ function Carrito(_props: Props): React.ReactNode {
             display: "flex",
             width: "95%",
             justifyContent: "flex-end",
-            borderBottom: "2px solid #373241",
+            borderBottom: "2px solid #d8d8d8",
             marginTop: "10px",
           }}
         >

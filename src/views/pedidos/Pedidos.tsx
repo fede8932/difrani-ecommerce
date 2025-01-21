@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from "styled-components";
 import View from "../../components/atoms/view/View";
 import {
@@ -67,6 +69,10 @@ const ContactDataContainer = styled(View)`
   @media (max-width: ${breakpoints.mobileLarge}px) {
     height: auto;
   }
+
+  @media (max-width: ${breakpoints.mobileLarge -1 }px) {
+    width: 100%;
+  }
 `;
 
 const PagContainer = styled(View)`
@@ -115,8 +121,8 @@ function Pedidos(_props: Props): React.ReactNode {
         compras. ¡Revisa tus pedidos y mantente informado!
       </DescriptionStyled>
       <ContactDataContainer>
-        <div>
-          <Table singleLine selectable padded>
+        <div style={{overflowX: "auto"}}>
+          <Table selectable unstackable>
             <TableHeader>
               <TableRow>
                 <TableHeaderCell>Número de orden</TableHeaderCell>
