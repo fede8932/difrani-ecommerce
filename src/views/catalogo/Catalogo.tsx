@@ -81,6 +81,11 @@ const DivCont = styled(View)`
   flex-direction: row;
   align-items: flex-start;
 `;
+const DivStockCont = styled(View)`
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+`;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Catalogo(_props: Props): React.ReactNode {
@@ -130,6 +135,7 @@ function Catalogo(_props: Props): React.ReactNode {
 
   const downloadList = async () => {
     setListDownloadPending(true);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
     const response = await getAllProducts(userState.data?.clientId!);
 
     // Crea un objeto URL a partir del objeto Blob
@@ -334,10 +340,10 @@ function Catalogo(_props: Props): React.ReactNode {
           </RoleProtectedComponent> */}
           <RoleProtectedComponent accessList={[4]}>
             <FilterView top="20px">
-              <DivCont>
+              <DivStockCont>
                 <FilterView flexDirection="row">
                   <MuestraColor color="primary" opac={0.5}></MuestraColor>
-                  <span style={{ margin: "0px 2px" }}>Stock disponible</span>
+                  <span style={{ margin: "0px 2px" }}>Es stock</span>
                 </FilterView>
                 <FilterView flexDirection="row">
                   <MuestraColor color="warning" opac={0.5}></MuestraColor>
@@ -345,9 +351,9 @@ function Catalogo(_props: Props): React.ReactNode {
                 </FilterView>
                 <FilterView flexDirection="row">
                   <MuestraColor color="alert" opac={0.5}></MuestraColor>
-                  <span style={{ margin: "0px 2px" }}>Stock limitado</span>
+                  <span style={{ margin: "0px 2px" }}>Sin stock</span>
                 </FilterView>
-              </DivCont>
+              </DivStockCont>
             </FilterView>
             <div style={{ marginTop: "-10px" }}>
               <Checkbox

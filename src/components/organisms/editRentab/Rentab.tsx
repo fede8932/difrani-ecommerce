@@ -60,9 +60,9 @@ const AddContainer = styled(View)`
   justify-content: space-between;
 
   @media (max-width: ${breakpoints.mobileSmall}px) {
-    flex-direction: column;
     align-items: flex-start;
     height: 110px;
+    flex-wrap: wrap;
   }
 `;
 

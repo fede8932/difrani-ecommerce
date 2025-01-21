@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from "styled-components";
 import View from "../../components/atoms/view/View";
 import backgroundImage from "../../assets/background_login.jpg";
@@ -192,13 +194,13 @@ function Login(_props: Props): React.ReactNode {
           <div style={{ position: "relative", width: "100%", display: "flex" }}>
             {passError != "" ? <ErrorMessage>{passError}</ErrorMessage> : null}
           </div>
-          <div style={{ marginTop: "310px", marginLeft: "250px" }}>
+          <div style={{ marginTop: "310px", width: "98%" }}>
             <Button
               type="submit"
               color="primary"
               text="Ingresar"
               height="28px"
-              width="120px"
+              width="100%"
               pending={userState.loading}
             />
           </div>

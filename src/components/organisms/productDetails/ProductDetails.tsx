@@ -164,7 +164,7 @@ function ProductDetails(props: Props): React.ReactNode {
       button={children}
       size="1000px"
     >
-      <DetailsContainer height="400px">
+      <DetailsContainer /*height="400px"*/>
         <Img
           margin="10px 0px 0px 0px"
           src={product?.images.length > 0 ? product?.images[0].url : img}
