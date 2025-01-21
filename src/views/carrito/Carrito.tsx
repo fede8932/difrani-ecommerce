@@ -30,6 +30,7 @@ import {
 } from "../../aux/prices";
 import Button from "../../components/atoms/button/Button";
 import CartInput from "../../components/atoms/cartInput/CartInput";
+import { breakpoints } from "../../resolutions";
 
 interface Props {}
 
@@ -69,6 +70,10 @@ const ContactDataContainer = styled(View)`
   margin-top: 17px;
   margin-bottom: 10px;
   justify-content: space-between;
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    width: 100%;
+  }
 `;
 
 const Icon = styled.span<{ active: boolean; size?: string; color?: string }>`
@@ -162,12 +167,12 @@ function Carrito(_props: Props): React.ReactNode {
           style={{ height: "480px", overflowY: "auto" }}
           className={styles.tableContainer}
         >
-          <Table selectable>
+          <Table selectable unstackable>
             <TableHeader>
               <TableRow>
                 <TableHeaderCell>Código</TableHeaderCell>
                 <TableHeaderCell>Marca</TableHeaderCell>
-                <TableHeaderCell>Precio sin IVA</TableHeaderCell>
+                <TableHeaderCell>Precio s/IVA</TableHeaderCell>
                 <TableHeaderCell>Cantidad</TableHeaderCell>
                 <TableHeaderCell>Subtotal</TableHeaderCell>
                 <TableHeaderCell>Acciones</TableHeaderCell>
