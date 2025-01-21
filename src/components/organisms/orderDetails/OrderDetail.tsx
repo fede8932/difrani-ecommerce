@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from "styled-components";
 import View from "../../atoms/view/View";
 import {
@@ -94,12 +95,14 @@ function OrderDetail(props: IProps): React.ReactNode {
         height="500px"
         flexDirection="column"
       >
-        <Table singleLine selectable padded>
+        <Table selectable unstackable>
           <TableHeader>
             <TableRow>
               <TableHeaderCell width={1}>Artículo</TableHeaderCell>
               <TableHeaderCell width={1}>Marca</TableHeaderCell>
-              <TableHeaderCell width={5}>Descripción</TableHeaderCell>
+              {window.innerWidth > breakpoints.mobileLarge ? (
+                <TableHeaderCell width={5}>Descripción</TableHeaderCell>
+              ) : null}
               <TableHeaderCell width={1}>Catidad</TableHeaderCell>
               <TableHeaderCell width={1}>Precio</TableHeaderCell>
               <TableHeaderCell width={1}>Subtotal</TableHeaderCell>
@@ -111,9 +114,11 @@ function OrderDetail(props: IProps): React.ReactNode {
               <TableRow key={i}>
                 <TableCell>{item.product.article}</TableCell>
                 <TableCell>{item.product.brand.name}</TableCell>
-                <TableCell>
-                  {item.product.description.substring(0, 60)}
-                </TableCell>
+                {window.innerWidth > breakpoints.mobileLarge ? (
+                  <TableCell>
+                    {item.product.description.substring(0, 60)}
+                  </TableCell>
+                ) : null}
                 <TableCell>{item.amount}</TableCell>
                 <TableCell>${roundToTwoDecimals(item.sellPrice)}</TableCell>
                 <TableCell>
