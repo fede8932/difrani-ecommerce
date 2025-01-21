@@ -43,6 +43,7 @@ const GeneralCard = styled(View)`
 
 const BrandCard = styled(View)`
   margin: 2px 0px;
+  min-height: 42px;
   height: 42px;
   flex-direction: row;
   padding: 0px 15px;
