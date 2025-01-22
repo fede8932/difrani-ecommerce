@@ -30,3 +30,14 @@
 .newText:focus{
     border-color: #b7d1bd;
 }
+.butCont{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+.header{
+    margin-bottom: 15px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+}
