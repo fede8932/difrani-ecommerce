@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable no-useless-catch */
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import * as acountRequest from "../../axios/request/currentAcountRequest";
@@ -9,7 +10,7 @@ export interface ISend {
   pending?: boolean;
 }
 
-interface IMovements {
+export interface IMovements {
   id: number;
   type: number;
   fecha: string;
@@ -20,6 +21,8 @@ interface IMovements {
   numComprobante: number;
   apply: boolean;
   payDetail: { comprobanteVendedor: string };
+  pending: boolean;
+  marc?: boolean;
 }
 
 interface ICurrentAcount {
@@ -69,7 +72,16 @@ export const GetCurrentAcountState = createAsyncThunk<IData, ISend>(
 const acountSlice = createSlice({
   name: "current_acount",
   initialState: initialState,
-  reducers: {}, // Puedes definir acciones síncronas aquí si es necesario
+  reducers: {
+    toggleMarc: (state, action) => {
+      let newList = [...state.data.moviments];
+      const index = newList.findIndex((item) => item.id == action.payload);
+      if (index > -1) {
+        newList[index].marc = !newList[index].marc;
+      }
+      state.data.moviments = newList;
+    },
+  }, // Puedes definir acciones síncronas aquí si es necesario
   extraReducers: (builder) => {
     builder
       .addCase(GetCurrentAcountState.pending, (state) => {
@@ -82,11 +94,19 @@ const acountSlice = createSlice({
       .addCase(
         GetCurrentAcountState.fulfilled,
         (state, action: PayloadAction<IData>) => {
+          const newList = action.payload.moviments.map((item) => {
+            item.marc = false;
+            return item;
+          });
           state.loading = false;
           state.data = action.payload;
+          state.data.moviments = newList;
         }
       );
   },
 });
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const { toggleMarc } = acountSlice.actions;
 
 export default acountSlice.reducer;

@@ -74,7 +74,7 @@ function AppIn() {
       dispatch(GetAllRentaPercentState(userState.data.clientId));
     }
     dispatch(GetAllBrandsState());
-  }, [userState.data]);
+  }, [dispatch, userState.data]);
   return (
     <AppContainer>
       {

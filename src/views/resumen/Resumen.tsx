@@ -4,6 +4,7 @@
 import styled from "styled-components";
 import View from "../../components/atoms/view/View";
 import {
+  Button,
   Checkbox,
   Pagination,
   Table,
@@ -20,9 +21,13 @@ import { formatDate } from "../../aux/formatDate";
 import {
   GetCurrentAcountState,
   IAcountState,
+  toggleMarc,
 } from "../../redux/reducers/acountReducer";
 import { formatNumberToString } from "../../aux/prices";
 import { breakpoints } from "../../resolutions";
+import { checkActive } from "../../utils";
+import ModalComponent from "../../components/molecules/modal/ModalComponent";
+import NewSellerReceipt from "../../components/organisms/newSellerReceipt/NewSellerReceipt";
 
 interface Props {}
 
@@ -133,7 +138,7 @@ function Resumen(_props: Props): React.ReactNode {
         pending: check,
       })
     );
-  }, [dispatch, page, check]);
+  }, [dispatch, page, check, userState.data?.clientId]);
   return (
     <ContactoContainer>
       <TitleStyled>
@@ -181,18 +186,27 @@ function Resumen(_props: Props): React.ReactNode {
             onChange={handleChangeToggle}
             checked={check}
           />
+          <div style={{ marginLeft: "45px", display: "inline-block" }}>
+            <ModalComponent
+              button={<Button>Nuevo cobro</Button>}
+              title="Nuevo cobro"
+            >
+              <NewSellerReceipt />
+            </ModalComponent>
+          </div>
         </div>
         <div style={{ height: "490px" }}>
           <Table unstackable selectable>
             <TableHeader>
               <TableRow>
+                {userState.data?.rolId == 3 ? (
+                  <TableHeaderCell>Box</TableHeaderCell>
+                ) : null}
                 <TableHeaderCell>Fecha</TableHeaderCell>
                 <TableHeaderCell>Concepto</TableHeaderCell>
-                <TableHeaderCell>
-                  {window.innerWidth > breakpoints.mobileSmall
-                    ? "Comprobante Vdor"
-                    : "Comprobante"}
-                </TableHeaderCell>
+                {window.innerWidth > breakpoints.mobileSmall ? (
+                  <TableHeaderCell>Comprobante Vdor</TableHeaderCell>
+                ) : null}
                 <TableHeaderCell>Total</TableHeaderCell>
               </TableRow>
             </TableHeader>
@@ -200,6 +214,17 @@ function Resumen(_props: Props): React.ReactNode {
             <TableBody>
               {acountStatus.data.moviments.map((mov, i) => (
                 <TableRow key={i}>
+                  {userState.data?.rolId == 3 ? (
+                    <TableCell>
+                      <Checkbox
+                        disabled={checkActive(mov)}
+                        checked={mov.marc}
+                        onChange={() => {
+                          dispatch(toggleMarc(mov.id));
+                        }}
+                      />
+                    </TableCell>
+                  ) : null}
                   <TableCell>{formatDate(mov.fecha)}</TableCell>
                   <TableCell>
                     {mov.type == 0 ? (
@@ -218,7 +243,11 @@ function Resumen(_props: Props): React.ReactNode {
                       "Descuento"
                     )}
                   </TableCell>
-                  <TableCell>{mov.payDetail?.comprobanteVendedor}</TableCell>
+
+                  {window.innerWidth > breakpoints.mobileSmall ||
+                  userState.data?.rolId != 3 ? (
+                    <TableCell>{mov.payDetail?.comprobanteVendedor}</TableCell>
+                  ) : null}
                   <TableCell>${formatNumberToString(mov.total)}</TableCell>
                 </TableRow>
               ))}
