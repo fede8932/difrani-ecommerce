@@ -41,7 +41,7 @@ function NewSellerReceipt(): ReactNode {
         <span>Total facturado:</span>
         <span>${1111}</span>
       </div>
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.formu} onSubmit={handleSubmit}>
         <div className={styles.inputCont}>
           <label>Monto en efectivo</label>
           <input

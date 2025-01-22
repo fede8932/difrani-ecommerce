@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 8px;
+    width: 100%;
 }
 .newImput{
     all: unset;
@@ -40,4 +41,36 @@
     font-weight: 600;
     display: flex;
     justify-content: space-between;
+}
+.formu{
+    width: 100%;
+    height: 480px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3px;
+}
+
+/* Estilizar la barra de desplazamiento */
+.formu::-webkit-scrollbar {
+    width: 3px; /* Ancho de la barra vertical */
+    height: 8px; /* Altura de la barra horizontal */
+}
+
+/* Fondo de la barra de desplazamiento */
+.formu::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color de fondo */
+    border-radius: 10px;
+}
+
+/* Color del "dedo" (thumb) del scroll */
+.formu::-webkit-scrollbar-thumb {
+    background: #888; /* Color del thumb */
+    border-radius: 10px;
+}
+
+/* Color del thumb al pasar el mouse por encima */
+.formu::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
