@@ -1,11 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReactNode, useState } from "react";
 import styles from "./newSellerReceipt.module.css";
-// import { IAcountState } from "../../../redux/reducers/acountReducer";
-// import { useSelector } from "react-redux";
-// import { RootState } from "../../../redux/store";
+import { IAcountState } from "../../../redux/reducers/acountReducer";
+import { useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../redux/store";
 import { DatePicker } from "antd";
 import { Button, Checkbox } from "semantic-ui-react";
+import toast from "react-hot-toast";
+import {
+  AddPay,
+  ICreateSellerReceipt,
+} from "../../../redux/reducers/SellerReceipt";
+import { useDispatch } from "react-redux";
 
 function NewSellerReceipt(): ReactNode {
   type CheckType = { [key in "efec" | "cheq" | "tran"]: boolean };
@@ -21,8 +27,9 @@ function NewSellerReceipt(): ReactNode {
     tran: false,
   });
 
-  const [montoEf, setMontoEf] = useState(0);
-  const [montoTr, setMontoTr] = useState(0);
+  const dispatch: AppDispatch = useDispatch();
+  const [montoEf, setMontoEf] = useState("");
+  const [montoTr, setMontoTr] = useState("");
 
   const [bancoTr, setBancoTr] = useState("");
 
@@ -37,19 +44,24 @@ function NewSellerReceipt(): ReactNode {
   const handleChange = (e: any, fn: any) => {
     fn(e.target.value);
   };
-  const handleChequeChange = (e: any, i: number) => {
+
+  const handleChequeChange = (
+    e: any,
+    i: number,
+    key: "montoCh" | "bancoCh" | "numCh" | "cobroCh"
+  ) => {
     const newChequeState = [...chequeState];
-    newChequeState[i] = e.target.value;
+    newChequeState[i][key] = e.target.value;
     setChequeState(newChequeState);
   };
-  //   const acountStatus: IAcountState = useSelector(
-  //     (state: RootState) => state.acount
-  //   );
+  const acountStatus: IAcountState = useSelector(
+    (state: RootState) => state.acount
+  );
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-  };
+  // console.log(acountStatus);
+  const user = useSelector((state: RootState) => state.user);
+
+  console.log(user);
 
   const handleChecked = (name: "efec" | "cheq" | "tran") => {
     const newCheckType = { ...checkType };
@@ -69,6 +81,65 @@ function NewSellerReceipt(): ReactNode {
     const newChequeState = [...chequeState];
     newChequeState.push({ montoCh: "", bancoCh: "", numCh: "", cobroCh: "" });
     setChequeState(newChequeState);
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    if (
+      checkType.efec &&
+      (montoEf === null || montoEf == "" || isNaN(Number(montoEf)))
+    ) {
+      toast.error("El campo monto en efectivo no es correcto");
+      return;
+    }
+    if (
+      checkType.tran &&
+      (montoTr === null ||
+        montoTr == "" ||
+        isNaN(Number(montoTr)) ||
+        op == "" ||
+        op === null ||
+        bancoTr === null ||
+        bancoTr === "null")
+    ) {
+      toast.error("Los campos de transferencia no están bien definidos");
+      return;
+    }
+    if (checkType.cheq) {
+      chequeState.map((cheque, index) => {
+        if (
+          cheque.bancoCh === null ||
+          cheque.bancoCh == "" ||
+          cheque.cobroCh === null ||
+          cheque.cobroCh == "" ||
+          cheque.montoCh === null ||
+          cheque.montoCh == "" ||
+          isNaN(Number(cheque.montoCh)) ||
+          cheque.numCh === null ||
+          cheque.numCh == ""
+        ) {
+          toast.error(
+            `Los campos en el cheque ${index + 1}, no están bien definido`
+          );
+          return;
+        }
+      });
+    }
+    const movimentsMarc = acountStatus.data.moviments.filter(
+      (item) => item.marc
+    );
+    const send: ICreateSellerReceipt = {
+      clientId: acountStatus?.data?.client?.id,
+      userId: user?.data?.userId,
+      montoEf: Number(montoEf),
+      montoTr: Number(montoTr),
+      bancoTr: bancoTr,
+      op: op,
+      coment: coment,
+      chequeData: chequeState,
+      movIds: movimentsMarc.map((item) => item.id),
+    };
+    dispatch(AddPay(send));
   };
 
   return (
@@ -141,34 +212,50 @@ function NewSellerReceipt(): ReactNode {
           ? chequeState.map((item, i) => (
               <>
                 <div className={styles.inputCont}>
-                  <label>{chequeState.length < 2 ? "Monto de cheque" : `Monto de cheque ${i+1}`}</label>
+                  <label>
+                    {chequeState.length < 2
+                      ? "Monto de cheque"
+                      : `Monto de cheque ${i + 1}`}
+                  </label>
                   <input
                     className={styles.newImput}
                     placeholder="Monto pagado por cheque"
                     value={item.montoCh}
-                    onChange={(e) => handleChequeChange(e, i)}
+                    onChange={(e) => handleChequeChange(e, i, "montoCh")}
                   />
                 </div>
                 <div className={styles.inputCont}>
-                  <label>{chequeState.length < 2 ? "Entidad bancaria" : `Entidad bancaria de cheque ${i+1}`}</label>
+                  <label>
+                    {chequeState.length < 2
+                      ? "Entidad bancaria"
+                      : `Entidad bancaria de cheque ${i + 1}`}
+                  </label>
                   <input
                     className={styles.newImput}
                     placeholder="Nombre de la entidad que figura en el cheque"
                     value={item.bancoCh}
-                    onChange={(e) => handleChequeChange(e, i)}
+                    onChange={(e) => handleChequeChange(e, i, "bancoCh")}
                   />
                 </div>
                 <div className={styles.inputCont}>
-                  <label>{chequeState.length < 2 ? "Número de cheque" : `Número de cheque ${i+1}`}</label>
+                  <label>
+                    {chequeState.length < 2
+                      ? "Número de cheque"
+                      : `Número de cheque ${i + 1}`}
+                  </label>
                   <input
                     className={styles.newImput}
                     placeholder="Ingresar tal cual figura en el cheque"
                     value={item.numCh}
-                    onChange={(e) => handleChequeChange(e, i)}
+                    onChange={(e) => handleChequeChange(e, i, "numCh")}
                   />
                 </div>
                 <div className={styles.inputCont}>
-                <label>{chequeState.length < 2 ? "Fecha de cobro" : `Fecha de cobro de cheque ${i+1}`}</label>
+                  <label>
+                    {chequeState.length < 2
+                      ? "Fecha de cobro"
+                      : `Fecha de cobro de cheque ${i + 1}`}
+                  </label>
                   <DatePicker
                     placeholder="Seleccioná la fecha"
                     onChange={(_, ds) => {

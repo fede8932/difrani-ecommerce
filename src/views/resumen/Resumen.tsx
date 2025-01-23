@@ -186,14 +186,14 @@ function Resumen(_props: Props): React.ReactNode {
             onChange={handleChangeToggle}
             checked={check}
           />
-          <div style={{ marginLeft: "45px", display: "inline-block" }}>
+          {acountStatus?.data.moviments.filter(item => item.marc).length > 0?<div style={{ marginLeft: "45px", display: "inline-block" }}>
             <ModalComponent
               button={<Button>Nuevo cobro</Button>}
               title="Nuevo cobro"
             >
               <NewSellerReceipt />
             </ModalComponent>
-          </div>
+          </div>:null}
         </div>
         <div style={{ height: "490px" }}>
           <Table unstackable selectable>

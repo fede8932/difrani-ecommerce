@@ -1,7 +1,7 @@
 .inputCont{
     display: flex;
     flex-direction: column;
-    margin-bottom: 8px;
+    margin-bottom: 15px;
     width: 100%;
 }
 .newImput{
@@ -14,6 +14,9 @@
 }
 .newImput:hover{
     border-color: #b7d1bd;
+}
+.newImput::placeholder{
+    color: #c4c4c4;
 }
 .newImput:focus{
     border-color: #b7d1bd;
@@ -30,6 +33,9 @@
 }
 .newText:focus{
     border-color: #b7d1bd;
+}
+.newText::placeholder{
+    color: #c4c4c4;
 }
 .butCont{
     width: 100%;
