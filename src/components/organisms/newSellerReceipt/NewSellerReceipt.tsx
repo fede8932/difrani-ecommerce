@@ -12,6 +12,7 @@ import {
   ICreateSellerReceipt,
 } from "../../../redux/reducers/SellerReceipt";
 import { useDispatch } from "react-redux";
+import { truncarADosDecimales } from "../../../utils";
 
 function NewSellerReceipt(): ReactNode {
   type CheckType = { [key in "efec" | "cheq" | "tran"]: boolean };
@@ -60,8 +61,9 @@ function NewSellerReceipt(): ReactNode {
 
   // console.log(acountStatus);
   const user = useSelector((state: RootState) => state.user);
+  const { loading } = useSelector((state: RootState) => state.sellerReceipt);
 
-  console.log(user);
+  // console.log(user);
 
   const handleChecked = (name: "efec" | "cheq" | "tran") => {
     const newCheckType = { ...checkType };
@@ -105,6 +107,7 @@ function NewSellerReceipt(): ReactNode {
       toast.error("Los campos de transferencia no están bien definidos");
       return;
     }
+    let totalCheque = 0;
     if (checkType.cheq) {
       chequeState.map((cheque, index) => {
         if (
@@ -123,30 +126,59 @@ function NewSellerReceipt(): ReactNode {
           );
           return;
         }
+        totalCheque += Number(cheque.montoCh);
       });
     }
+
+    const maxSald: number = acountStatus.data.moviments.reduce((acum, obj) => {
+      if (obj.marc) return acum + obj.total;
+      return acum;
+    }, 0);
+
+    if (Number(montoEf) + Number(montoTr) + totalCheque > maxSald) {
+      toast.error(`El pago total no puede superar los movimientos marcados`);
+    }
+
     const movimentsMarc = acountStatus.data.moviments.filter(
       (item) => item.marc
     );
     const send: ICreateSellerReceipt = {
       clientId: acountStatus?.data?.client?.id,
       userId: user?.data?.userId,
-      montoEf: Number(montoEf),
-      montoTr: Number(montoTr),
-      bancoTr: bancoTr,
-      op: op,
-      coment: coment,
+      montoEfect: Number(montoEf),
+      montoTransf: Number(montoTr),
+      bancoTransf: bancoTr,
+      numOperación: op,
+      comments: coment,
       chequeData: chequeState,
       movIds: movimentsMarc.map((item) => item.id),
     };
-    dispatch(AddPay(send));
+    dispatch(AddPay(send))
+      .then((res: any) => {
+        if (res.error) {
+          toast.error(`Error: ${res.error.message}`);
+          return;
+        }
+        toast.success("Guardado con éxito");
+      })
+      .catch((err: any) => {
+        toast.error(`Error: ${err.message}`);
+      });
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <span>Total facturado:</span>
-        <span>${1111}</span>
+        <span>
+          $
+          {truncarADosDecimales(
+            acountStatus.data.moviments.reduce((acum, obj) => {
+              if (obj.marc) return acum + obj.total;
+              return acum;
+            }, 0)
+          )}
+        </span>
       </div>
       <div className={styles.cheCont}>
         <Checkbox
@@ -296,7 +328,9 @@ function NewSellerReceipt(): ReactNode {
           />
         </div>
         <div className={styles.butCont}>
-          <Button type="submit">Guardar</Button>
+          <Button disabled={loading} type="submit">
+            {loading ? "Guardando..." : "Guardar"}
+          </Button>
         </div>
       </form>
     </div>
