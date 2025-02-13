@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable prefer-const */
-import { ICreateSellerReceipt } from "../../redux/reducers/SellerReceipt";
+import { ICreateSellerReceipt, IData } from "../../redux/reducers/SellerReceipt";
 import axiosInstances from "../config";
 const apiUrl = import.meta.env.VITE_MY_URL_BACKEND;
 
@@ -27,6 +27,24 @@ export const CreateSellerReceipt = async (
       throw new Error("No es posible continuar");
     let url: string = `${apiUrl}/api/client/pay/recib`;
     const { data } = await axiosInstances.api.post(url, sendData);
+    return data;
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
+    throw err;
+  }
+};
+
+export const GetSellerReceiptByClientId = async (
+  clientId: number,
+  pending: boolean,
+  page: number
+): Promise<IData> => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    let url: any = `${apiUrl}/api/client/pay/receipt?clientId=${clientId}&pending=${pending}&page=${page}`;
+    const { data } = await axiosInstances.api.get(url);
     return data;
   } catch (err: any) {
     if (err.response?.status == 401) {

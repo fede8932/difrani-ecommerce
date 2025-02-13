@@ -21,16 +21,48 @@ export interface ICreateSellerReceipt {
   chequeData: ICheQueType[];
   movIds: number[];
 }
+export interface ISellerReceipt {
+  id: number;
+  clientId: number;
+  montoCheque: number;
+  bancoTransf?: string | null;
+  numOperación?: string | null;
+  montoTransf: number;
+  montoEfect: number;
+  total: number;
+  pending: boolean;
+  applyPending: number;
+  comments?: string | null;
+  bills: any[]; // Asegúrate de definir la interfaz Movement
+  cheques: any[]; // Asegúrate de definir la interfaz Cheque
+  createdAt: string; // DateTime se mapea como string (ISO 8601)
+}
+
+export interface IGetSellerReceipt {
+  clientId: number;
+  page: number;
+  pending: boolean;
+}
+
+export interface IData {
+  totalPages: number;
+  totalResults: number;
+  list: ISellerReceipt[];
+}
 
 export interface ISellerReceiptState {
   loading: boolean;
-  list: any[];
+  data: IData;
   error: string;
 }
 
 const initialState: ISellerReceiptState = {
   loading: false,
-  list: [],
+  data: {
+    list: [],
+    totalPages: 1,
+    totalResults: 0,
+  },
   error: "",
 };
 
@@ -38,7 +70,25 @@ export const AddPay = createAsyncThunk<string, ICreateSellerReceipt>(
   "CREATE_RECEIPT",
   async (sendData: ICreateSellerReceipt) => {
     try {
-      const response: string = await sellerRequest.CreateSellerReceipt(sendData);
+      const response: string = await sellerRequest.CreateSellerReceipt(
+        sendData
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+export const GetPays = createAsyncThunk<IData, IGetSellerReceipt>(
+  "GET_RECEIPT",
+  async (sendData: IGetSellerReceipt) => {
+    try {
+      const response: IData = await sellerRequest.GetSellerReceiptByClientId(
+        sendData.clientId,
+        sendData.pending,
+        sendData.page
+      );
       return response;
     } catch (error) {
       throw error;
@@ -59,13 +109,22 @@ const SellerReceiptSlice = createSlice({
         state.loading = false;
         state.error = action.error.message ?? "Error desconocido";
       })
-      .addCase(
-        AddPay.fulfilled,
-        (state) => {
-          state.loading = false;
-          state.error = "";
-        }
-      );
+      .addCase(AddPay.fulfilled, (state) => {
+        state.loading = false;
+        state.error = "";
+      })
+      .addCase(GetPays.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(GetPays.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message ?? "Error desconocido";
+      })
+      .addCase(GetPays.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = "";
+        state.data = action.payload;
+      });
   },
 });
 

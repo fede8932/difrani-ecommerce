@@ -108,8 +108,9 @@ function NewSellerReceipt(): ReactNode {
       return;
     }
     let totalCheque = 0;
+    let sendChequeState = [...chequeState];
     if (checkType.cheq) {
-      chequeState.map((cheque, index) => {
+      sendChequeState.map((cheque, index) => {
         if (
           cheque.bancoCh === null ||
           cheque.bancoCh == "" ||
@@ -128,6 +129,8 @@ function NewSellerReceipt(): ReactNode {
         }
         totalCheque += Number(cheque.montoCh);
       });
+    } else {
+      sendChequeState = [];
     }
 
     const maxSald: number = acountStatus.data.moviments.reduce((acum, obj) => {
@@ -150,7 +153,7 @@ function NewSellerReceipt(): ReactNode {
       bancoTransf: bancoTr,
       numOperación: op,
       comments: coment,
-      chequeData: chequeState,
+      chequeData: sendChequeState,
       movIds: movimentsMarc.map((item) => item.id),
     };
     dispatch(AddPay(send))
