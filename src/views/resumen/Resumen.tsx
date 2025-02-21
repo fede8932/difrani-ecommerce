@@ -219,7 +219,7 @@ function Resumen(_props: Props): React.ReactNode {
                       "Devolución"
                     ) : (
                       "Descuento"
-                    )}
+                    )}<span>{rolId != 4 ? ` N°${mov.numComprobante}`: ""}</span>
                   </TableCell>
                   <TableCell>{mov.payDetail?.comprobanteVendedor}</TableCell>
                   <TableCell>
