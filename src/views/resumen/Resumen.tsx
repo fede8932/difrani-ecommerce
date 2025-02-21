@@ -114,6 +114,7 @@ function Resumen(_props: Props): React.ReactNode {
   const acountStatus: IAcountState = useSelector(
     (state: RootState) => state.acount
   );
+  const { rolId }: any = useSelector((state: RootState) => state.user).data;
   // console.log(acountStatus);
 
   const handleChange = (_e: any, data: any) => {
@@ -133,7 +134,7 @@ function Resumen(_props: Props): React.ReactNode {
         pending: check,
       })
     );
-  }, [dispatch, page, check]);
+  }, [dispatch, page, check, userState.data?.clientId]);
   return (
     <ContactoContainer>
       <TitleStyled>
@@ -193,7 +194,9 @@ function Resumen(_props: Props): React.ReactNode {
                     ? "Comprobante Vdor"
                     : "Comprobante"}
                 </TableHeaderCell>
-                <TableHeaderCell>Total</TableHeaderCell>
+                <TableHeaderCell>
+                  {rolId == 4 ? "Total" : "Pendiente"}
+                </TableHeaderCell>
               </TableRow>
             </TableHeader>
 
@@ -219,7 +222,12 @@ function Resumen(_props: Props): React.ReactNode {
                     )}
                   </TableCell>
                   <TableCell>{mov.payDetail?.comprobanteVendedor}</TableCell>
-                  <TableCell>${formatNumberToString(mov.total)}</TableCell>
+                  <TableCell>
+                    $
+                    {formatNumberToString(
+                      rolId == 4 ? mov.total : mov.saldoPend
+                    )}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

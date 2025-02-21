@@ -17,6 +17,7 @@ interface IMovements {
   amount: number;
   iva: number;
   total: number;
+  saldoPend: number;
   numComprobante: number;
   apply: boolean;
   payDetail: { comprobanteVendedor: string };
