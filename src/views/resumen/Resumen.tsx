@@ -119,6 +119,7 @@ function Resumen(_props: Props): React.ReactNode {
   const acountStatus: IAcountState = useSelector(
     (state: RootState) => state.acount
   );
+  const { rolId }: any = useSelector((state: RootState) => state.user).data;
   // console.log(acountStatus);
 
   const handleChange = (_e: any, data: any) => {
@@ -186,14 +187,17 @@ function Resumen(_props: Props): React.ReactNode {
             onChange={handleChangeToggle}
             checked={check}
           />
-          {acountStatus?.data.moviments.filter(item => item.marc).length > 0?<div style={{ marginLeft: "45px", display: "inline-block" }}>
-            <ModalComponent
-              button={<Button>Nuevo cobro</Button>}
-              title="Nuevo cobro"
-            >
-              <NewSellerReceipt />
-            </ModalComponent>
-          </div>:null}
+          {acountStatus?.data.moviments.filter((item) => item.marc).length >
+          0 ? (
+            <div style={{ marginLeft: "45px", display: "inline-block" }}>
+              <ModalComponent
+                button={<Button>Nuevo cobro</Button>}
+                title="Nuevo cobro"
+              >
+                <NewSellerReceipt />
+              </ModalComponent>
+            </div>
+          ) : null}
         </div>
         <div style={{ height: "490px" }}>
           <Table unstackable selectable>
@@ -204,10 +208,14 @@ function Resumen(_props: Props): React.ReactNode {
                 ) : null}
                 <TableHeaderCell>Fecha</TableHeaderCell>
                 <TableHeaderCell>Concepto</TableHeaderCell>
-                {window.innerWidth > breakpoints.mobileSmall ? (
-                  <TableHeaderCell>Comprobante Vdor</TableHeaderCell>
-                ) : null}
-                <TableHeaderCell>Total</TableHeaderCell>
+                <TableHeaderCell>
+                  {window.innerWidth > breakpoints.mobileSmall
+                    ? "Comprobante Vdor"
+                    : "Comprobante"}
+                </TableHeaderCell>
+                <TableHeaderCell>
+                  {rolId == 4 ? "Total" : "Pendiente"}
+                </TableHeaderCell>
               </TableRow>
             </TableHeader>
 
@@ -243,12 +251,16 @@ function Resumen(_props: Props): React.ReactNode {
                       "Descuento"
                     )}
                   </TableCell>
-
                   {window.innerWidth > breakpoints.mobileSmall ||
                   userState.data?.rolId != 3 ? (
                     <TableCell>{mov.payDetail?.comprobanteVendedor}</TableCell>
                   ) : null}
-                  <TableCell>${formatNumberToString(mov.total)}</TableCell>
+                  <TableCell>
+                    $
+                    {formatNumberToString(
+                      rolId == 4 ? mov.total : mov.saldoPend
+                    )}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
