@@ -48,7 +48,14 @@ function ModalComponent(props: Props) {
             <Modal.Title>{title}</Modal.Title>
             <Modal.CloseButton />
           </Modal.Header>
-          <Modal.Body>{children}</Modal.Body>
+          <Modal.Body>
+            {React.isValidElement(children)
+              ? React.cloneElement(
+                  children as React.ReactElement<{ onClose: () => void }>,
+                  { onClose }
+                )
+              : children}
+          </Modal.Body>
         </Modal.Content>
       </Modal.Root>
       {triggerButton}

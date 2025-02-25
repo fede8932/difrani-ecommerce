@@ -20,6 +20,7 @@ export interface ICreateSellerReceipt {
   comments: string;
   chequeData: ICheQueType[];
   movIds: number[];
+  inTermPayDiscount: boolean;
 }
 export interface ISellerReceipt {
   id: number;

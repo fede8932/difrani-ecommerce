@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReactNode, useState } from "react";
+import { ReactNode, useMemo, useState } from "react";
 import styles from "./newSellerReceipt.module.css";
-import { IAcountState } from "../../../redux/reducers/acountReducer";
+import {
+  GetCurrentAcountState,
+  IAcountState,
+  resetAcountState,
+} from "../../../redux/reducers/acountReducer";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store";
 import { DatePicker } from "antd";
@@ -12,9 +16,14 @@ import {
   ICreateSellerReceipt,
 } from "../../../redux/reducers/SellerReceipt";
 import { useDispatch } from "react-redux";
-import { truncarADosDecimales } from "../../../utils";
+import { applyInTermPayDiscount } from "../../../utils";
 
-function NewSellerReceipt(): ReactNode {
+interface IProps {
+  onClose?: () => void;
+}
+
+function NewSellerReceipt(props: IProps): ReactNode {
+  const { onClose } = props;
   type CheckType = { [key in "efec" | "cheq" | "tran"]: boolean };
   type CheQueType = {
     montoCh: string;
@@ -29,6 +38,7 @@ function NewSellerReceipt(): ReactNode {
   });
 
   const dispatch: AppDispatch = useDispatch();
+  const [discApply, setDiscApply] = useState(false);
   const [montoEf, setMontoEf] = useState("");
   const [montoTr, setMontoTr] = useState("");
 
@@ -62,6 +72,9 @@ function NewSellerReceipt(): ReactNode {
   // console.log(acountStatus);
   const user = useSelector((state: RootState) => state.user);
   const { loading } = useSelector((state: RootState) => state.sellerReceipt);
+  const { totalSelect, selectMovements } = useSelector(
+    (state: RootState) => state.acount
+  );
 
   // console.log(user);
 
@@ -79,6 +92,11 @@ function NewSellerReceipt(): ReactNode {
     }
   };
 
+  const total = useMemo(() => {
+    if (discApply) return applyInTermPayDiscount(totalSelect);
+    return totalSelect;
+  }, [discApply, totalSelect]);
+
   const addNewCheq = () => {
     const newChequeState = [...chequeState];
     newChequeState.push({ montoCh: "", bancoCh: "", numCh: "", cobroCh: "" });
@@ -87,6 +105,7 @@ function NewSellerReceipt(): ReactNode {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+
     if (
       checkType.efec &&
       (montoEf === null || montoEf == "" || isNaN(Number(montoEf)))
@@ -133,18 +152,10 @@ function NewSellerReceipt(): ReactNode {
       sendChequeState = [];
     }
 
-    const maxSald: number = acountStatus.data.moviments.reduce((acum, obj) => {
-      if (obj.marc) return acum + obj.total;
-      return acum;
-    }, 0);
-
-    if (Number(montoEf) + Number(montoTr) + totalCheque > maxSald) {
+    if (Number(montoEf) + Number(montoTr) + totalCheque > total) {
       toast.error(`El pago total no puede superar los movimientos marcados`);
+      return;
     }
-
-    const movimentsMarc = acountStatus.data.moviments.filter(
-      (item) => item.marc
-    );
     const send: ICreateSellerReceipt = {
       clientId: acountStatus?.data?.client?.id,
       userId: user?.data?.userId,
@@ -154,7 +165,8 @@ function NewSellerReceipt(): ReactNode {
       numOperación: op,
       comments: coment,
       chequeData: sendChequeState,
-      movIds: movimentsMarc.map((item) => item.id),
+      movIds: selectMovements.map((item) => item.movement.id),
+      inTermPayDiscount: discApply,
     };
     dispatch(AddPay(send))
       .then((res: any) => {
@@ -162,7 +174,18 @@ function NewSellerReceipt(): ReactNode {
           toast.error(`Error: ${res.error.message}`);
           return;
         }
-        toast.success("Guardado con éxito");
+        dispatch(resetAcountState());
+        dispatch(
+          GetCurrentAcountState({
+            clientId: user.data?.clientId || 0,
+            rows: 10,
+            page: 1,
+            pending: true,
+          })
+        ).then(() => {
+          toast.success("Guardado con éxito");
+        });
+        onClose!();
       })
       .catch((err: any) => {
         toast.error(`Error: ${err.message}`);
@@ -172,16 +195,15 @@ function NewSellerReceipt(): ReactNode {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <span>Total facturado:</span>
-        <span>
-          $
-          {truncarADosDecimales(
-            acountStatus.data.moviments.reduce((acum, obj) => {
-              if (obj.marc) return acum + obj.total;
-              return acum;
-            }, 0)
-          )}
-        </span>
+        <span>Total a cobrar:</span>
+        <span>${total}</span>
+      </div>
+      <div className={styles.cheCont}>
+        <Checkbox
+          label="Aplicar desucuento por pago en término"
+          checked={discApply}
+          onChange={() => setDiscApply(!discApply)}
+        />
       </div>
       <div className={styles.cheCont}>
         <Checkbox

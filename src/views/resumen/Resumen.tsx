@@ -21,11 +21,12 @@ import { formatDate } from "../../aux/formatDate";
 import {
   GetCurrentAcountState,
   IAcountState,
+  resetAcountState,
   toggleMarc,
 } from "../../redux/reducers/acountReducer";
 import { formatNumberToString } from "../../aux/prices";
 import { breakpoints } from "../../resolutions";
-import { checkActive } from "../../utils";
+import { checkActive, getMarc } from "../../utils";
 import ModalComponent from "../../components/molecules/modal/ModalComponent";
 import NewSellerReceipt from "../../components/organisms/newSellerReceipt/NewSellerReceipt";
 
@@ -92,7 +93,7 @@ const PagContainer = styled(View)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 5px;
+  margin-top: 15px;
 
   @media (max-width: ${breakpoints.mobileLarge}px) {
     flex-direction: column-reverse;
@@ -120,7 +121,7 @@ function Resumen(_props: Props): React.ReactNode {
     (state: RootState) => state.acount
   );
   const { rolId }: any = useSelector((state: RootState) => state.user).data;
-  // console.log(acountStatus);
+  // console.log(acountStatus.selectMovements, acountStatus.totalSelect);
 
   const handleChange = (_e: any, data: any) => {
     setPage(data.activePage);
@@ -140,6 +141,12 @@ function Resumen(_props: Props): React.ReactNode {
       })
     );
   }, [dispatch, page, check, userState.data?.clientId]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetAcountState());
+    };
+  }, [dispatch]);
   return (
     <ContactoContainer>
       <TitleStyled>
@@ -187,7 +194,7 @@ function Resumen(_props: Props): React.ReactNode {
             onChange={handleChangeToggle}
             checked={check}
           />
-          {acountStatus?.data.moviments.filter((item) => item.marc).length >
+          {acountStatus?.totalSelect >
           0 ? (
             <div style={{ marginLeft: "45px", display: "inline-block" }}>
               <ModalComponent
@@ -208,11 +215,13 @@ function Resumen(_props: Props): React.ReactNode {
                 ) : null}
                 <TableHeaderCell>Fecha</TableHeaderCell>
                 <TableHeaderCell>Concepto</TableHeaderCell>
-                <TableHeaderCell>
-                  {window.innerWidth > breakpoints.mobileSmall
-                    ? "Comprobante Vdor"
-                    : "Comprobante"}
-                </TableHeaderCell>
+                {rolId == 4 ? (
+                  <TableHeaderCell>
+                    {window.innerWidth > breakpoints.mobileSmall
+                      ? "Comprobante Vdor"
+                      : "Comprobante"}
+                  </TableHeaderCell>
+                ) : null}
                 <TableHeaderCell>
                   {rolId == 4 ? "Total" : "Pendiente"}
                 </TableHeaderCell>
@@ -226,14 +235,14 @@ function Resumen(_props: Props): React.ReactNode {
                     <TableCell>
                       <Checkbox
                         disabled={checkActive(mov)}
-                        checked={mov.marc}
+                        checked={getMarc(mov, acountStatus.selectMovements)}
                         onChange={() => {
-                          dispatch(toggleMarc(mov.id));
+                          dispatch(toggleMarc(mov));
                         }}
                       />
                     </TableCell>
                   ) : null}
-                  <TableCell>{formatDate(mov.fecha)}</TableCell>
+                  <TableCell>{formatDate(mov.fecha, true)}</TableCell>
                   <TableCell>
                     {mov.type == 0 ? (
                       mov.billType == 0 ? (
@@ -249,16 +258,21 @@ function Resumen(_props: Props): React.ReactNode {
                       "Devolución"
                     ) : (
                       "Descuento"
-                    )}<span>{rolId != 4 ? ` N°${mov.numComprobante}`: ""}</span>
+                    )}
+                    <span>{rolId != 4 ? ` N°${mov.numComprobante}` : ""}</span>
                   </TableCell>
-                  {window.innerWidth > breakpoints.mobileSmall ||
+                  {window.innerWidth > breakpoints.mobileSmall &&
                   userState.data?.rolId != 3 ? (
                     <TableCell>{mov.payDetail?.comprobanteVendedor}</TableCell>
                   ) : null}
                   <TableCell>
                     $
                     {formatNumberToString(
-                      rolId == 4 ? mov.total : mov.saldoPend
+                      rolId == 4
+                        ? mov.total
+                        : mov.type == 0
+                        ? mov.saldoPend
+                        : mov.total
                     )}
                   </TableCell>
                 </TableRow>

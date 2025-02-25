@@ -2,6 +2,7 @@
 /* eslint-disable no-useless-catch */
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import * as acountRequest from "../../axios/request/currentAcountRequest";
+import { redondearCuatroDecimales } from "../../utils";
 
 export interface ISend {
   rows: number;
@@ -24,6 +25,12 @@ export interface IMovements {
   payDetail: { comprobanteVendedor: string };
   pending: boolean;
   marc?: boolean;
+  payInProcess?: boolean
+}
+
+export interface ISelectMovements {
+  movement: IMovements;
+  saldo: number;
 }
 
 interface ICurrentAcount {
@@ -50,12 +57,16 @@ export interface IAcountState {
   loading: boolean;
   data: IData;
   error: string;
+  selectMovements: ISelectMovements[];
+  totalSelect: number;
 }
 
 const initialState: IAcountState = {
   loading: false,
   data: { pages: 0, client: null, moviments: [] },
   error: "",
+  selectMovements: [],
+  totalSelect: 0,
 };
 
 export const GetCurrentAcountState = createAsyncThunk<IData, ISend>(
@@ -75,12 +86,40 @@ const acountSlice = createSlice({
   initialState: initialState,
   reducers: {
     toggleMarc: (state, action) => {
-      let newList = [...state.data.moviments];
-      const index = newList.findIndex((item) => item.id == action.payload);
-      if (index > -1) {
-        newList[index].marc = !newList[index].marc;
+      const movement: IMovements = action.payload;
+      const selectMoviments = [...state.selectMovements];
+      let total = state.totalSelect;
+      const index = selectMoviments.findIndex(
+        (item) => item.movement.id == movement.id
+      );
+      if (index < 0) {
+        //No está en la lista, lo agrego
+        const newItem: ISelectMovements = {
+          movement: movement,
+          saldo: redondearCuatroDecimales(
+            movement.type == 0
+              ? movement.saldoPend
+              : movement.type == 1 || movement.type == 3
+              ? -movement.total
+              : 0
+          ),
+        };
+        selectMoviments.push(newItem);
+        total += redondearCuatroDecimales(newItem.saldo);
+      } else {
+        //Está en la lista, lo saco
+        total -= redondearCuatroDecimales(selectMoviments[index].saldo);
+        selectMoviments.splice(index, 1);
       }
-      state.data.moviments = newList;
+      state.totalSelect = redondearCuatroDecimales(total);
+      state.selectMovements = selectMoviments;
+    },
+    resetAcountState: (state) => {
+      state.loading = initialState.loading;
+      state.data = initialState.data;
+      state.error = initialState.error;
+      state.selectMovements = initialState.selectMovements;
+      state.totalSelect = initialState.totalSelect;
     },
   }, // Puedes definir acciones síncronas aquí si es necesario
   extraReducers: (builder) => {
@@ -108,6 +147,6 @@ const acountSlice = createSlice({
 });
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const { toggleMarc } = acountSlice.actions;
+export const { toggleMarc, resetAcountState } = acountSlice.actions;
 
 export default acountSlice.reducer;
