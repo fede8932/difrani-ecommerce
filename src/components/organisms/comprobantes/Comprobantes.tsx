@@ -39,7 +39,6 @@ const ContactDataContainer = styled(View)`
   width: 77%;
   margin-top: 17px;
   margin-bottom: 10px;
-  justify-content: space-between;
 
   @media (max-width: ${breakpoints.mobileLarge}px) {
     height: auto;

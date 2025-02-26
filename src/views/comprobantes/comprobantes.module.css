@@ -1,3 +1,12 @@
-.rowTable{
-    font-size: 12px;
+.rowTable {
+  font-size: 12px;
+}
+.tabContainer {
+  width: 100%;
+}
+
+@media (min-width: 770px) {  /* Se corrige la sintaxis */
+  .tabContainer {
+    width: 80%;
+  }
 }

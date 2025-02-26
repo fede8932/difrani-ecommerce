@@ -6,6 +6,7 @@ import ComprobanteOrganism from "../../components/organisms/comprobantes/Comprob
 import { breakpoints } from "../../resolutions";
 import { Tab, TabPane } from "semantic-ui-react";
 import CierresOrganism from "../../components/organisms/cierres/Cierres";
+import styles from "./comprobantes.module.css"
 
 interface Props {}
 
@@ -45,7 +46,7 @@ const panes = [
   {
     menuItem: { key: "pays", icon: "payment", content: "Cobros" },
     render: () => (
-      <TabPane style={{padding: "10px 2px"}}>
+      <TabPane style={{ padding: "10px 2px" }}>
         <ComprobanteOrganism />
       </TabPane>
     ),
@@ -53,7 +54,7 @@ const panes = [
   {
     menuItem: { key: "closing", icon: "balance scale", content: "Cierres" },
     render: () => (
-      <TabPane style={{padding: "10px 2px"}}>
+      <TabPane style={{ padding: "10px 2px" }}>
         <CierresOrganism />
       </TabPane>
     ),
@@ -72,8 +73,9 @@ function Comprobantes(_props: Props): React.ReactNode {
         En la sección de comprobantes, puedes ver el detalle de todos los pagos
         recibidos por los vendedores!
       </DescriptionStyled>
-      <Tab panes={panes} style={{ width: "100%" }} />
-      {/* <ComprobanteOrganism /> */}
+      <div className={styles.tabContainer}>
+        <Tab panes={panes} style={{ width: "100%" }} />
+      </div>
     </ContactoContainer>
   );
 }
