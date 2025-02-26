@@ -4,7 +4,7 @@ import styled from "styled-components";
 import View from "../../components/atoms/view/View";
 import ComprobanteOrganism from "../../components/organisms/comprobantes/Comprobantes";
 import { breakpoints } from "../../resolutions";
-import { Label, MenuItem, Tab, TabPane } from "semantic-ui-react";
+import { Tab, TabPane } from "semantic-ui-react";
 import CierresOrganism from "../../components/organisms/cierres/Cierres";
 
 interface Props {}
