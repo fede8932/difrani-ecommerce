@@ -139,7 +139,7 @@ function CierresOrganism(_props: Props): React.ReactNode {
                 <TableCell>
                   <ModalComponent
                     button={<Icon children="info" active color={""} />}
-                    title={"Detalle de orden"}
+                    title={"Detalle de cierre"}
                     size="1500px"
                   >
                     <CloseDetail closeId={c.id}/>
