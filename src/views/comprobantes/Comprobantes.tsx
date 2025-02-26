@@ -2,25 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from "styled-components";
 import View from "../../components/atoms/view/View";
-import {
-  Pagination,
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableHeaderCell,
-  TableRow,
-} from "semantic-ui-react";
-import styles from "./comprobantes.module.css";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../redux/store";
-import { formatDate } from "../../aux/formatDate";
+import ComprobanteOrganism from "../../components/organisms/comprobantes/Comprobantes";
 import { breakpoints } from "../../resolutions";
-import Icon from "../../components/atoms/icon/Icon";
-import ModalComponent from "../../components/molecules/modal/ModalComponent";
-import { formatNumbers } from "../../aux/formatNumbers";
-import { GetPays } from "../../redux/reducers/SellerReceipt";
+import { Label, MenuItem, Tab, TabPane } from "semantic-ui-react";
+import CierresOrganism from "../../components/organisms/cierres/Cierres";
 
 interface Props {}
 
@@ -56,54 +41,28 @@ const DescriptionStyled = styled.p`
   }
 `;
 
-const ContactDataContainer = styled(View)`
-  height: 580px;
-  width: 77%;
-  margin-top: 17px;
-  margin-bottom: 10px;
-  justify-content: space-between;
-
-  @media (max-width: ${breakpoints.mobileLarge}px) {
-    height: auto;
-  }
-
-  @media (max-width: ${breakpoints.mobileLarge - 1}px) {
-    width: 100%;
-  }
-`;
-
-const PagContainer = styled(View)`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 5px;
-
-  @media (max-width: ${breakpoints.mobileLarge}px) {
-    flex-direction: column-reverse;
-    align-items: center;
-  }
-`;
+const panes = [
+  {
+    menuItem: { key: "pays", icon: "payment", content: "Cobros" },
+    render: () => (
+      <TabPane style={{padding: "10px 2px"}}>
+        <ComprobanteOrganism />
+      </TabPane>
+    ),
+  },
+  {
+    menuItem: { key: "closing", icon: "balance scale", content: "Cierres" },
+    render: () => (
+      <TabPane style={{padding: "10px 2px"}}>
+        <CierresOrganism />
+      </TabPane>
+    ),
+  },
+];
 
 function Comprobantes(_props: Props): React.ReactNode {
-  const userState = useSelector((state: RootState) => state.user);
-  const [page, setPage] = useState(1);
-  const dispatch: AppDispatch = useDispatch();
-  const { data } = useSelector((state: RootState) => state.sellerReceipt);
+  // const userState = useSelector((state: RootState) => state.user);
 
-  const handleChange = (_e: any, data: any) => {
-    setPage(data.activePage);
-  };
-
-  useEffect(() => {
-    dispatch(
-      GetPays({
-        page: page,
-        clientId: userState.data?.clientId ?? 0,
-        pending: true,
-      })
-    );
-  }, [dispatch, page, userState.data?.clientId]);
   return (
     <ContactoContainer>
       <TitleStyled>
@@ -113,77 +72,8 @@ function Comprobantes(_props: Props): React.ReactNode {
         En la sección de comprobantes, puedes ver el detalle de todos los pagos
         recibidos por los vendedores!
       </DescriptionStyled>
-      <ContactDataContainer>
-        <div style={{ overflowX: "auto" }}>
-          <Table selectable unstackable>
-            <TableHeader>
-              <TableRow>
-                <TableHeaderCell>
-                  {window.innerWidth > breakpoints.mobileSmall
-                    ? "Número de comprobante"
-                    : "Comprobante"}
-                </TableHeaderCell>
-                <TableHeaderCell>
-                  {window.innerWidth > breakpoints.mobileSmall
-                    ? "Fecha de comprobante"
-                    : "Fecha"}
-                </TableHeaderCell>
-                <TableHeaderCell>
-                  {window.innerWidth > breakpoints.mobileSmall
-                    ? "Total del pago"
-                    : "Total"}
-                </TableHeaderCell>
-                <TableHeaderCell>
-                  {window.innerWidth > breakpoints.mobileSmall
-                    ? "Acciones"
-                    : "Acc"}
-                </TableHeaderCell>
-              </TableRow>
-            </TableHeader>
-
-            <TableBody>
-              {data.list.map((sr, i) => (
-                <TableRow
-                  key={i}
-                  className={
-                    window.innerWidth > breakpoints.mobileSmall
-                      ? ""
-                      : `${styles.rowTable}`
-                  }
-                >
-                  <TableCell>{sr.id}</TableCell>
-                  <TableCell>{formatDate(sr.createdAt)}</TableCell>
-                  <TableCell>${formatNumbers(sr.total)}</TableCell>
-                  <TableCell>
-                    <ModalComponent
-                      button={<Icon children="info" active color={""} />}
-                      title={"Detalle de orden"}
-                      size="1500px"
-                    >
-                      detalles
-                    </ModalComponent>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-        <PagContainer>
-          <span>{`Se encontaron ${data.totalPages} páginas con resultados`}</span>
-          <div>
-            <Pagination
-              boundaryRange={0}
-              activePage={page}
-              ellipsisItem={null}
-              firstItem={null}
-              lastItem={null}
-              siblingRange={1}
-              onPageChange={handleChange}
-              totalPages={data.totalPages}
-            />
-          </div>
-        </PagContainer>
-      </ContactDataContainer>
+      <Tab panes={panes} style={{ width: "100%" }} />
+      {/* <ComprobanteOrganism /> */}
     </ContactoContainer>
   );
 }

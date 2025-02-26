@@ -1,0 +1,15 @@
+.facturas{
+    margin-top: -10px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.payContainer
+{
+    margin-top: 10px;
+}
+.cobroCont
+{
+    max-height: 450px;
+    overflow-y: auto;
+}

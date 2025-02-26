@@ -8,6 +8,7 @@ import { LogOut } from "../../../axios/request/userRequest";
 import { breakpoints } from "../../../resolutions";
 import { useNavigate } from "react-router-dom";
 import PricesProtected from "../../../protected/PricesProtected";
+import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
 
 interface Props {}
 
@@ -50,6 +51,7 @@ const MobileButtonOnly = styled(InvertStyledButton)`
   }
 `;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function ListMenu(_props: Props): React.ReactNode {
   const userState: IUserState = useSelector((state: RootState) => state.user);
   const logOut = async () => {
@@ -110,6 +112,15 @@ function ListMenu(_props: Props): React.ReactNode {
           Contacto
         </MobileButtonOnly>
       </PricesProtected>
+      <RoleProtectedComponent accessList={[3]}>
+        <MobileButtonOnly
+          onClick={() => {
+            navigate("/comprobantes");
+          }}
+        >
+          Comprobantes
+        </MobileButtonOnly>
+      </RoleProtectedComponent>
       <InvertStyledButton onClick={logOut}>Cerrar sesión</InvertStyledButton>
     </ListContainer>
   );

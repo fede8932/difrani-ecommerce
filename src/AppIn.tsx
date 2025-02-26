@@ -2,11 +2,11 @@ import styled from "styled-components";
 import "./App.css";
 import View from "./components/atoms/view/View";
 import Navbar from "./components/organisms/navbar/Navbar";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Catalogo from "./views/catalogo/Catalogo";
 import "@mantine/core/styles.css";
 import { Toaster } from "react-hot-toast";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { AppDispatch, RootState } from "./redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { GetAllCartItemsState } from "./redux/reducers/cartListReducer";
@@ -25,7 +25,6 @@ import ClientFilter from "./components/molecules/clientFilter/ClientFilter";
 import BloquedModal from "./components/organisms/bloquedModal/BloquedModal";
 import ChangePass from "./components/organisms/changePassForm/ChangePass";
 import Comprobantes from "./views/comprobantes/Comprobantes";
-import Pagos from "./views/pagos/Pagos";
 
 const AppContainer = styled(View)`
   justify-content: space-between;
@@ -50,7 +49,12 @@ const AppContainer = styled(View)`
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(80,255,181,0.28)', endColorstr='#f8feff',GradientType=0 );
 `;
 
-const FilterView = styled(View)<{ justifyContent?: string; top?: string }>`
+const FilterView = styled(View)<{
+  justifyContent?: string;
+  top?: string;
+  displayNone?: boolean;
+}>`
+  display: ${({ displayNone }) => (displayNone ? "none" : "flex")};
   flex-direction: row;
   align-items: center;
   justify-content: ${({ justifyContent }) => justifyContent || "flex-start"};
@@ -66,8 +70,14 @@ const FilterView = styled(View)<{ justifyContent?: string; top?: string }>`
 
 function AppIn() {
   const dispatch: AppDispatch = useDispatch();
+  const { pathname } = useLocation();
 
   const userState = useSelector((state: RootState) => state.user);
+
+  const clientSelectView: boolean = useMemo(
+    () => pathname == "/comprobantes",
+    [pathname]
+  );
 
   useEffect(() => {
     if (userState.data) {
@@ -87,7 +97,7 @@ function AppIn() {
       <Navbar />
       <View position="relative" margin="75px 0px">
         <RoleProtectedComponent accessList={[3]}>
-          <FilterView>
+          <FilterView displayNone={clientSelectView}>
             <ClientFilter userId={userState.data?.userId} />
           </FilterView>
         </RoleProtectedComponent>
@@ -121,14 +131,6 @@ function AppIn() {
             element={
               <RoleProtectedView accessList={[3, 4]}>
                 <Comprobantes />
-              </RoleProtectedView>
-            }
-          />
-          <Route
-            path="/pagos"
-            element={
-              <RoleProtectedView accessList={[3]}>
-                <Pagos />
               </RoleProtectedView>
             }
           />

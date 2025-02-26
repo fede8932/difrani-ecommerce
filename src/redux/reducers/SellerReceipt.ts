@@ -10,6 +10,13 @@ export interface ICheQueType {
   cobroCh: string | string[];
 }
 
+export interface IPayPending{
+  transferencia: number;
+  cheque: number;
+  efectivo: number;
+  total: number;
+}
+
 export interface ICreateSellerReceipt {
   clientId?: number;
   userId?: number; //del vendedor
@@ -34,13 +41,14 @@ export interface ISellerReceipt {
   pending: boolean;
   applyPending: number;
   comments?: string | null;
+  movements: any[];
   bills: any[]; // Asegúrate de definir la interfaz Movement
   cheques: any[]; // Asegúrate de definir la interfaz Cheque
   createdAt: string; // DateTime se mapea como string (ISO 8601)
 }
 
 export interface IGetSellerReceipt {
-  clientId: number;
+  // clientId: number;
   page: number;
   pending: boolean;
 }
@@ -55,6 +63,7 @@ export interface ISellerReceiptState {
   loading: boolean;
   data: IData;
   error: string;
+  totalPending: number;
 }
 
 const initialState: ISellerReceiptState = {
@@ -65,6 +74,7 @@ const initialState: ISellerReceiptState = {
     totalResults: 0,
   },
   error: "",
+  totalPending: 0,
 };
 
 export const AddPay = createAsyncThunk<string, ICreateSellerReceipt>(
@@ -85,8 +95,7 @@ export const GetPays = createAsyncThunk<IData, IGetSellerReceipt>(
   "GET_RECEIPT",
   async (sendData: IGetSellerReceipt) => {
     try {
-      const response: IData = await sellerRequest.GetSellerReceiptByClientId(
-        sendData.clientId,
+      const response: IData = await sellerRequest.GetSellerReceipt(
         sendData.pending,
         sendData.page
       );
@@ -100,7 +109,14 @@ export const GetPays = createAsyncThunk<IData, IGetSellerReceipt>(
 const SellerReceiptSlice = createSlice({
   name: "SellerReceipt",
   initialState: initialState,
-  reducers: {}, // Puedes definir acciones síncronas aquí si es necesario
+  reducers: {
+    resetSellerReceipt: (state) => {
+      state.loading = false;
+      state.error = "";
+      state.data = initialState.data;
+      state.totalPending = initialState.totalPending;
+    },
+  }, // Puedes definir acciones síncronas aquí si es necesario
   extraReducers: (builder) => {
     builder
       .addCase(AddPay.pending, (state) => {
@@ -122,11 +138,14 @@ const SellerReceiptSlice = createSlice({
         state.error = action.error.message ?? "Error desconocido";
       })
       .addCase(GetPays.fulfilled, (state, action) => {
+        
         state.loading = false;
         state.error = "";
         state.data = action.payload;
       });
   },
 });
+
+export const { resetSellerReceipt } = SellerReceiptSlice.actions;
 
 export default SellerReceiptSlice.reducer;

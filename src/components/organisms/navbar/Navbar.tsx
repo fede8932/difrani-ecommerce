@@ -89,6 +89,7 @@ function Navbar(_props: Props): React.ReactNode {
 
   const { pathname } = useLocation();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedDispatch = useCallback(
     debounce((value) => {
       dispatch(setSearchInput(value));
