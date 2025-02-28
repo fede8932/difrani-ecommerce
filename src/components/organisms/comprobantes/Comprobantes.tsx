@@ -75,6 +75,9 @@ function ComprobanteOrganism(_props: Props): React.ReactNode {
 
   const handleNewClosing = () => {
     GetTotalPayPending().then((res) => {
+      if(res.total <= 0){
+        return toast.error("No hay pagos pendientes");
+      }
       Swal.fire({
         title: "Confirmar cierre diario?",
         html: `
