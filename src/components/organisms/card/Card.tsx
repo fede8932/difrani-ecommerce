@@ -185,9 +185,7 @@ function Card(props: Props): React.ReactNode {
             src={
               product?.images.length > 0
                 ? product?.images[0].url
-                : product.equivalence?.image?.url
-                ? product.equivalence?.image?.url
-                : img
+                : product.equivalence?.images[0] ? product.equivalence.images[0].url : img
             }
             alt="foto"
             width="100%"

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-useless-catch */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

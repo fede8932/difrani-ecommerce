@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IProduct, ISendItemData } from "../../redux/reducers/cartListReducer";
 import axiosInstances from "../config";
 const apiUrl = import.meta.env.VITE_MY_URL_BACKEND;
