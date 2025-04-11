@@ -87,6 +87,8 @@ function Navbar(_props: Props): React.ReactNode {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const { data } = useSelector((state: RootState) => state.user);
+
   const { pathname } = useLocation();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -180,15 +182,17 @@ function Navbar(_props: Props): React.ReactNode {
                 <IconButton icon="manufacturing" size="24px" />
               </Rentab>
             </RoleProtectedComponent>
-            <RoleProtectedComponent accessList={[4]}>
+            <RoleProtectedComponent accessList={[3, 4]}>
               <ItemsCount>
-                <IconButton
-                  icon="shopping_cart"
-                  size="24px"
-                  onClick={() => {
-                    navigate("/carrito");
-                  }}
-                />
+                {data?.cartId ? (
+                  <IconButton
+                    icon="shopping_cart"
+                    size="24px"
+                    onClick={() => {
+                      navigate("/carrito");
+                    }}
+                  />
+                ) : null}
               </ItemsCount>
             </RoleProtectedComponent>
             <Menu

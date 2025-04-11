@@ -1,12 +1,12 @@
 import styled, { keyframes } from "styled-components";
 import View from "../../atoms/view/View";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import React from "react";
 
 interface Props {
   button: React.ReactElement;
   children: React.ReactElement;
-  position: "left" | "right"; // Nuevo prop para definir la posición
+  position: "left" | "right";
 }
 
 const MenuContainer = styled(View)`
@@ -57,16 +57,18 @@ const BoxContainer = styled(View)<{
 function Menu(props: Props): React.ReactNode {
   const { children, position, button } = props;
   const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
   const extendButton: React.ReactNode = React.cloneElement(button, {
     onClick: () => {
       setOpen(!open);
     },
   });
 
-  const handleClickOutside = () => {
-    setTimeout(() => {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
       setOpen(false);
-    }, 2500);
+    }
   };
 
   useEffect(() => {
@@ -77,7 +79,7 @@ function Menu(props: Props): React.ReactNode {
   }, []);
 
   return (
-    <MenuContainer>
+    <MenuContainer ref={menuRef}>
       {extendButton}
       {open || open === false ? (
         <BoxContainer position={position} open={open}>

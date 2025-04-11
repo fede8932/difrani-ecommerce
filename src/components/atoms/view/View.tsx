@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 
 interface Props {
@@ -36,9 +37,14 @@ const ViewContainer = styled.div<{
     props.flexDirection ? props.flexDirection : "column"};
 `;
 
-function View(props: Props): React.ReactNode {
-  const { children, ...rest } = props;
-  return <ViewContainer {...rest}>{children}</ViewContainer>;
-}
+const View = React.forwardRef<HTMLDivElement, Props>(
+  ({ children, ...rest }, ref) => {
+    return (
+      <ViewContainer {...rest} ref={ref}>
+        {children}
+      </ViewContainer>
+    );
+  }
+);
 
 export default View;
