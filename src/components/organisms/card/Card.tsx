@@ -41,17 +41,15 @@ const CardContainer = styled(View)`
     rgba(249, 249, 249, 1) 100%
   );
   border: 2px solid ${({ theme }) => hexToRgba(theme.colors.secundary, 0.1)};
-  box-shadow: 0px 0px 10px -2px rgba(79, 225, 135, 0.33);
-  -webkit-box-shadow: 0px 0px 10px -2px rgba(79, 225, 135, 0.33);
-  -moz-box-shadow: 0px 0px 10px -2px rgba(79, 225, 135, 0.33);
+  box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
+  -webkit-box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
+  -moz-box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
 `;
 
 const PriceContainer = styled(View)<{ stock: number }>`
   background-color: ${({ theme, stock }) =>
-    stock > 4
-      ? hexToRgba(theme.colors.primary, 0.5)
-      : stock > 0
-      ? hexToRgba(theme.colors.warning, 0.5)
+    stock > 0
+      ? hexToRgba(theme.colors.greenAccent, 0.5)
       : hexToRgba(theme.colors.alert, 0.4)};
   margin: -10px -6px;
   border-radius: 10px;
@@ -185,7 +183,9 @@ function Card(props: Props): React.ReactNode {
             src={
               product?.images.length > 0
                 ? product?.images[0].url
-                : product.equivalence?.images[0] ? product.equivalence.images[0].url : img
+                : product.equivalence?.images[0]
+                ? product.equivalence.images[0].url
+                : img
             }
             alt="foto"
             width="100%"

@@ -16,7 +16,7 @@ interface Props {
 
 const StyledInput = styled.input<{ icon?: boolean; background?: string }>`
   all: unset;
-  border-radius: 20px;
+  border-radius: 5px;
   z-index: 50;
   height: ${({ height }) => height || "auto"};
   width: ${({ width }) => width || "100%"};

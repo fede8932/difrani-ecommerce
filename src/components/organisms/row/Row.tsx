@@ -41,18 +41,16 @@ const RowContainer = styled(View)`
     rgba(249, 249, 249, 1) 100%
   );
   border: 2px solid ${({ theme }) => hexToRgba(theme.colors.secundary, 0.1)};
-  box-shadow: 0px 0px 10px -2px rgba(79, 225, 135, 0.33);
-  -webkit-box-shadow: 0px 0px 10px -2px rgba(79, 225, 135, 0.33);
-  -moz-box-shadow: 0px 0px 10px -2px rgba(79, 225, 135, 0.33);
+  box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
+  -webkit-box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
+  -moz-box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
 `;
 
 const PriceContainer = styled(View)<{ stock: number }>`
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   background-color: ${({ theme, stock }) =>
-    stock > 4
-      ? hexToRgba(theme.colors.primary, 0.5)
-      : stock > 0
-      ? hexToRgba(theme.colors.warning, 0.5)
+    stock > 0
+      ? hexToRgba(theme.colors.greenAccent, 0.5)
       : hexToRgba(theme.colors.alert, 0.4)};
   border-radius: 10px;
   padding: 5px 10px;

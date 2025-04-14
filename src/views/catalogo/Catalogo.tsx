@@ -342,12 +342,8 @@ function Catalogo(_props: Props): React.ReactNode {
             <FilterView top="20px">
               <DivStockCont>
                 <FilterView flexDirection="row">
-                  <MuestraColor color="primary" opac={0.5}></MuestraColor>
-                  <span style={{ margin: "0px 2px" }}>Es stock</span>
-                </FilterView>
-                <FilterView flexDirection="row">
-                  <MuestraColor color="warning" opac={0.5}></MuestraColor>
-                  <span style={{ margin: "0px 2px" }}>Bajo stock</span>
+                  <MuestraColor color="greenAccent" opac={0.5}></MuestraColor>
+                  <span style={{ margin: "0px 2px" }}>En stock</span>
                 </FilterView>
                 <FilterView flexDirection="row">
                   <MuestraColor color="alert" opac={0.5}></MuestraColor>

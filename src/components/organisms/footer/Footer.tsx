@@ -39,12 +39,11 @@ function Footer(_props: Props): React.ReactNode {
   return (
     <Container>
       <InfoCont width="33%">
-        <span>Blase distribuidora</span>
-        <a href="https://maps.app.goo.gl/NPSodGsCbev2stoHA" target="_blank">
-          B1708FHL, Av. Don Bosco 2175, B1708FHB Morón, Provincia de Buenos
-          Aires
+        <span>Difrani</span>
+        <a href="https://maps.app.goo.gl/jwm4h8DSsREvj1ch8" target="_blank">
+          RP28 369, B1748 Gral. Rodríguez, Provincia de Buenos Aires
         </a>
-        <p>Tel.: (011) 4460-5972</p>
+        <p>Tel.: 1132948959</p>
       </InfoCont>
       <div
         style={{
@@ -56,36 +55,61 @@ function Footer(_props: Props): React.ReactNode {
       >
         <span style={{ marginBottom: "15px" }}>Redes sociales</span>
         <IconCont width="33%">
-          <Img width="31px" src={faceboook} alt={"facebook"} margin="0px 5px" />
-          <Img
-            width="31px"
-            src={instagram}
-            alt={"instagram"}
-            margin="0px 5px"
-          />
-          <Img width="31px" src={whatsapp} alt={"whatsapp"} margin="0px 5px" />
+          <a
+            href="https://www.facebook.com/profile.php?id=61565347106755"
+            target="_blank"
+          >
+            <Img
+              width="31px"
+              src={faceboook}
+              alt={"facebook"}
+              margin="0px 5px"
+            />
+          </a>
+          <a
+            href="https://www.instagram.com/difrani_autopartes/"
+            target="_blank"
+          >
+            <Img
+              width="31px"
+              src={instagram}
+              alt={"instagram"}
+              margin="0px 5px"
+            />
+          </a>
+          <a
+            href="https://web.whatsapp.com/send/?phone=541132948959&text&type=phone_number&app_absent=0"
+            target="_blank"
+          >
+            <Img
+              width="31px"
+              src={whatsapp}
+              alt={"whatsapp"}
+              margin="0px 5px"
+            />
+          </a>
         </IconCont>
       </div>
       <InfoCont>
         <span>
           Whatsapp.:{" "}
           <a
-            href="https://web.whatsapp.com/send/?phone=541164147716&text&type=phone_number&app_absent=0"
+            href="https://web.whatsapp.com/send/?phone=541132948959&text&type=phone_number&app_absent=0"
             target="_blank"
           >
-            +54 1164147716
+            +54 1132948959
           </a>
         </span>
         <span>
           Website.:{" "}
-          <a href="https://www.blasedistribuidora.com.ar/" target="_blank">
-            https://www.blasedistribuidora.com.ar/
+          <a href="https://difrani.com.ar/" target="_blank">
+            https://difrani.com.ar/
           </a>
         </span>
         <p>
           Email.:{" "}
-          <a href="mailto:ventas@blasedistribuidora.com" target="_blank">
-            ventas@blasedistribuidora.com
+          <a href="mailto:ventas@difrani.com" target="_blank">
+            ventas@difrani.com
           </a>
         </p>
       </InfoCont>

@@ -1,19 +1,21 @@
 export const themes = {
   ligth: {
     colors: {
-      background: "#F7FFFA", // Color de fondo
-      surface: "#fffbd5", // Color de fondo de tarjetas
-      text: "#373241", // Color de textos
-      wideText: "#51555b", //Color de otros textos
-      primary: "#4fe187", // Color primario
-      secundary: "#5577a4", // Color secundario
-      maxim: "#122835", // Contraste máximo
-      medium: "#DFE4E8",
-      minim: "#f9f9f9", // Contraste mínimo
-      warning: "#f9fa72", // Cuidado
-      success: "#4fe187", // Exito
-      alert: "#ff306a", // Error
-      line: "#ECF6F3", // Lineas
+      background: "#FFF5F5", // Un fondo suave con tinte rojo claro
+      surface: "#ffe6e6", // Tarjetas con fondo claro rojizo
+      text: "#373241", // Mantenido
+      wideText: "#51555b", // Mantenido
+      primary: "#e14f4f", // Rojo principal
+      secundary: "#a45555", // Rojo apagado como secundario
+      maxim: "#2e0a0a", // Contraste máximo más acorde al rojo
+      medium: "#f0dcdc", // Fondo medio
+      minim: "#fef8f8", // Contraste mínimo más claro
+      warning: "#f9fa72", // Podés dejarlo o buscar un amarillo más pastel
+      success: "#e14f4f", // Éxito también con rojo si lo usás como "confirmación"
+      alert: "#c82333", // Rojo intenso para errores
+      line: "#f7dcdc", // Líneas suaves rojizas
+      greenAccent: "#4CAF50",
     },
   },
 };
+

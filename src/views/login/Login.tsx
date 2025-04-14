@@ -20,9 +20,9 @@ interface Props {}
 const LoginContainer = styled(View)`
   height: 100vh;
   background: linear-gradient(
-      87deg,
+      267deg,
       rgba(255, 251, 213, 0.152) 0%,
-      rgba(79, 225, 135, 0.41) 88%
+      rgba(139, 0, 0, 0.41) 88%
     ),
     url(${backgroundImage});
   background-size: cover;
@@ -31,12 +31,13 @@ const LoginContainer = styled(View)`
 `;
 
 const Logo = styled.img`
-  width: 180px;
+  width: 190px;
+  height: 90px;
 `;
 
 const BodyCont = styled(View)`
   flex-direction: row;
-  justify-content: space-between;
+  padding: 0px 150px;
   color: ${({ theme }) => theme.colors.line};
 
   @media (max-width: ${breakpoints.mobileLarge}px) {
@@ -135,37 +136,12 @@ function Login(_props: Props): React.ReactNode {
 
   return (
     <LoginContainer>
-      <Logo alt="logo" src={logo} />
+      <div style={{ width: "100%", display: "flex", justifyContent: "end" }}>
+        <Logo alt="logo" src={logo} />
+      </div>
       <BodyCont>
-        <Container>
-          <h3>Bienvenido</h3>
-          <Text>
-            En Blase Distribuidora, nos enorgullece ser líderes en la
-            distribución mayorista de repuestos para automóviles. Ofrecemos
-            soluciones confiables y de calidad desde hace años, siendo un
-            referente en la industria automotriz. Fundada con la visión de
-            proporcionar un servicio excepcional y productos de primera calidad,
-            Blase Distribuidora se ha convertido en un pilar fundamental para
-            talleres mecánicos, concesionarios y comercios de repuestos. Nuestro
-            catálogo abarca una amplia gama de marcas y modelos de vehículos,
-            garantizando que nuestros clientes encuentren lo que necesitan.
-            Nuestro equipo está compuesto por profesionales capacitados y
-            apasionados por la industria automotriz. Nos mantenemos al tanto de
-            las últimas innovaciones para ofrecer soluciones eficientes. La
-            satisfacción del cliente es nuestra prioridad. Nos comprometemos a
-            proporcionar un servicio personalizado y atención individualizada
-            para asegurarnos de que cada cliente reciba la asistencia que
-            necesita. Construimos relaciones sólidas y duraderas basadas en la
-            confianza mutua. En Blase Distribuidora también nos preocupamos por
-            el medio ambiente y la sostenibilidad. Buscamos constantemente
-            maneras de reducir nuestro impacto ambiental y promover prácticas
-            comerciales responsables. Confíe en nosotros para satisfacer todas
-            sus necesidades de repuestos para automóviles y experimente la
-            diferencia que marca la excelencia en el servicio.
-          </Text>
-        </Container>
         <Form onSubmit={handleSubmit}>
-          <h3 style={{ marginBottom: "35px" }}>Iniciar sesión</h3>
+          <h3 style={{ marginBottom: "35px" }}>Iniciar sesión</h3><Logo alt="logo" src={logo} />
           <div style={{ width: "100%" }}>
             <label>Número de CUIT</label>
             <Input
@@ -194,7 +170,7 @@ function Login(_props: Props): React.ReactNode {
           <div style={{ position: "relative", width: "100%", display: "flex" }}>
             {passError != "" ? <ErrorMessage>{passError}</ErrorMessage> : null}
           </div>
-          <div style={{ marginTop: "310px", width: "98%" }}>
+          <div style={{ marginTop: "210px", width: "98%" }}>
             <Button
               type="submit"
               color="primary"

@@ -45,7 +45,7 @@ const ButtonContainer = styled(View)`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  border-radius: 50px;
+  border-radius: 5px;
   padding: 5px 15px;
   -webkit-box-shadow: 0px 0px 5px 0px rgba(7, 197, 155, 0.1);
   -moz-box-shadow: 0px 0px 5px 0px rgba(7, 197, 155, 0.1);
@@ -124,7 +124,8 @@ function Navbar(_props: Props): React.ReactNode {
           <Logo
             src={logo}
             alt="logo"
-            width="155px"
+            width="105px"
+            height="60px"
             onClick={() => {
               navigate("/");
             }}

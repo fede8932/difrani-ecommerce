@@ -29,24 +29,11 @@ import Comprobantes from "./views/comprobantes/Comprobantes";
 const AppContainer = styled(View)`
   justify-content: space-between;
   min-height: 100vh;
-  /* width: 100vw; */
-  background: rgba(80, 255, 181, 0.28);
-  background: -moz-linear-gradient(
-    top,
-    rgba(80, 255, 181, 0.28) 0%,
-    #f8feff 100%
-  );
-  background: -webkit-linear-gradient(
-    top,
-    rgba(80, 255, 181, 0.28) 0%,
-    #f8feff 100%
-  );
   background: linear-gradient(
     to bottom,
-    rgba(80, 255, 181, 0.28) 0%,
-    #f8feff 100%
+    rgba(225, 79, 79, 0.28) 0%,
+    /* primary con opacidad */ #fff5f5 100% /* background */
   );
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(80,255,181,0.28)', endColorstr='#f8feff',GradientType=0 );
 `;
 
 const FilterView = styled(View)<{
