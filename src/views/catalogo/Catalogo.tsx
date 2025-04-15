@@ -5,7 +5,7 @@ import Card from "../../components/organisms/card/Card";
 import Row from "../../components/organisms/row/Row";
 import Icon from "../../components/atoms/icon/Icon";
 import { useEffect, useState } from "react";
-import { Checkbox, Loader, Pagination, Popup } from "semantic-ui-react";
+import { Loader, Pagination, Popup } from "semantic-ui-react";
 import Select from "../../components/atoms/select/Select";
 import { hexToRgba } from "../../aux/rgbaConverter";
 import { useDispatch, useSelector } from "react-redux";
@@ -90,7 +90,7 @@ const DivStockCont = styled(View)`
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Catalogo(_props: Props): React.ReactNode {
   const [grid, setGrid] = useState(true);
-  const [sale, setSale] = useState(false);
+  const [sale] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -116,10 +116,10 @@ function Catalogo(_props: Props): React.ReactNode {
     (state: RootState) => state.searchInput
   );
 
-  const changeSale = (_e: any, d: any) => {
-    handlePageChange("", { activePage: 1 });
-    setSale(d.checked);
-  };
+  // const changeSale = (_e: any, d: any) => {
+  //   handlePageChange("", { activePage: 1 });
+  //   setSale(d.checked);
+  // };
 
   const resetSearch = () => {
     window.location.reload();

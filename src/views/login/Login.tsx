@@ -45,18 +45,18 @@ const BodyCont = styled(View)`
   }
 `;
 
-const Text = styled.p`
-  width: 630px;
-  font-size: 15px;
-`;
+// const Text = styled.p`
+//   width: 630px;
+//   font-size: 15px;
+// `;
 
-const Container = styled(View)`
-  margin: 200px 0px 0px 50px;
+// const Container = styled(View)`
+//   margin: 200px 0px 0px 50px;
 
-  @media (max-width: ${breakpoints.mobileLarge}px) {
-    display: none;
-  }
-`;
+//   @media (max-width: ${breakpoints.mobileLarge}px) {
+//     display: none;
+//   }
+// `;
 
 const Form = styled.form`
   margin-top: 84px;
