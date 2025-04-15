@@ -31,7 +31,7 @@ interface Props {
 const RowContainer = styled(View)`
   padding: 8px 5px;
   margin: 10px 6px;
-  border-radius: 10px;
+  border-radius: 2px;
   justify-content: flex-start;
   flex-direction: row;
   background: rgb(247, 255, 250);
@@ -40,7 +40,6 @@ const RowContainer = styled(View)`
     rgba(247, 255, 250, 1) 0%,
     rgba(249, 249, 249, 1) 100%
   );
-  border: 2px solid ${({ theme }) => hexToRgba(theme.colors.secundary, 0.1)};
   box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
   -webkit-box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
   -moz-box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
@@ -48,11 +47,8 @@ const RowContainer = styled(View)`
 
 const PriceContainer = styled(View)<{ stock: number }>`
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  background-color: ${({ theme, stock }) =>
-    stock > 0
-      ? hexToRgba(theme.colors.greenAccent, 0.5)
-      : hexToRgba(theme.colors.alert, 0.4)};
-  border-radius: 10px;
+  background-color: ${({ theme }) => hexToRgba(theme.colors.black, 0.1)};
+  border-radius: 2px;
   padding: 5px 10px;
   color: ${({ theme }) => theme.colors.text};
   justify-content: space-between;
@@ -192,6 +188,7 @@ function Row(props: Props): React.ReactNode {
       ) : (
         <ProductDetails product={product}>
           <MyImg
+            st={product.stock.stock < 1}
             src={
               product?.images.length > 0
                 ? product?.images[0].url

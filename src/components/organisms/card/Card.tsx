@@ -32,7 +32,7 @@ const CardContainer = styled(View)`
   margin: 12px 8px;
   width: 270px;
   height: 390px;
-  border-radius: 10px;
+  border-radius: 2px;
   justify-content: space-between;
   background: rgb(247, 255, 250);
   background: radial-gradient(
@@ -40,19 +40,15 @@ const CardContainer = styled(View)`
     rgba(247, 255, 250, 1) 0%,
     rgba(249, 249, 249, 1) 100%
   );
-  border: 2px solid ${({ theme }) => hexToRgba(theme.colors.secundary, 0.1)};
   box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
   -webkit-box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
   -moz-box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
 `;
 
 const PriceContainer = styled(View)<{ stock: number }>`
-  background-color: ${({ theme, stock }) =>
-    stock > 0
-      ? hexToRgba(theme.colors.greenAccent, 0.5)
-      : hexToRgba(theme.colors.alert, 0.4)};
+  background-color: ${({ theme }) => hexToRgba(theme.colors.black, 0.1)};
   margin: -10px -6px;
-  border-radius: 10px;
+  border-radius: 2x;
   padding: 5px 10px;
   color: ${({ theme }) => theme.colors.text};
   flex-direction: row;
@@ -180,6 +176,7 @@ function Card(props: Props): React.ReactNode {
       ) : (
         <ProductDetails product={product}>
           <Img
+            st={product.stock.stock < 1}
             src={
               product?.images.length > 0
                 ? product?.images[0].url

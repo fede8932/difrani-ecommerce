@@ -351,14 +351,14 @@ function Catalogo(_props: Props): React.ReactNode {
                 </FilterView>
               </DivStockCont>
             </FilterView>
-            <div style={{ marginTop: "-10px" }}>
+            {/* <div style={{ marginTop: "-10px" }}>
               <Checkbox
                 label="Solo ofertas"
                 toggle
                 checked={sale}
                 onChange={changeSale}
               />
-            </div>
+            </div> */}
           </RoleProtectedComponent>
         </FilterView>
         {catalogState.data.list?.map((product, i) =>

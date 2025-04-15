@@ -15,6 +15,7 @@ export const themes = {
       alert: "#c82333", // Rojo intenso para errores
       line: "#f7dcdc", // Líneas suaves rojizas
       greenAccent: "#4CAF50",
+      black: "#000000",
     },
   },
 };

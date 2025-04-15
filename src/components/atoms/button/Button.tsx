@@ -25,7 +25,7 @@ const StyledButton = styled.button<{
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 15px;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.5s ease;
   width: ${({ width }) => width || "100%"};
@@ -51,7 +51,7 @@ const InvertStyledButton = styled.button<{
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 15px;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.5s ease;
   color: ${({ theme }) => theme.colors.text};
