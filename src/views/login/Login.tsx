@@ -42,6 +42,7 @@ const BodyCont = styled(View)`
 
   @media (max-width: ${breakpoints.mobileLarge}px) {
     flex-direction: column;
+  padding: 0px 0px;
   }
 `;
 
