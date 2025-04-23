@@ -10,6 +10,7 @@ interface Props {
   height?: string;
   margin?: string;
   objectFit?: string;
+  zoom?: string;
 }
 
 const StockSpan = styled.span`
@@ -26,19 +27,26 @@ const ImgRender = styled.img<{
   height?: string;
   margin?: string;
   objectFit?: string;
+  zoom?: string;
 }>`
   cursor: pointer;
   margin: ${({ margin }) => margin || "0px 15px 0px 0px"};
   width: ${({ width }) => width || ""};
   height: ${({ height }) => height || ""};
   object-fit: ${({ objectFit }) => objectFit || "fit"};
+  transform: ${({ zoom }) => (zoom ? `scale(${zoom})` : "scale(1)")};
 `;
 
 function Img(props: Props): React.ReactNode {
   const { alt, src, st, ...rest } = props;
   return (
     <div
-      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        overflow: "hidden",
+      }}
     >
       <ImgRender src={src} alt={alt} {...rest} />
       {st ? <StockSpan>SIN STOCK</StockSpan> : null}

@@ -176,6 +176,7 @@ function Card(props: Props): React.ReactNode {
       ) : (
         <ProductDetails product={product}>
           <Img
+            zoom="1.4"
             st={product.stock.stock < 1}
             src={
               product?.images.length > 0
