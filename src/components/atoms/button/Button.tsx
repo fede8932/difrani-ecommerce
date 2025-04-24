@@ -34,6 +34,8 @@ const StyledButton = styled.button<{
   color: ${({ theme }) => theme.colors.wideText};
   font-weight: 600;
   font-size: 15px;
+  font-family: 'Nunito', sans-serif !important;
+  font-weight: 600 !important;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.success};
@@ -55,6 +57,8 @@ const InvertStyledButton = styled.button<{
   cursor: pointer;
   transition: background-color 0.5s ease;
   color: ${({ theme }) => theme.colors.text};
+  font-family: 'Nunito', sans-serif !important;
+  font-weight: 600 !important;
 
   &:hover {
     background-color: ${({ theme }) => hexToRgba(theme.colors.secundary, 0.5)};

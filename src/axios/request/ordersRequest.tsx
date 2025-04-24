@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable prefer-const */
 import { IGetOrderItems } from "../../redux/reducers/orderItemsReducer";
 import { IGetOrders } from "../../redux/reducers/ordersReducer";
 import axiosInstances from "../config";
@@ -7,7 +9,7 @@ export const GetAllOrders = async (sendData: IGetOrders) => {
   // eslint-disable-next-line no-useless-catch
   try {
     const { clientId, rows, page } = sendData;
-    let url: string = `${apiUrl}/api/purchase/order/client/${clientId}?pageSize=${rows}&page=${page}`;
+    let url: string = `${apiUrl}/api/purchase/order/client/${clientId}?pageSize=${rows}&page=${page}&ecom=${true}`;
     const {
       data,
     }: { data: { totalPages: number; totalRows: number; list: any[] } } =

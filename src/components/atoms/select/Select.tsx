@@ -36,7 +36,7 @@ const slideUp = keyframes`
 `;
 
 const SelectClick = styled.div<{ width?: string; height?: string }>`
-  border-radius: 15px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -142,7 +142,7 @@ function Select(props: Props): React.ReactNode {
   }, [open, options]);
 
   return (
-    <div ref={selectRef} style={{ marginTop: "5px" }}>
+    <div ref={selectRef} style={{ marginTop: "5px", marginLeft: "3px" }}>
       <SelectClick
         {...rest}
         onClick={() => {

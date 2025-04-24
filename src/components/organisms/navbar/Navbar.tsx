@@ -152,7 +152,7 @@ function Navbar(_props: Props): React.ReactNode {
             <Button
               invert
               color="primary"
-              text="Estado de cuenta"
+              text="Transacciones"
               height="25px"
               onClick={() => {
                 navigate("/resumen");

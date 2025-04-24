@@ -1,10 +1,8 @@
 import styled from "styled-components";
-import "./App.css";
 import View from "./components/atoms/view/View";
 import Navbar from "./components/organisms/navbar/Navbar";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Catalogo from "./views/catalogo/Catalogo";
-import "@mantine/core/styles.css";
 import { Toaster } from "react-hot-toast";
 import { useEffect, useMemo } from "react";
 import { AppDispatch, RootState } from "./redux/store";
@@ -25,14 +23,15 @@ import ClientFilter from "./components/molecules/clientFilter/ClientFilter";
 import BloquedModal from "./components/organisms/bloquedModal/BloquedModal";
 import ChangePass from "./components/organisms/changePassForm/ChangePass";
 import Comprobantes from "./views/comprobantes/Comprobantes";
+import BotonFlotante from "./components/atoms/bootnFlotante/BotonFlotante";
 
 const AppContainer = styled(View)`
   justify-content: space-between;
   min-height: 100vh;
   background: linear-gradient(
     to bottom,
-    rgba(225, 79, 79, 0.28) 0%,
-    /* primary con opacidad */ #fff5f5 100% /* background */
+    rgba(255, 255, 255, 1) 0%, /* Blanco */
+    rgba(0, 0, 0, 1) 100% /* Negro */
   );
 `;
 
@@ -159,6 +158,7 @@ function AppIn() {
           },
         }}
       />
+      <BotonFlotante />
     </AppContainer>
   );
 }

@@ -20,9 +20,9 @@ interface Props {}
 const LoginContainer = styled(View)`
   height: 100vh;
   background: linear-gradient(
-      267deg,
-      rgba(255, 251, 213, 0.152) 0%,
-      rgba(139, 0, 0, 0.41) 88%
+      90deg,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(255, 255, 255, 0.7) 100%
     ),
     url(${backgroundImage});
   background-size: cover;
@@ -63,7 +63,7 @@ const Form = styled.form`
   margin-top: 84px;
   margin-right: 50px;
   border: 1px solid ${({ theme }) => theme.colors.line};
-  background-color: ${({ theme }) => hexToRgba(theme.colors.line, 0.87)};
+  background-color: ${({ theme }) => hexToRgba(theme.colors.line, 0.37)};
   border-radius: 10px;
   width: 440px;
   height: 600px;

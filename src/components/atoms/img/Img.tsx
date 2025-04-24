@@ -20,6 +20,7 @@ const StockSpan = styled.span`
   padding: 2px 3px;
   border-radius: 2px;
   margin-top: -25px;
+  z-index: 100;
 `;
 
 const ImgRender = styled.img<{

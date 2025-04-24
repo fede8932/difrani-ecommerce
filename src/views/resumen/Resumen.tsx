@@ -150,7 +150,7 @@ function Resumen(_props: Props): React.ReactNode {
   return (
     <ContactoContainer>
       <TitleStyled>
-        Informe de <TitleStyledSpan>Cuenta corriente</TitleStyledSpan>
+        Reporte de <TitleStyledSpan> transacciones</TitleStyledSpan>
       </TitleStyled>
       <DescriptionStyled>
         En la sección de transacciones, puedes revisar el detalle y el estado de
@@ -194,8 +194,7 @@ function Resumen(_props: Props): React.ReactNode {
             onChange={handleChangeToggle}
             checked={check}
           />
-          {acountStatus?.totalSelect >
-          0 ? (
+          {acountStatus?.totalSelect > 0 ? (
             <div style={{ marginLeft: "45px", display: "inline-block" }}>
               <ModalComponent
                 button={<Button>Nuevo cobro</Button>}

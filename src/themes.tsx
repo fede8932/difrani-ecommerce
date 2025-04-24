@@ -1,5 +1,6 @@
 export const themes = {
   ligth: {
+    font: "'Noto Sans', sans-serif",
     colors: {
       background: "#FFF5F5", // Un fondo suave con tinte rojo claro
       surface: "#ffe6e6", // Tarjetas con fondo claro rojizo

@@ -166,7 +166,6 @@ function ProductDetails(props: Props): React.ReactNode {
     >
       <DetailsContainer /*height="400px"*/>
         <Img
-          zoom="1.58"
           margin="10px 0px 0px 0px"
           src={product?.images.length > 0 ? product?.images[0].url : img}
           alt="imagen"

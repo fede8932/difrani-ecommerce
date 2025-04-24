@@ -1,4 +1,3 @@
-import "./App.css";
 import "@mantine/core/styles.css";
 import { Toaster } from "react-hot-toast";
 import { useEffect } from "react";

@@ -35,6 +35,7 @@ const InfoCont = styled(View)`
   }
 `;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Footer(_props: Props): React.ReactNode {
   return (
     <Container>

@@ -175,7 +175,7 @@ function Carrito(_props: Props): React.ReactNode {
             <TableHeader>
               <TableRow>
                 <TableHeaderCell>Código</TableHeaderCell>
-                <TableHeaderCell>Marca</TableHeaderCell>
+                <TableHeaderCell>Descripcion</TableHeaderCell>
                 <TableHeaderCell>Precio s/IVA</TableHeaderCell>
                 <TableHeaderCell>Cantidad</TableHeaderCell>
                 {window.innerWidth > breakpoints.mobileSmall ? (
@@ -190,7 +190,7 @@ function Carrito(_props: Props): React.ReactNode {
                 <TableRow key={i}>
                   <TableCell>{item.product?.article.toUpperCase()}</TableCell>
                   <TableCell>
-                    {item.product?.brand.name.toUpperCase()}
+                    {item.product?.description.toUpperCase()}
                   </TableCell>
                   <TableCell>
                     $
@@ -232,7 +232,7 @@ function Carrito(_props: Props): React.ReactNode {
             </TableBody>
           </Table>
         </div>
-        <div
+        {/* <div
           style={{
             display: "flex",
             width: "95%",
@@ -247,8 +247,8 @@ function Carrito(_props: Props): React.ReactNode {
               + iva
             </span>
           </span>
-        </div>
-        <div
+        </div> */}
+        {/* <div
           style={{
             display: "flex",
             width: "95%",
@@ -260,7 +260,7 @@ function Carrito(_props: Props): React.ReactNode {
             Descuentos:{" "}
             <span>${formatNumberToString(cartState.totalDiscounts)} + iva</span>
           </span>
-        </div>
+        </div> */}
         <div
           style={{
             display: "flex",
@@ -270,7 +270,7 @@ function Carrito(_props: Props): React.ReactNode {
             marginTop: "10px",
           }}
         >
-          <span style={{ fontSize: "15px", fontWeight: "600" }}>
+          <span style={{ fontSize: "15px", fontWeight: "600", color: "white" }}>
             Total:{" "}
             <span>
               $

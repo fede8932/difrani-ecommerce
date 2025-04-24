@@ -49,6 +49,7 @@ const ContactDataContainer = styled(View)`
   }
 `;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Contacto(_props: Props): React.ReactNode {
   return (
     <ContactoContainer>
@@ -56,10 +57,10 @@ function Contacto(_props: Props): React.ReactNode {
         Información de <TitleStyledSpan>Contacto</TitleStyledSpan>
       </TitleStyled>
       <DescriptionStyled>
-        En la sección de contacto, puedes comunicarte con nosotros de manera
-        rápida y sencilla. Encuentra nuestra dirección de correo electrónico,
-        número de teléfono y un mapa para ubicar nuestra tienda. ¡Contáctanos y
-        con gusto te asistiremos!
+        En nuestra sección de contacto, tienes a tu disposición una forma ágil y
+        simple de comunicarte con nosotros. Aquí encontrarás nuestro correo
+        electrónico, número de teléfono y un mapa con la ubicación de nuestra
+        tienda. ¡No dudes en escribirnos, estaremos encantados de ayudarte!
       </DescriptionStyled>
       <ContactDataContainer>
         <Map width="90vw" />

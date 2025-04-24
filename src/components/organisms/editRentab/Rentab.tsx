@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from "styled-components";
 import ModalComponent from "../../molecules/modal/ModalComponent";
 import View from "../../atoms/view/View";
@@ -27,7 +28,7 @@ interface Props {
 
 const GeneralCard = styled(View)`
   height: 42px;
-  border-radius: 20px;
+  border-radius: 5px;
   flex-direction: row;
   padding: 0px 15px;
   align-items: center;
@@ -219,18 +220,20 @@ function Rentab(props: Props): React.ReactNode {
       <AddContainer height="37px" margin="10px 0px">
         <Select
           validate={false}
-          placeholder="Seleccioná la marca"
+          placeholder="Seleccioná la categoría"
           width="250px"
           height="35px"
           options={brandsSelectTab(brandsState)}
           onSelect={(value) => setBrand(value)}
         />
-        <CustomInput
-          width="35px"
-          icon="percent"
-          value={percentValue}
-          onChange={(value) => setPercentValue(value)}
-        />
+        <div style={{ marginTop: "5px" }}>
+          <CustomInput
+            width="35px"
+            icon="percent"
+            value={percentValue}
+            onChange={(value) => setPercentValue(value)}
+          />
+        </div>
         <Button
           invert
           color="wideText"

@@ -7,7 +7,7 @@ import Icon from "../../components/atoms/icon/Icon";
 import { useEffect, useState } from "react";
 import { Loader, Pagination, Popup } from "semantic-ui-react";
 import Select from "../../components/atoms/select/Select";
-import { hexToRgba } from "../../aux/rgbaConverter";
+// import { hexToRgba } from "../../aux/rgbaConverter";
 import { useDispatch, useSelector } from "react-redux";
 import {
   ISearchProductInitialState,
@@ -68,24 +68,24 @@ const FilterView = styled(View)<{ justifyContent?: string; top?: string }>`
   }
 `;
 
-const MuestraColor = styled.div<{ color: string; opac: number }>`
-  width: 25px;
-  height: 25px;
-  border: 1px solid ${({ theme }) => hexToRgba(theme.colors.wideText, 0.4)};
-  border-radius: 15px;
-  background-color: ${({ theme, color, opac }) =>
-    hexToRgba(theme.colors[color], opac)};
-`;
+// const MuestraColor = styled.div<{ color: string; opac: number }>`
+//   width: 25px;
+//   height: 25px;
+//   border: 1px solid ${({ theme }) => hexToRgba(theme.colors.wideText, 0.4)};
+//   border-radius: 15px;
+//   background-color: ${({ theme, color, opac }) =>
+//     hexToRgba(theme.colors[color], opac)};
+// `;
 
 const DivCont = styled(View)`
   flex-direction: row;
   align-items: flex-start;
 `;
-const DivStockCont = styled(View)`
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-`;
+// const DivStockCont = styled(View)`
+//   flex-direction: row;
+//   align-items: center;
+//   width: 100%;
+// `;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Catalogo(_props: Props): React.ReactNode {
@@ -292,7 +292,7 @@ function Catalogo(_props: Props): React.ReactNode {
             />
             <Select
               validate={false}
-              placeholder="Filtro por marca de producto"
+              placeholder="Filtro por categoría"
               width="250px"
               height="31px"
               options={brandsSelectTab(brandsState)}
@@ -317,7 +317,7 @@ function Catalogo(_props: Props): React.ReactNode {
               ) : (
                 <RoleProtectedComponent accessList={[4]}>
                   <Popup
-                    content="Descargar catátalogo"
+                    content="Descargar lista"
                     trigger={
                       <Icon
                         color="wideText"
@@ -333,12 +333,7 @@ function Catalogo(_props: Props): React.ReactNode {
               )}
             </DivCont>
           </FilterView>
-          {/* <RoleProtectedComponent accessList={[3]}>
-            <FilterView>
-              <ClientFilter userId={userState.data?.userId} />
-            </FilterView>
-          </RoleProtectedComponent> */}
-          <RoleProtectedComponent accessList={[4]}>
+          {/* <RoleProtectedComponent accessList={[4]}>
             <FilterView top="20px">
               <DivStockCont>
                 <FilterView flexDirection="row">
@@ -351,15 +346,15 @@ function Catalogo(_props: Props): React.ReactNode {
                 </FilterView>
               </DivStockCont>
             </FilterView>
-            {/* <div style={{ marginTop: "-10px" }}>
+            <div style={{ marginTop: "-10px" }}>
               <Checkbox
                 label="Solo ofertas"
                 toggle
                 checked={sale}
                 onChange={changeSale}
               />
-            </div> */}
-          </RoleProtectedComponent>
+            </div>
+          </RoleProtectedComponent> */}
         </FilterView>
         {catalogState.data.list?.map((product, i) =>
           grid ? (
@@ -370,7 +365,9 @@ function Catalogo(_props: Props): React.ReactNode {
         )}
       </CardProductContainer>
       <PaginationContainer>
-        <span>{`Se han encontrado ${catalogState.data.totalPages} páginas con resultados.`}</span>
+        <span
+          style={{ color: "white" }}
+        >{`Se han encontrado ${catalogState.data.totalPages} páginas con resultados.`}</span>
         <div>
           <Pagination
             boundaryRange={0}
