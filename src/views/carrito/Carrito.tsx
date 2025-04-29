@@ -4,6 +4,7 @@ import styled from "styled-components";
 import View from "../../components/atoms/view/View";
 import styles from "./carrito.module.css";
 import {
+  Popup,
   Table,
   TableBody,
   TableCell,
@@ -31,6 +32,10 @@ import {
 import Button from "../../components/atoms/button/Button";
 import CartInput from "../../components/atoms/cartInput/CartInput";
 import { breakpoints } from "../../resolutions";
+import RoleProtectedComponent from "../../protected/RoleProtectedComponent";
+import CustomIcon from "../../components/atoms/icon/Icon";
+import { GetTemplate, UploadCartExcel } from "../../axios/request/cartRequest";
+import { FileUploader } from "../../components/atoms/fileUploader/FileUploader";
 
 interface Props {}
 
@@ -52,20 +57,6 @@ const TitleStyled = styled.p`
 const TitleStyledSpan = styled.span`
   font-weight: 600;
   color: ${({ theme }) => theme.colors.primary};
-`;
-
-const DescriptionStyled = styled.p`
-  font-size: 13px;
-  text-align: center;
-  margin: 0px;
-  max-width: 100%;
-  width: 600px;
-  color: ${({ theme }) => theme.colors.text};
-  padding: 0px 3px;
-
-  @media (max-width: ${breakpoints.mobileSmall}px) {
-    display: none;
-  }
 `;
 
 const ContactDataContainer = styled(View)`
@@ -107,6 +98,19 @@ function Carrito(_props: Props): React.ReactNode {
   const discountsState = useSelector((state: RootState) => state.discounts);
 
   const userState = useSelector((state: RootState) => state.user);
+
+  const sendFile = async (files: FileList | null) => {
+    if (files == null || files.length == 0) {
+      toast.error("No hay archivo");
+      return;
+    }
+    try {
+      await UploadCartExcel(userState.data!.cartId, files[0]);
+      toast.success("Pedido cargado correctamente");
+    } catch (err: any) {
+      toast.error(`Error: ${err.message}`);
+    }
+  };
 
   const sendOrder = () => {
     if (cartState.itemsAmount < 1) {
@@ -160,12 +164,41 @@ function Carrito(_props: Props): React.ReactNode {
       <TitleStyled>
         Tu carrito de <TitleStyledSpan>Compras</TitleStyledSpan>
       </TitleStyled>
-      <DescriptionStyled>
-        En la sección de carrito, puedes ver el detalle de los productos que has
-        añadido para comprar de manera rápida y sencilla. Encuentra información
-        detallada sobre cada artículo, su precio, cantidad y opciones para
-        gestionar tu compra.
-      </DescriptionStyled>
+      <RoleProtectedComponent accessList={[4]}>
+        <View flexDirection="row">
+          <Popup
+            content="Descargar plantilla de pedidos"
+            trigger={
+              <CustomIcon
+                margin="0px 3px"
+                color="wideText"
+                size="25px"
+                active={false}
+                onClick={async () => {
+                  await GetTemplate();
+                }}
+              >
+                cloud_download
+              </CustomIcon>
+            }
+          />
+          <FileUploader onFileChange={sendFile}>
+            <Popup
+              content="Importar pedido en excel"
+              trigger={
+                <CustomIcon
+                  margin="0px 3px"
+                  color="wideText"
+                  size="25px"
+                  active={false}
+                >
+                  file_open
+                </CustomIcon>
+              }
+            />
+          </FileUploader>
+        </View>
+      </RoleProtectedComponent>
       <ContactDataContainer>
         <div
           style={{ height: "480px", overflowY: "auto" }}
@@ -232,35 +265,6 @@ function Carrito(_props: Props): React.ReactNode {
             </TableBody>
           </Table>
         </div>
-        {/* <div
-          style={{
-            display: "flex",
-            width: "95%",
-            justifyContent: "flex-end",
-            borderBottom: "1px solid #d8d8d8",
-          }}
-        >
-          <span style={{ fontSize: "15px", fontWeight: "600" }}>
-            Subtotal:{" "}
-            <span>
-              ${calcularBuyTotal(cartState.data, discountsState.data).subtotal}{" "}
-              + iva
-            </span>
-          </span>
-        </div> */}
-        {/* <div
-          style={{
-            display: "flex",
-            width: "95%",
-            justifyContent: "flex-end",
-            borderBottom: "1px solid #d8d8d8",
-          }}
-        >
-          <span style={{ fontSize: "15px", fontWeight: "600" }}>
-            Descuentos:{" "}
-            <span>${formatNumberToString(cartState.totalDiscounts)} + iva</span>
-          </span>
-        </div> */}
         <div
           style={{
             display: "flex",

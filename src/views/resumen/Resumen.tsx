@@ -52,18 +52,6 @@ const TitleStyledSpan = styled.span`
   color: ${({ theme }) => theme.colors.primary};
 `;
 
-const DescriptionStyled = styled.p`
-  font-size: 13px;
-  text-align: center;
-  margin: 0px;
-  width: 600px;
-  color: ${({ theme }) => theme.colors.text};
-
-  @media (max-width: ${breakpoints.mobileLarge}px) {
-    display: none;
-  }
-`;
-
 const ContactDataContainer = styled(View)`
   height: 545px;
   width: 77%;
@@ -152,12 +140,6 @@ function Resumen(_props: Props): React.ReactNode {
       <TitleStyled>
         Reporte de <TitleStyledSpan> transacciones</TitleStyledSpan>
       </TitleStyled>
-      <DescriptionStyled>
-        En la sección de transacciones, puedes revisar el detalle y el estado de
-        tus movimientos de manera rápida y sencilla. Encuentra información
-        detallada sobre cada transacción y su estado actual. ¡Revisa tus
-        movimientos y mantente informado sobre tu cuenta corriente!
-      </DescriptionStyled>
       <CurrentAcountInfoContainer>
         <TagInfo>
           <Icon className="material-symbols-outlined">corporate_fare</Icon>

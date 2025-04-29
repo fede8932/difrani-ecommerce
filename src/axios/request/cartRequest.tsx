@@ -90,3 +90,52 @@ export const SendOrder = async (cartId: number): Promise<string> => {
     throw err;
   }
 };
+
+export const GetTemplate = async (): Promise<void> => {
+  try {
+    const url: string = `${apiUrl}/api/cart/template`;
+    const response = await axiosInstances.api.get(url, {
+      responseType: "blob", // importante para recibir el archivo binario
+    });
+
+    const blob = new Blob([response.data], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    const downloadUrl = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = downloadUrl;
+    link.download = "plantilla_pedido_difrani.xlsx"; // mismo nombre que en el backend
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(downloadUrl); // libera la memoria
+  } catch (err: any) {
+    if (err.response?.status === 401) {
+      window.location.reload();
+    }
+    throw err;
+  }
+};
+
+export const UploadCartExcel = async (cartId: number, file: File): Promise<void> => {
+  try {
+    const url = `${apiUrl}/api/cart/upload/${cartId}`;
+    const formData = new FormData();
+    formData.append("file", file); // el nombre debe coincidir con el parámetro del backend
+
+    await axiosInstances.api.post(url, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    console.log("Archivo subido correctamente.");
+    window.location.reload();
+  } catch (err: any) {
+    if (err.response?.status === 401) {
+      window.location.reload();
+    }
+    throw err;
+  }
+};

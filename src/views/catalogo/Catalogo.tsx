@@ -7,7 +7,6 @@ import Icon from "../../components/atoms/icon/Icon";
 import { useEffect, useState } from "react";
 import { Loader, Pagination, Popup } from "semantic-ui-react";
 import Select from "../../components/atoms/select/Select";
-// import { hexToRgba } from "../../aux/rgbaConverter";
 import { useDispatch, useSelector } from "react-redux";
 import {
   ISearchProductInitialState,
@@ -19,7 +18,6 @@ import {
   selectBrandById,
 } from "../../redux/reducers/brandListReducers";
 import { brandsSelectTab } from "../../aux/brandsSelectTab";
-// import { IRentaState } from "../../redux/reducers/rentabReducer";
 import { getAllProducts } from "../../axios/request/productsRequest";
 import { IUserState } from "../../redux/reducers/userReducer";
 import RoleProtectedComponent from "../../protected/RoleProtectedComponent";

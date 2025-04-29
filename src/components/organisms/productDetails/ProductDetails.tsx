@@ -21,7 +21,7 @@ import toast from "react-hot-toast";
 import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
 import PricesProtected from "../../../protected/PricesProtected";
 import { breakpoints } from "../../../resolutions";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 
 interface Props {
   children: React.ReactNode;
@@ -111,23 +111,23 @@ function ProductDetails(props: Props): React.ReactNode {
   };
 
   const confirmAddCartItem = () => {
-    if (amountProdInCart) {
-      Swal.fire({
-        title: "Deseas agregar mas unidades?",
-        text: "El artículo ya se encuentra en el carrito",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#4fe187",
-        cancelButtonColor: "grey",
-        confirmButtonText: "Confirmar",
-        cancelButtonText: "Cancelar",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          addCartItem();
-        }
-      });
-      return;
-    }
+    // if (amountProdInCart) {
+    //   Swal.fire({
+    //     title: "Deseas agregar mas unidades?",
+    //     text: "El artículo ya se encuentra en el carrito",
+    //     icon: "warning",
+    //     showCancelButton: true,
+    //     confirmButtonColor: "#4fe187",
+    //     cancelButtonColor: "grey",
+    //     confirmButtonText: "Confirmar",
+    //     cancelButtonText: "Cancelar",
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       addCartItem();
+    //     }
+    //   });
+    //   return;
+    // }
     addCartItem();
   };
 
@@ -169,7 +169,7 @@ function ProductDetails(props: Props): React.ReactNode {
           margin="10px 0px 0px 0px"
           src={product?.images.length > 0 ? product?.images[0].url : img}
           alt="imagen"
-          width="50%"
+          width="85%"
           objectFit="contain"
         />
         <DetailsInfo>

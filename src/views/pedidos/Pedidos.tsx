@@ -48,18 +48,6 @@ const TitleStyledSpan = styled.span`
   color: ${({ theme }) => theme.colors.primary};
 `;
 
-const DescriptionStyled = styled.p`
-  font-size: 13px;
-  text-align: center;
-  margin: 0px;
-  width: 600px;
-  color: ${({ theme }) => theme.colors.text};
-
-  @media (max-width: ${breakpoints.mobileLarge}px) {
-    display: none;
-  }
-`;
-
 const ContactDataContainer = styled(View)`
   height: 580px;
   width: 77%;
@@ -115,12 +103,6 @@ function Pedidos(_props: Props): React.ReactNode {
       <TitleStyled>
         Información de <TitleStyledSpan>Pedidos</TitleStyledSpan>
       </TitleStyled>
-      <DescriptionStyled>
-        En la sección de pedidos, puedes ver el detalle y el estado de tus
-        compras de manera rápida y sencilla. Encuentra información detallada
-        sobre cada pedido, su estado actual y opciones para gestionar tus
-        compras. ¡Revisa tus pedidos y mantente informado!
-      </DescriptionStyled>
       <ContactDataContainer>
         <div style={{ overflowX: "auto" }}>
           <Table selectable unstackable>
