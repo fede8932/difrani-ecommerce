@@ -3,7 +3,7 @@ import { IProduct } from "../../../redux/reducers/searchInputReducer";
 import ModalComponent from "../../molecules/modal/ModalComponent";
 import View from "../../atoms/view/View";
 import img from "../../../assets/amortiguador-de-coche.jpg";
-import Img from "../../atoms/img/Img";
+// import Img from "../../atoms/img/Img";
 import { hexToRgba } from "../../../aux/rgbaConverter";
 import Button from "../../atoms/button/Button";
 import AmountInput from "../../molecules/amountInput/AmountInput";
@@ -21,6 +21,7 @@ import toast from "react-hot-toast";
 import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
 import PricesProtected from "../../../protected/PricesProtected";
 import { breakpoints } from "../../../resolutions";
+import { Magnifier } from "react-image-magnifiers";
 // import Swal from "sweetalert2";
 
 interface Props {
@@ -165,13 +166,22 @@ function ProductDetails(props: Props): React.ReactNode {
       size="1000px"
     >
       <DetailsContainer /*height="400px"*/>
-        <Img
+      <Magnifier
+  imageSrc={product?.images.length > 0 ? product?.images[0].url : img}
+  imageAlt="Imagen"
+  largeImageSrc={product?.images.length > 0 ? product?.images[0].url : img}
+  inPlace={true}
+  fillAvailableSpace={false}
+  zoomContainerBorder="1px solid #ccc"
+  zoomContainerBoxShadow="0 0 10px rgba(0,0,0,0.2)"
+/>
+        {/* <Img
           margin="10px 0px 0px 0px"
           src={product?.images.length > 0 ? product?.images[0].url : img}
           alt="imagen"
           width="85%"
           objectFit="contain"
-        />
+        /> */}
         <DetailsInfo>
           <span
             style={{
