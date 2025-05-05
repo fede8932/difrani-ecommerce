@@ -166,15 +166,13 @@ function ProductDetails(props: Props): React.ReactNode {
       size="1000px"
     >
       <DetailsContainer /*height="400px"*/>
-      <Magnifier
-  imageSrc={product?.images.length > 0 ? product?.images[0].url : img}
-  imageAlt="Imagen"
-  largeImageSrc={product?.images.length > 0 ? product?.images[0].url : img}
-  inPlace={true}
-  fillAvailableSpace={false}
-  zoomContainerBorder="1px solid #ccc"
-  zoomContainerBoxShadow="0 0 10px rgba(0,0,0,0.2)"
-/>
+        <Magnifier
+          imageSrc={product?.images.length > 0 ? product?.images[0].url : img}
+          imageAlt="Imagen"
+          largeImageSrc={
+            product?.images.length > 0 ? product?.images[0].url : img
+          }
+        />
         {/* <Img
           margin="10px 0px 0px 0px"
           src={product?.images.length > 0 ? product?.images[0].url : img}
