@@ -228,7 +228,7 @@ function Catalogo(_props: Props): React.ReactNode {
                       localStorage.setItem("grill", true.toString());
                     }}
                   >
-                    grid_view
+                    dashboard
                   </Icon>
                 }
               />
@@ -246,7 +246,7 @@ function Catalogo(_props: Props): React.ReactNode {
                       localStorage.setItem("grill", false.toString());
                     }}
                   >
-                    view_list
+                    list
                   </Icon>
                 }
               />
@@ -306,7 +306,7 @@ function Catalogo(_props: Props): React.ReactNode {
                     active={false}
                     onClick={resetSearch}
                   >
-                    search_off
+                    filter_alt_off
                   </Icon>
                 }
               />

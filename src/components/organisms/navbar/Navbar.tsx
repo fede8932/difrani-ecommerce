@@ -119,7 +119,7 @@ function Navbar(_props: Props): React.ReactNode {
 
   return (
     <NavbarContainer height="54px">
-      <ButtonContainer width="1500px" height="54px">
+      <ButtonContainer width="100%" height="54px">
         <ButtonImgContainer>
           <Logo
             src={logo}
@@ -180,14 +180,14 @@ function Navbar(_props: Props): React.ReactNode {
           <ActionsCont>
             <RoleProtectedComponent accessList={[4]}>
               <Rentab>
-                <IconButton icon="manufacturing" size="24px" />
+                <IconButton icon="settings" size="24px" />
               </Rentab>
             </RoleProtectedComponent>
             <RoleProtectedComponent accessList={[3, 4]}>
               <ItemsCount>
                 {data?.cartId ? (
                   <IconButton
-                    icon="shopping_cart"
+                    icon="production_quantity_limits"
                     size="24px"
                     onClick={() => {
                       navigate("/carrito");
@@ -198,7 +198,7 @@ function Navbar(_props: Props): React.ReactNode {
             </RoleProtectedComponent>
             <Menu
               position="left"
-              button={<IconButton icon="account_circle" size="24px" />}
+              button={<IconButton icon="person_3" size="24px" />}
             >
               <ListMenu />
             </Menu>
