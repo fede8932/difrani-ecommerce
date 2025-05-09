@@ -25,7 +25,7 @@ const NavbarContainer = styled(View)`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 15px;
+  margin-top: 0px;
   position: fixed;
   width: 100vw;
   z-index: 20;
@@ -50,8 +50,8 @@ const ButtonContainer = styled(View)`
   -webkit-box-shadow: 0px 0px 5px 0px rgba(7, 197, 155, 0.1);
   -moz-box-shadow: 0px 0px 5px 0px rgba(7, 197, 155, 0.1);
   box-shadow: 0px 0px 5px 0px rgba(7, 197, 155, 0.1);
-  background: rgba(255, 255, 255, 0.5); /* Fondo semitransparente */
-  backdrop-filter: blur(10px); /* Desenfoque del fondo */
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
 
   @media (max-width: ${breakpoints.desktopSmall}px) {
     width: 100%;
