@@ -78,7 +78,7 @@ const Logo = styled(Img)`
 const ButtonSearchContainer = styled(View)`
   flex-direction: row;
   align-items: center;
-  width: 450px;
+  width: 550px;
   justify-content: space-around;
 `;
 
@@ -130,6 +130,15 @@ function Navbar(_props: Props): React.ReactNode {
               navigate("/");
             }}
           />
+          <Search
+            loading={catalogState.loading}
+            placeholder="Buscar..."
+            width="300px"
+            icon="search"
+            onChange={handleChange}
+          />
+        </ButtonImgContainer>
+        <ButtonSearchContainer>
           <LinkContainer>
             <Button
               invert
@@ -168,15 +177,6 @@ function Navbar(_props: Props): React.ReactNode {
               }}
             />
           </LinkContainer>
-        </ButtonImgContainer>
-        <ButtonSearchContainer>
-          <Search
-            loading={catalogState.loading}
-            placeholder="Buscar..."
-            width="300px"
-            icon="search"
-            onChange={handleChange}
-          />
           <ActionsCont>
             <RoleProtectedComponent accessList={[4]}>
               <Rentab>
