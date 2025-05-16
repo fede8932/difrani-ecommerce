@@ -87,7 +87,8 @@ const DivCont = styled(View)`
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Catalogo(_props: Props): React.ReactNode {
-  const [grid, setGrid] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [grid, _setGrid] = useState(false);
   const [sale] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
@@ -173,17 +174,17 @@ function Catalogo(_props: Props): React.ReactNode {
       dispatch(setSearchPage(data.activePage));
     }
   };
-  const getGril = (): void => {
-    const preferenc: string | null = localStorage.getItem("grill");
-    let viewGrill: boolean;
-    if (!preferenc) {
-      localStorage.setItem("grill", true.toString());
-      viewGrill = true;
-    } else {
-      viewGrill = JSON.parse(preferenc);
-    }
-    setGrid(viewGrill);
-  };
+  // const getGril = (): void => {
+  //   const preferenc: string | null = localStorage.getItem("grill");
+  //   let viewGrill: boolean;
+  //   if (!preferenc) {
+  //     localStorage.setItem("grill", true.toString());
+  //     viewGrill = true;
+  //   } else {
+  //     viewGrill = JSON.parse(preferenc);
+  //   }
+  //   setGrid(viewGrill);
+  // };
 
   useEffect(() => {
     dispatch(
@@ -205,15 +206,15 @@ function Catalogo(_props: Props): React.ReactNode {
     sale,
     // rentabState.loading,
   ]);
-  useEffect(() => {
-    getGril();
-  }, [dispatch]);
+  // useEffect(() => {
+  //   getGril();
+  // }, [dispatch]);
   return (
     <CatalogoContainer>
       <CardProductContainer width="94%">
         <FilterView width="100%" justifyContent="space-between">
           <FilterView width="640px" justifyContent="space-between">
-            <DivCont>
+            {/* <DivCont>
               <Popup
                 content="Ver en forma de grilla"
                 trigger={
@@ -250,7 +251,7 @@ function Catalogo(_props: Props): React.ReactNode {
                   </Icon>
                 }
               />
-            </DivCont>
+            </DivCont> */}
             <Select
               validate={false}
               placeholder="Filtro por marca del vehículo"

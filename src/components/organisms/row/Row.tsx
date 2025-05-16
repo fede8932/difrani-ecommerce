@@ -2,12 +2,7 @@ import styled from "styled-components";
 import View from "../../atoms/view/View";
 import Img from "../../atoms/img/Img";
 import img from "../../../assets/amortiguador-de-coche.jpg"; // aca va la imagen sin imagen
-import { hexToRgba } from "../../../aux/rgbaConverter";
-import IconButton from "../../atoms/iconButton/IconButton";
-import {
-  IProduct,
-  SearchEquivalencesState,
-} from "../../../redux/reducers/catalogoReducer";
+import { IProduct } from "../../../redux/reducers/catalogoReducer";
 import Skeleton from "@mui/material/Skeleton";
 import ProductDetails from "../productDetails/ProductDetails";
 import { AddCartItemsState } from "../../../redux/reducers/cartListReducer";
@@ -15,10 +10,8 @@ import { AppDispatch, RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { calcularSellPrice } from "../../../aux/prices";
-import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
-import PricesProtected from "../../../protected/PricesProtected";
 import { breakpoints } from "../../../resolutions";
-import { Label } from "semantic-ui-react";
+import { Button, Label } from "semantic-ui-react";
 import { Tooltip } from "antd";
 import TooltipContent from "../../molecules/TooltipContent/TooltipContent";
 // import Swal from "sweetalert2";
@@ -45,25 +38,36 @@ const RowContainer = styled(View)`
   -moz-box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
 `;
 
-const PriceContainer = styled(View)<{ stock: number }>`
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  background-color: ${({ theme }) => hexToRgba(theme.colors.black, 0.1)};
-  border-radius: 2px;
-  padding: 5px 10px;
-  color: ${({ theme }) => theme.colors.text};
+// const PriceContainer = styled(View)<{ stock: number }>`
+//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   background-color: ${({ theme }) => hexToRgba(theme.colors.black, 0.1)};
+//   border-radius: 2px;
+//   padding: 5px 10px;
+//   color: ${({ theme }) => theme.colors.text};
+//   justify-content: space-between;
+//   align-items: center;
+//   justify-content: space-around;
+//   flex-direction: row;
+// `;
+
+const ActionContainer = styled(View)`
+  width: calc(25%);
+  padding: 20px;
   justify-content: space-between;
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: row;
+
+  span {
+    font-size: 16px;
+  }
 `;
 
 const DescripCont = styled(View)`
-  width: calc(100%);
-  margin-top: -20px;
+  width: calc(55%);
+  margin-top: -5px;
   color: ${({ theme }) => theme.colors.wideText};
   height: 155px;
   padding: 15px;
-  align-items: center;
+  margin-top: 10px;
+  // align-items: center;
 `;
 
 const StyledSpan = styled.span<{
@@ -86,7 +90,7 @@ const StyledDescription = styled.p`
   margin: 0;
   margin-top: 10px;
   font-size: 16px;
-  text-align: center;
+  // text-align: center;
   cursor: pointer;
   width: calc(100% - 20px); /* Ancho fijo del párrafo */
   height: 65px; /* Altura fija del párrafo */
@@ -110,6 +114,13 @@ const MyImg = styled(Img)`
   }
 `;
 
+const PriceSpan = styled.span<{
+  color?: string;
+}>`
+  color: ${({ theme, color }) => (color ? color : theme.colors.text)};
+  font-weight: 700;
+`;
+
 function Row(props: Props): React.ReactNode {
   const { product, loading } = props;
 
@@ -119,10 +130,6 @@ function Row(props: Props): React.ReactNode {
   const dispatch: AppDispatch = useDispatch();
   const discountsState = useSelector((state: RootState) => state.discounts);
   const rentabState = useSelector((state: RootState) => state.rentabilidad);
-
-  const searchEquiv = (id: number) => {
-    dispatch(SearchEquivalencesState(id));
-  };
 
   const confirmAddCartItem = () => {
     // if (cartState.data.some((element) => element.productId == product.id)) {
@@ -168,7 +175,7 @@ function Row(props: Props): React.ReactNode {
       });
   };
   return (
-    <RowContainer width="100%" height="135px">
+    <RowContainer width="85%" height="185px">
       {product.sales?.length > 0 || product.brand.sales?.length > 0 ? (
         <Tooltip
           placement="rightBottom"
@@ -197,23 +204,14 @@ function Row(props: Props): React.ReactNode {
                 : img
             }
             alt="foto"
-            width="200px"
+            width="230px"
             height="97%"
-            margin="0px"
+            margin="0px 0px 0px 20px"
             objectFit="contain"
           />
         </ProductDetails>
       )}
       <DescripCont>
-        {loading ? (
-          <Skeleton variant="text" width="100px" />
-        ) : (
-          <ProductDetails product={product}>
-            <StyledSpan size="18px" weight={500}>
-              {product?.article.toUpperCase()}
-            </StyledSpan>
-          </ProductDetails>
-        )}
         <StyledDescription>
           {loading ? (
             <>
@@ -226,57 +224,44 @@ function Row(props: Props): React.ReactNode {
             </>
           ) : (
             <ProductDetails product={product}>
-              <span>{`${product?.brand.name.toUpperCase()}-${product?.description.toUpperCase()}`}</span>
+              <span>{`${product?.description.toUpperCase()}`}</span>
             </ProductDetails>
           )}
         </StyledDescription>
-        <PriceContainer
-          height="39-2px"
-          width="250px"
-          stock={product.stock.stock}
-        >
-          {loading ? (
-            <Skeleton variant="text" width="70px" />
-          ) : (
-            <ProductDetails product={product}>
-              <StyledSpan size="15px" color="secundary" weight={700}>
-                $
-                <PricesProtected>
-                  {calcularSellPrice(product, discountsState.data, rentabState)}
-                </PricesProtected>
-              </StyledSpan>
-            </ProductDetails>
-          )}
-          <div
-            style={{
-              width: "60px",
-              display: "flex",
-              justifyContent: "end",
-            }}
-          >
-            {product?.equivalence ? (
-              <div style={{ marginRight: "3px" }}>
-                <IconButton
-                  icon="balance"
-                  size="20px"
-                  onClick={() => {
-                    searchEquiv(product.id);
-                  }}
-                />
-              </div>
-            ) : null}
-            <RoleProtectedComponent accessList={[3, 4]}>
-              <PricesProtected>
-                <IconButton
-                  icon="shopping_cart"
-                  size="20px"
-                  onClick={confirmAddCartItem}
-                />
-              </PricesProtected>
-            </RoleProtectedComponent>
-          </div>
-        </PriceContainer>
+        {loading ? (
+          <Skeleton variant="text" width="100px" />
+        ) : (
+          <ProductDetails product={product}>
+            <StyledSpan size="18px" weight={500}>
+              Artículo: {product?.article.toUpperCase()}
+            </StyledSpan>
+          </ProductDetails>
+        )}
+        {loading ? (
+          <Skeleton variant="text" width="100px" />
+        ) : (
+          <ProductDetails product={product}>
+            <StyledSpan size="10px" weight={500}>
+              Categoría: {product?.brand.name.toUpperCase()}
+            </StyledSpan>
+          </ProductDetails>
+        )}
       </DescripCont>
+      <ActionContainer>
+        <span>
+          Precio de lista:{" "}
+          <PriceSpan color="#e14f4f">
+            ${calcularSellPrice(product, discountsState.data)}
+          </PriceSpan>
+        </span>
+        <span>
+          Precio de venta:{" "}
+          <PriceSpan color="#4CAF50">
+            ${calcularSellPrice(product, discountsState.data, rentabState)}
+          </PriceSpan>
+        </span>
+        <Button onClick={confirmAddCartItem}>Agregar</Button>
+      </ActionContainer>
     </RowContainer>
   );
 }

@@ -36,21 +36,22 @@ export const calcularSellPrice = (
   // Sin iva
   product: IProduct,
   discounts: IResGetDiscounts[],
-  rentabState: IRentaState
+  rentabState?: IRentaState
 ): string => {
   const discount: IResGetDiscounts | undefined = discounts.find(
     (discount) => discount.brandId == product.brand.id
   );
-  const rentab: IResGetRentab =
-    rentabState.byBrand.find((rent) => rent.brandId == product.brand.id) ||
-    rentabState.general;
+  const rentab: IResGetRentab | null = rentabState
+    ? rentabState.byBrand.find((rent) => rent.brandId == product.brand.id) ||
+      rentabState.general
+    : null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const price: any = discount
     ? product.price.price *
       (1 + discount.porcentaje) *
       (1 + product.brand.rentabilidad)
     : product.price.price * (1 + product.brand.rentabilidad);
-  const sellPrice = price * (1 + rentab.surchargePercentage);
+  const sellPrice = price * (1 + (rentab?.surchargePercentage ?? 0));
 
   return formatNumberToString(sellPrice);
 };
