@@ -25,17 +25,17 @@ const TitleStyledSpan = styled.span`
   color: ${({ theme }) => theme.colors.primary};
 `;
 
-const DescriptionStyled = styled.p`
-  font-size: 13px;
-  text-align: center;
-  margin: 0px;
-  width: 600px;
-  color: ${({ theme }) => theme.colors.text};
+// const DescriptionStyled = styled.p`
+//   font-size: 13px;
+//   text-align: center;
+//   margin: 0px;
+//   width: 600px;
+//   color: ${({ theme }) => theme.colors.text};
 
-  @media (max-width: ${breakpoints.mobileLarge}px) {
-    display: none;
-  }
-`;
+//   @media (max-width: ${breakpoints.mobileLarge}px) {
+//     display: none;
+//   }
+// `;
 
 const ContactDataContainer = styled(View)`
   flex-wrap: wrap;
@@ -56,12 +56,12 @@ function Contacto(_props: Props): React.ReactNode {
       <TitleStyled>
         Información de <TitleStyledSpan>Contacto</TitleStyledSpan>
       </TitleStyled>
-      <DescriptionStyled>
+      {/* <DescriptionStyled>
         En nuestra sección de contacto, tienes a tu disposición una forma ágil y
         simple de comunicarte con nosotros. Aquí encontrarás nuestro correo
         electrónico, número de teléfono y un mapa con la ubicación de nuestra
         tienda. ¡No dudes en escribirnos, estaremos encantados de ayudarte!
-      </DescriptionStyled>
+      </DescriptionStyled> */}
       <ContactDataContainer>
         <Map width="90vw" />
       </ContactDataContainer>
