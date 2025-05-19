@@ -20,8 +20,8 @@ import RoleProtectedView from "./protected/RoleProtectedView";
 import RoleProtectedComponent from "./protected/RoleProtectedComponent";
 import { breakpoints } from "./resolutions";
 import ClientFilter from "./components/molecules/clientFilter/ClientFilter";
-import BloquedModal from "./components/organisms/bloquedModal/BloquedModal";
-import ChangePass from "./components/organisms/changePassForm/ChangePass";
+// import BloquedModal from "./components/organisms/bloquedModal/BloquedModal";
+// import ChangePass from "./components/organisms/changePassForm/ChangePass";
 import Comprobantes from "./views/comprobantes/Comprobantes";
 import BotonFlotante from "./components/atoms/bootnFlotante/BotonFlotante";
 
@@ -76,9 +76,9 @@ function AppIn() {
   return (
     <AppContainer>
       {
-        <BloquedModal title="Cambiar contraseña">
+        /*<BloquedModal title="Cambiar contraseña">
           <ChangePass />
-        </BloquedModal>
+        </BloquedModal>*/
       }
       <Navbar />
       <View position="relative" margin="75px 0px">
