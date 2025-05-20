@@ -170,6 +170,15 @@ function Navbar(_props: Props): React.ReactNode {
             <Button
               invert
               color="primary"
+              text="Sugerencias"
+              height="25px"
+              onClick={() => {
+                navigate("/sugerencias");
+              }}
+            />
+            <Button
+              invert
+              color="primary"
               text="Contacto"
               height="25px"
               onClick={() => {

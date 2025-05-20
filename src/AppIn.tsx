@@ -24,6 +24,7 @@ import ClientFilter from "./components/molecules/clientFilter/ClientFilter";
 // import ChangePass from "./components/organisms/changePassForm/ChangePass";
 import Comprobantes from "./views/comprobantes/Comprobantes";
 import BotonFlotante from "./components/atoms/bootnFlotante/BotonFlotante";
+import Sugerencias from "./views/sugerencias/Sugerencias";
 
 const AppContainer = styled(View)`
   justify-content: space-between;
@@ -117,6 +118,14 @@ function AppIn() {
             element={
               <RoleProtectedView accessList={[3, 4]}>
                 <Comprobantes />
+              </RoleProtectedView>
+            }
+          />
+          <Route
+            path="/sugerencias"
+            element={
+              <RoleProtectedView accessList={[3, 4]}>
+                <Sugerencias />
               </RoleProtectedView>
             }
           />

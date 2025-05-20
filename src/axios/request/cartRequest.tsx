@@ -139,3 +139,17 @@ export const UploadCartExcel = async (cartId: number, file: File): Promise<void>
     throw err;
   }
 };
+
+export const SendClaim = async (clientId: number, sendData: any): Promise<string> => {
+  try {
+    const url: string = `${apiUrl}/api/cart/claim/${clientId}`;
+    const { data }: { data: string } = await axiosInstances.api.post(url, sendData);
+    return data;
+
+  } catch (err: any) {
+    if (err.response?.status === 401) {
+      window.location.reload();
+    }
+    throw err;
+  }
+};
