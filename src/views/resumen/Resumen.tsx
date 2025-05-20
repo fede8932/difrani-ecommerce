@@ -26,9 +26,10 @@ import {
 } from "../../redux/reducers/acountReducer";
 import { formatNumberToString } from "../../aux/prices";
 import { breakpoints } from "../../resolutions";
-import { checkActive, getMarc } from "../../utils";
+import { checkActive, getMarc, selectStylesByDate } from "../../utils";
 import ModalComponent from "../../components/molecules/modal/ModalComponent";
 import NewSellerReceipt from "../../components/organisms/newSellerReceipt/NewSellerReceipt";
+import styles from "./resumen.module.css"
 
 interface Props {}
 
@@ -213,7 +214,7 @@ function Resumen(_props: Props): React.ReactNode {
               {acountStatus.data.moviments.map((mov, i) => (
                 <TableRow key={i}>
                   {userState.data?.rolId == 3 ? (
-                    <TableCell>
+                    <TableCell className={styles[selectStylesByDate(mov.fecha)]}>
                       <Checkbox
                         disabled={checkActive(mov)}
                         checked={getMarc(mov, acountStatus.selectMovements)}
@@ -223,8 +224,8 @@ function Resumen(_props: Props): React.ReactNode {
                       />
                     </TableCell>
                   ) : null}
-                  <TableCell>{formatDate(mov.fecha, true)}</TableCell>
-                  <TableCell>
+                  <TableCell className={styles[selectStylesByDate(mov.fecha)]}>{formatDate(mov.fecha, true)}</TableCell>
+                  <TableCell className={styles[selectStylesByDate(mov.fecha)]}>
                     {mov.type == 0 ? (
                       mov.billType == 0 ? (
                         "Factura"
@@ -244,9 +245,9 @@ function Resumen(_props: Props): React.ReactNode {
                   </TableCell>
                   {window.innerWidth > breakpoints.mobileSmall &&
                   userState.data?.rolId != 3 ? (
-                    <TableCell>{mov.payDetail?.comprobanteVendedor}</TableCell>
+                    <TableCell className={styles[selectStylesByDate(mov.fecha)]}>{mov.payDetail?.comprobanteVendedor}</TableCell>
                   ) : null}
-                  <TableCell>
+                  <TableCell className={styles[selectStylesByDate(mov.fecha)]}>
                     $
                     {formatNumberToString(
                       rolId == 4

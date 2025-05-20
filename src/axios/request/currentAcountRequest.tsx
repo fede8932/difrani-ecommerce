@@ -7,7 +7,7 @@ export const GetCurrentAcount = async (sendData: ISend) => {
   // eslint-disable-next-line no-useless-catch
   try {
     const { clientId, page, rows, pending } = sendData;
-    let url: string = `${apiUrl}/api/client/acount/pages/${clientId}?page=${page}&rows=${rows}&ecom={true}`;
+    let url: string = `${apiUrl}/api/client/acount/pages/${clientId}?page=${page}&rows=${rows}&ecom=${true}`;
     if (pending) {
       url = url + `&pending=${pending}`;
     }

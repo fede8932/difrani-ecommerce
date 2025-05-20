@@ -20,8 +20,8 @@ import RoleProtectedView from "./protected/RoleProtectedView";
 import RoleProtectedComponent from "./protected/RoleProtectedComponent";
 import { breakpoints } from "./resolutions";
 import ClientFilter from "./components/molecules/clientFilter/ClientFilter";
-// import BloquedModal from "./components/organisms/bloquedModal/BloquedModal";
-// import ChangePass from "./components/organisms/changePassForm/ChangePass";
+import BloquedModal from "./components/organisms/bloquedModal/BloquedModal";
+import ChangePass from "./components/organisms/changePassForm/ChangePass";
 import Comprobantes from "./views/comprobantes/Comprobantes";
 import BotonFlotante from "./components/atoms/bootnFlotante/BotonFlotante";
 import Sugerencias from "./views/sugerencias/Sugerencias";
@@ -31,8 +31,8 @@ const AppContainer = styled(View)`
   min-height: 100vh;
   background: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 1) 0%, /* Blanco */
-    rgba(0, 0, 0, 1) 100% /* Negro */
+    rgba(255, 255, 255, 1) 0%,
+    /* Blanco */ rgba(0, 0, 0, 1) 100% /* Negro */
   );
 `;
 
@@ -76,11 +76,9 @@ function AppIn() {
   }, [dispatch, userState.data]);
   return (
     <AppContainer>
-      {
-        /*<BloquedModal title="Cambiar contraseña">
-          <ChangePass />
-        </BloquedModal>*/
-      }
+      <BloquedModal title="Cambiar contraseña">
+        <ChangePass />
+      </BloquedModal>
       <Navbar />
       <View position="relative" margin="75px 0px">
         <RoleProtectedComponent accessList={[3]}>
