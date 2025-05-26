@@ -12,6 +12,7 @@ interface Props {
   value?: string;
   type?: string;
   onChange?: (value: string) => void;
+  iconOnClick?: () => void;
 }
 
 const InputContainer = styled.div`
@@ -32,12 +33,21 @@ const LoaderContainer = styled.div`
 `;
 
 function CustomInput(props: Props): React.ReactNode {
-  const { icon, loading, type, ...rest } = props;
+  const { icon, loading, type, iconOnClick, ...rest } = props;
   return (
     <InputContainer>
       {icon ? (
         !loading ? (
-          <StylesIcon className="material-symbols-outlined">{icon}</StylesIcon>
+          <StylesIcon
+            onClick={() => {
+              if (iconOnClick) {
+                iconOnClick();
+              }
+            }}
+            className="material-symbols-outlined"
+          >
+            {icon}
+          </StylesIcon>
         ) : (
           <LoaderContainer>
             <Loader active inline="centered" size="mini" />

@@ -95,6 +95,7 @@ const ErrorMessage = styled.span`
 `;
 
 function Login(_props: Props): React.ReactNode {
+  const [passView, setPassView] = useState<"password" | "text">("password");
   const [cuit, setCuit] = useState("");
   const [pass, setPass] = useState("");
   const [cuitError, setCuitError] = useState("");
@@ -160,11 +161,18 @@ function Login(_props: Props): React.ReactNode {
           <div style={{ marginTop: "28px", width: "100%" }}>
             <label>Contraseña</label>
             <Input
+              iconOnClick={() => {
+                if (passView == "password") {
+                  setPassView("text");
+                  return;
+                }
+                setPassView("password");
+              }}
               onChange={(value) => setPass(value)}
               background="background"
-              type="password"
+              type={passView}
               width="380px"
-              icon="visibility"
+              icon={passView == "password" ? "visibility" : "visibility_off"}
               placeholder="Ingresá tu contraseña"
             />
           </div>
