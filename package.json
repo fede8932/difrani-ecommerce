@@ -31,7 +31,8 @@
     "semantic-ui-css": "^2.5.0",
     "semantic-ui-react": "^2.1.5",
     "styled-components": "^6.1.11",
-    "sweetalert2": "^11.15.9"
+    "sweetalert2": "^11.15.9",
+    "vite-plugin-pwa": "^1.0.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.7",
