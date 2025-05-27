@@ -58,6 +58,18 @@ const StyledForm = styled.form`
   }
 `;
 
+const DescriptionStyled = styled.p`
+  font-size: 13px;
+  text-align: center;
+  margin: 0px;
+  width: 600px;
+  color: ${({ theme }) => theme.colors.text};
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    display: none;
+  }
+`;
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Sugerencias(_props: Props): React.ReactNode {
   const userState = useSelector((state: RootState) => state.user);
@@ -108,7 +120,12 @@ function Sugerencias(_props: Props): React.ReactNode {
       <TitleStyled>
         Dejanos tu <TitleStyledSpan>Sugerencia</TitleStyledSpan>
       </TitleStyled>
-
+      <DescriptionStyled>
+        Tu opinión es muy valiosa para nosotros. Si tienes alguna sugerencia,
+        comentario o aporte, no dudes en compartirlo. Cada mensaje nos ayuda a
+        mejorar y a brindarte un mejor servicio. ¡Gracias por ser parte de
+        nuestra mejora continua!
+      </DescriptionStyled>
       <ContactDataContainer>
         <StyledForm onSubmit={handleSubmit}>
           <div>
