@@ -106,6 +106,7 @@ function Catalogo(_props: Props): React.ReactNode {
   const brandsState: IGetBrandsInitialState = useSelector(
     (state: RootState) => state.brands
   );
+  // console.log(brandsState);
 
   // const rentabState: IRentaState = useSelector(
   //   (state: RootState) => state.rentabilidad

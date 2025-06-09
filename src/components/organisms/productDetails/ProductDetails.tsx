@@ -65,6 +65,160 @@ const TextDetail = styled.span`
   font-weight: 500;
 `;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Detail = (props: any): React.ReactNode => {
+  const {
+    product,
+    discountState,
+    rentabState,
+    amountProdInCart,
+    handleAdd,
+    handleMinus,
+    value,
+    handleChange,
+    addCartItem,
+    onClose,
+  } = props;
+
+  const confirmAddCartItem = () => {
+    // if (amountProdInCart) {
+    //   Swal.fire({
+    //     title: "Deseas agregar mas unidades?",
+    //     text: "El artículo ya se encuentra en el carrito",
+    //     icon: "warning",
+    //     showCancelButton: true,
+    //     confirmButtonColor: "#4fe187",
+    //     cancelButtonColor: "grey",
+    //     confirmButtonText: "Confirmar",
+    //     cancelButtonText: "Cancelar",
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       addCartItem();
+    //     }
+    //   });
+    //   return;
+    // }
+    addCartItem();
+    onClose();
+  };
+  return (
+    <DetailsContainer /*height="400px"*/>
+      <Magnifier
+        imageSrc={product?.images.length > 0 ? product?.images[0].url : img}
+        imageAlt="Imagen"
+        largeImageSrc={
+          product?.images.length > 0 ? product?.images[0].url : img
+        }
+      />
+      {/* <Img
+          margin="10px 0px 0px 0px"
+          src={product?.images.length > 0 ? product?.images[0].url : img}
+          alt="imagen"
+          width="85%"
+          objectFit="contain"
+        /> */}
+      <DetailsInfo>
+        <span
+          style={{
+            fontWeight: "700",
+            marginTop: "10px",
+            marginBottom: "18px",
+          }}
+        >
+          {product?.description}
+        </span>
+        <TextTitleDetail>
+          Precio de lista:
+          <TextDetail>
+            $
+            <PricesProtected>
+              {calcularPrice(product, discountState.data, "price")}
+            </PricesProtected>
+          </TextDetail>
+        </TextTitleDetail>
+        <TextTitleDetail>
+          Precio de lista con IVA:
+          <TextDetail>
+            $
+            <PricesProtected>
+              {calcularPrice(product, discountState.data, "endPrice")}
+            </PricesProtected>
+          </TextDetail>
+        </TextTitleDetail>
+        <RoleProtectedComponent accessList={[4]}>
+          <TextTitleDetail>
+            Rentabilidad de la marca:
+            <TextDetail>
+              {(
+                searchRentab(
+                  rentabState?.byBrand,
+                  rentabState?.general,
+                  product?.brand.id
+                ).surchargePercentage * 100
+              ).toFixed(2)}
+              %
+            </TextDetail>
+          </TextTitleDetail>
+        </RoleProtectedComponent>
+        <RoleProtectedComponent accessList={[4]}>
+          <TextTitleDetail>
+            Precio de venta sin IVA:
+            <TextDetail>
+              ${calcularSellPrice(product, discountState.data, rentabState)}
+            </TextDetail>
+          </TextTitleDetail>
+        </RoleProtectedComponent>
+        <RoleProtectedComponent accessList={[4]}>
+          <TextTitleDetail>
+            <span>
+              Cantidad{" "}
+              <span style={{ color: "grey", fontSize: "10px" }}>
+                {amountProdInCart
+                  ? `(${amountProdInCart.amount} en carrito)`
+                  : ""}
+              </span>
+              :
+            </span>
+            <TextDetail>
+              <AmountInput
+                add={handleAdd}
+                minus={handleMinus}
+                width="40px"
+                height="27px"
+                value={value}
+                onChange={handleChange}
+              />
+            </TextDetail>
+          </TextTitleDetail>
+        </RoleProtectedComponent>
+        <RoleProtectedComponent accessList={[4]}>
+          <TextTitleDetail style={{ marginBottom: "25px" }}>
+            Subtotal:
+            <TextDetail>
+              $
+              {calcularSubTotal(
+                product,
+                discountState.data,
+                rentabState,
+                value
+              )}
+            </TextDetail>
+          </TextTitleDetail>
+        </RoleProtectedComponent>
+        <RoleProtectedComponent accessList={[4]}>
+          <Button
+            icon="add_shopping_cart"
+            text="Agregar al carrito"
+            color="primary"
+            height="30px"
+            onClick={confirmAddCartItem}
+          />
+        </RoleProtectedComponent>
+      </DetailsInfo>
+    </DetailsContainer>
+  );
+};
+
 function ProductDetails(props: Props): React.ReactNode {
   const { children, product } = props;
 
@@ -111,27 +265,6 @@ function ProductDetails(props: Props): React.ReactNode {
     }
   };
 
-  const confirmAddCartItem = () => {
-    // if (amountProdInCart) {
-    //   Swal.fire({
-    //     title: "Deseas agregar mas unidades?",
-    //     text: "El artículo ya se encuentra en el carrito",
-    //     icon: "warning",
-    //     showCancelButton: true,
-    //     confirmButtonColor: "#4fe187",
-    //     cancelButtonColor: "grey",
-    //     confirmButtonText: "Confirmar",
-    //     cancelButtonText: "Cancelar",
-    //   }).then((result) => {
-    //     if (result.isConfirmed) {
-    //       addCartItem();
-    //     }
-    //   });
-    //   return;
-    // }
-    addCartItem();
-  };
-
   const addCartItem = () => {
     if (isNaN(Number(value))) {
       toast.error("La cantidad asignada no es válida");
@@ -165,120 +298,17 @@ function ProductDetails(props: Props): React.ReactNode {
       button={children}
       size="1000px"
     >
-      <DetailsContainer /*height="400px"*/>
-        <Magnifier
-          imageSrc={product?.images.length > 0 ? product?.images[0].url : img}
-          imageAlt="Imagen"
-          largeImageSrc={
-            product?.images.length > 0 ? product?.images[0].url : img
-          }
-        />
-        {/* <Img
-          margin="10px 0px 0px 0px"
-          src={product?.images.length > 0 ? product?.images[0].url : img}
-          alt="imagen"
-          width="85%"
-          objectFit="contain"
-        /> */}
-        <DetailsInfo>
-          <span
-            style={{
-              fontWeight: "700",
-              marginTop: "10px",
-              marginBottom: "18px",
-            }}
-          >
-            {product?.description}
-          </span>
-          <TextTitleDetail>
-            Precio de lista:
-            <TextDetail>
-              $
-              <PricesProtected>
-                {calcularPrice(product, discountState.data, "price")}
-              </PricesProtected>
-            </TextDetail>
-          </TextTitleDetail>
-          <TextTitleDetail>
-            Precio de lista con IVA:
-            <TextDetail>
-              $
-              <PricesProtected>
-                {calcularPrice(product, discountState.data, "endPrice")}
-              </PricesProtected>
-            </TextDetail>
-          </TextTitleDetail>
-          <RoleProtectedComponent accessList={[4]}>
-            <TextTitleDetail>
-              Rentabilidad de la marca:
-              <TextDetail>
-                {(
-                  searchRentab(
-                    rentabState?.byBrand,
-                    rentabState?.general,
-                    product?.brand.id
-                  ).surchargePercentage * 100
-                ).toFixed(2)}
-                %
-              </TextDetail>
-            </TextTitleDetail>
-          </RoleProtectedComponent>
-          <RoleProtectedComponent accessList={[4]}>
-            <TextTitleDetail>
-              Precio de venta sin IVA:
-              <TextDetail>
-                ${calcularSellPrice(product, discountState.data, rentabState)}
-              </TextDetail>
-            </TextTitleDetail>
-          </RoleProtectedComponent>
-          <RoleProtectedComponent accessList={[4]}>
-            <TextTitleDetail>
-              <span>
-                Cantidad{" "}
-                <span style={{ color: "grey", fontSize: "10px" }}>
-                  {amountProdInCart
-                    ? `(${amountProdInCart.amount} en carrito)`
-                    : ""}
-                </span>
-                :
-              </span>
-              <TextDetail>
-                <AmountInput
-                  add={handleAdd}
-                  minus={handleMinus}
-                  width="40px"
-                  height="27px"
-                  value={value}
-                  onChange={handleChange}
-                />
-              </TextDetail>
-            </TextTitleDetail>
-          </RoleProtectedComponent>
-          <RoleProtectedComponent accessList={[4]}>
-            <TextTitleDetail style={{ marginBottom: "25px" }}>
-              Subtotal:
-              <TextDetail>
-                $
-                {calcularSubTotal(
-                  product,
-                  discountState.data,
-                  rentabState,
-                  value
-                )}
-              </TextDetail>
-            </TextTitleDetail>
-          </RoleProtectedComponent>
-          <RoleProtectedComponent accessList={[4]}>
-            <Button
-              icon="add_shopping_cart"
-              text="Agregar al carrito"
-              color="primary"
-              height="30px"
-              onClick={confirmAddCartItem}
-            />
-          </RoleProtectedComponent>
-        </DetailsInfo>
-      </DetailsContainer>
+      <Detail
+        product={product}
+        discountState={discountState}
+        rentabState={rentabState}
+        amountProdInCart={amountProdInCart}
+        handleAdd={handleAdd}
+        handleMinus={handleMinus}
+        value={value}
+        handleChange={handleChange}
+        addCartItem={addCartItem}
+      />
     </ModalComponent>
   );
 }
