@@ -32,6 +32,7 @@
     "semantic-ui-react": "^2.1.5",
     "styled-components": "^6.1.11",
     "sweetalert2": "^11.15.9",
+    "swiper": "^11.2.8",
     "vite-plugin-pwa": "^1.0.0"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { toast, Toaster, Toast } from "react-hot-toast";
+import { toast, Toast } from "react-hot-toast";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -104,7 +104,7 @@ const InstallPWAToast: React.FC = () => {
     }
   }, [toastId]);
 
-  return <Toaster />;
+  return null;
 };
 
 export default InstallPWAToast;

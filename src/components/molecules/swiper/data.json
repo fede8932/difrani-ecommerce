@@ -1,0 +1,102 @@
+[
+  {
+    "producto": { "id": 1, "article": "A1001", "description": "Smartphone Pro X", "price": 399.99 },
+    "image": "src/components/molecules/swiper/img.jpeg",
+    "type": "oferta",
+    "ofertas": [
+      { "minimo": 2, "porcentaje": 10, "name": "Dúo Pack" },
+      { "minimo": 5, "porcentaje": 20, "name": "Promo Mayorista" }
+    ]
+  },
+  {
+    "producto": { "id": 2, "article": "A1002", "description": "Tablet 10 pulgadas", "price": 219.99 },
+    "image": "https://img.freepik.com/psd-premium/maqueta-muestra-cuadrada-tela_23-2150442942.jpg",
+    "type": "lanzamiento"
+  },
+  {
+    "producto": { "id": 3, "article": "A1003", "description": "Auriculares Bluetooth", "price": 59.99 },
+    "image": "src/components/molecules/swiper/img.jpeg",
+    "type": "oferta",
+    "ofertas": [
+      { "minimo": 3, "porcentaje": 15, "name": "Pack 3 Auris" }
+    ]
+  },
+  {
+    "producto": { "id": 4, "article": "A1004", "description": "Smartwatch Fit", "price": 129.99 },
+    "image": "https://img.freepik.com/psd-premium/maqueta-muestra-cuadrada-tela_23-2150442942.jpg",
+    "type": "lanzamiento"
+  },
+  {
+    "producto": { "id": 5, "article": "A1005", "description": "Notebook Slim", "price": 749.99 },
+    "image": "src/components/molecules/swiper/img.jpeg",
+    "type": "oferta",
+    "ofertas": [
+      { "minimo": 2, "porcentaje": 5, "name": "Promo 2x1.95" }
+    ]
+  },
+  {
+    "producto": { "id": 6, "article": "A1006", "description": "Monitor 24\"", "price": 189.99 },
+    "image": "https://img.freepik.com/psd-premium/maqueta-muestra-cuadrada-tela_23-2150442942.jpg",
+    "type": "lanzamiento"
+  },
+  {
+    "producto": { "id": 7, "article": "A1007", "description": "Teclado Mecánico", "price": 99.99 },
+    "image": "src/components/molecules/swiper/img.jpeg",
+    "type": "oferta",
+    "ofertas": [
+      { "minimo": 4, "porcentaje": 12, "name": "Pack Gaming" }
+    ]
+  },
+  {
+    "producto": { "id": 8, "article": "A1008", "description": "Mouse inalámbrico", "price": 39.99 },
+    "image": "https://img.freepik.com/psd-premium/maqueta-muestra-cuadrada-tela_23-2150442942.jpg",
+    "type": "lanzamiento"
+  },
+  {
+    "producto": { "id": 9, "article": "A1009", "description": "TV 50\" 4K", "price": 499.99 },
+    "image": "https://img.freepik.com/psd-premium/maqueta-muestra-cuadrada-tela_23-2150442942.jpg",
+    "type": "oferta",
+    "ofertas": [
+      { "minimo": 1, "porcentaje": 8, "name": "Descuento único" }
+    ]
+  },
+  {
+    "producto": { "id": 10, "article": "A1010", "description": "Consola de videojuegos", "price": 599.99 },
+    "image": "https://img.freepik.com/psd-premium/maqueta-muestra-cuadrada-tela_23-2150442942.jpg",
+    "type": "lanzamiento"
+  },
+  {
+    "producto": { "id": 11, "article": "A1011", "description": "Cámara digital", "price": 279.99 },
+    "image": "https://img.freepik.com/psd-premium/maqueta-muestra-cuadrada-tela_23-2150442942.jpg",
+    "type": "oferta",
+    "ofertas": [
+      { "minimo": 2, "porcentaje": 10, "name": "2 cámaras" }
+    ]
+  },
+  {
+    "producto": { "id": 12, "article": "A1012", "description": "Parlante portátil", "price": 49.99 },
+    "image": "https://img.freepik.com/psd-premium/maqueta-muestra-cuadrada-tela_23-2150442942.jpg",
+    "type": "lanzamiento"
+  },
+  {
+    "producto": { "id": 13, "article": "A1013", "description": "Router WiFi", "price": 69.99 },
+    "image": "https://img.freepik.com/psd-premium/maqueta-muestra-cuadrada-tela_23-2150442942.jpg",
+    "type": "oferta",
+    "ofertas": [
+      { "minimo": 3, "porcentaje": 15, "name": "Conexión total" }
+    ]
+  },
+  {
+    "producto": { "id": 14, "article": "A1014", "description": "Impresora multifunción", "price": 159.99 },
+    "image": "https://img.freepik.com/psd-premium/maqueta-muestra-cuadrada-tela_23-2150442942.jpg",
+    "type": "lanzamiento"
+  },
+  {
+    "producto": { "id": 15, "article": "A1015", "description": "Disco externo 1TB", "price": 89.99 },
+    "image": "https://img.freepik.com/psd-premium/maqueta-muestra-cuadrada-tela_23-2150442942.jpg",
+    "type": "oferta",
+    "ofertas": [
+      { "minimo": 2, "porcentaje": 10, "name": "Doble almacenamiento" }
+    ]
+  }
+]

@@ -104,6 +104,7 @@ const Detail = (props: any): React.ReactNode => {
   return (
     <DetailsContainer /*height="400px"*/>
       <Magnifier
+        style={{ width: '100%', maxWidth: '450px', height: 'auto' }}
         imageSrc={product?.images.length > 0 ? product?.images[0].url : img}
         imageAlt="Imagen"
         largeImageSrc={

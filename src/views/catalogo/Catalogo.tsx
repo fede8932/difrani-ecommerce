@@ -18,13 +18,43 @@ import {
   selectBrandById,
 } from "../../redux/reducers/brandListReducers";
 import { brandsSelectTab } from "../../aux/brandsSelectTab";
-import { getAllProducts } from "../../axios/request/productsRequest";
+import {
+  getAllNews,
+  getAllProducts,
+} from "../../axios/request/productsRequest";
 import { IUserState } from "../../redux/reducers/userReducer";
 import RoleProtectedComponent from "../../protected/RoleProtectedComponent";
 import { breakpoints } from "../../resolutions";
 import { setSearchPage } from "../../redux/reducers/searchInputReducer";
+import CustomSwiper from "../../components/molecules/swiper/CustomSwiper";
 
 interface Props {}
+/*{
+    "producto": { "id": 1, "article": "A1001", "description": "Smartphone Pro X", "price": 399.99 },
+    "image": "src/components/molecules/swiper/img.jpeg",
+    "type": "oferta",
+    "ofertas": [
+      { "minimo": 2, "porcentaje": 10, "name": "Dúo Pack" },
+      { "minimo": 5, "porcentaje": 20, "name": "Promo Mayorista" }
+    ]
+  } */
+interface INews {
+  producto: IProducto;
+  ofertas: IOferta[];
+  image: string;
+  type: "oferta" | "lanzamiento";
+}
+interface IProducto {
+  id: number;
+  article: string;
+  description: string;
+  price: number;
+}
+interface IOferta {
+  minimo: number;
+  porcentaje: number;
+  name: string;
+}
 
 const PaginationContainer = styled(View)`
   display: flex;
@@ -89,6 +119,7 @@ const DivCont = styled(View)`
 function Catalogo(_props: Props): React.ReactNode {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [grid, _setGrid] = useState(false);
+  const [newsList, setNewsList] = useState<INews[]>([]);
   const [sale] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
@@ -186,6 +217,9 @@ function Catalogo(_props: Props): React.ReactNode {
   //   }
   //   setGrid(viewGrill);
   // };
+  useEffect(() => {
+    getAllNews().then((res) => setNewsList(res));
+  }, []);
 
   useEffect(() => {
     dispatch(
@@ -215,44 +249,6 @@ function Catalogo(_props: Props): React.ReactNode {
       <CardProductContainer width="94%">
         <FilterView width="100%" justifyContent="space-between">
           <FilterView width="640px" justifyContent="space-between">
-            {/* <DivCont>
-              <Popup
-                content="Ver en forma de grilla"
-                trigger={
-                  <Icon
-                    margin="5px 0px 0px 0px"
-                    color="wideText"
-                    size="22px"
-                    active={grid}
-                    onClick={() => {
-                      dispatch(setSearchPage(1));
-                      setGrid(true);
-                      localStorage.setItem("grill", true.toString());
-                    }}
-                  >
-                    dashboard
-                  </Icon>
-                }
-              />
-              <Popup
-                content="Ver en forma de lista"
-                trigger={
-                  <Icon
-                    margin="3px 0px 0px 2px"
-                    color="wideText"
-                    size="25px"
-                    active={!grid}
-                    onClick={() => {
-                      dispatch(setSearchPage(1));
-                      setGrid(false);
-                      localStorage.setItem("grill", false.toString());
-                    }}
-                  >
-                    list
-                  </Icon>
-                }
-              />
-            </DivCont> */}
             <Select
               validate={false}
               placeholder="Filtro por marca del vehículo"
@@ -333,28 +329,20 @@ function Catalogo(_props: Props): React.ReactNode {
               )}
             </DivCont>
           </FilterView>
-          {/* <RoleProtectedComponent accessList={[4]}>
-            <FilterView top="20px">
-              <DivStockCont>
-                <FilterView flexDirection="row">
-                  <MuestraColor color="greenAccent" opac={0.5}></MuestraColor>
-                  <span style={{ margin: "0px 2px" }}>En stock</span>
-                </FilterView>
-                <FilterView flexDirection="row">
-                  <MuestraColor color="alert" opac={0.5}></MuestraColor>
-                  <span style={{ margin: "0px 2px" }}>Sin stock</span>
-                </FilterView>
-              </DivStockCont>
-            </FilterView>
-            <div style={{ marginTop: "-10px" }}>
-              <Checkbox
-                label="Solo ofertas"
-                toggle
-                checked={sale}
-                onChange={changeSale}
-              />
+          {newsList.length > 0 ? (
+            <div
+              style={{
+                width: "88%",
+                marginBottom: "10px",
+                padding: "15px 25px",
+                backgroundColor: "white",
+                borderRadius: "5px",
+              }}
+            >
+              <h2>Ofertas y lanzamientos</h2>
+              <CustomSwiper list={newsList} />
             </div>
-          </RoleProtectedComponent> */}
+          ) : null}
         </FilterView>
         {catalogState.data.list?.map((product, i) =>
           grid ? (

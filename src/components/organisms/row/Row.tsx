@@ -132,23 +132,6 @@ function Row(props: Props): React.ReactNode {
   const rentabState = useSelector((state: RootState) => state.rentabilidad);
 
   const confirmAddCartItem = () => {
-    // if (cartState.data.some((element) => element.productId == product.id)) {
-    //   Swal.fire({
-    //     title: "Deseas agregar mas unidades?",
-    //     text: "El artículo ya se encuentra en el carrito",
-    //     icon: "warning",
-    //     showCancelButton: true,
-    //     confirmButtonColor: "#4fe187",
-    //     cancelButtonColor: "grey",
-    //     confirmButtonText: "Confirmar",
-    //     cancelButtonText: "Cancelar",
-    //   }).then((result) => {
-    //     if (result.isConfirmed) {
-    //       addCartItem();
-    //     }
-    //   });
-    //   return;
-    // }
     addCartItem();
   };
 

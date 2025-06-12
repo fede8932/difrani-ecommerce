@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { CancelTokenSource } from "axios";
 import axiosInstances from "../config";
 const apiUrl = import.meta.env.VITE_MY_URL_BACKEND;
@@ -62,6 +63,21 @@ export const getAllProducts = async (clientId: number) => {
       }
     );
     return res;
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
+    throw err;
+  }
+};
+
+export const getAllNews = async (): Promise<any[]> => {
+  try {
+    // console.log(clientId);
+    const res: any = await axiosInstances.api.get(
+      `${apiUrl}/api/productos/all/news`
+    );
+    return res.data;
   } catch (err: any) {
     if (err.response?.status == 401) {
       window.location.reload();
