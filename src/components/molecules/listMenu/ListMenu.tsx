@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from "styled-components";
 import View from "../../atoms/view/View";
 import { IUserState } from "../../../redux/reducers/userReducer";
@@ -9,6 +10,8 @@ import { breakpoints } from "../../../resolutions";
 import { useNavigate } from "react-router-dom";
 import PricesProtected from "../../../protected/PricesProtected";
 import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
+import { useEffect, useState } from "react";
+import { instalarPWA } from "../../../utils";
 
 interface Props {}
 
@@ -53,6 +56,7 @@ const MobileButtonOnly = styled(InvertStyledButton)`
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function ListMenu(_props: Props): React.ReactNode {
+  const [viewInstall, setViewInstall] = useState<boolean>(false);
   const userState: IUserState = useSelector((state: RootState) => state.user);
   const logOut = async () => {
     // Remove cookies with path and domain
@@ -62,6 +66,18 @@ function ListMenu(_props: Props): React.ReactNode {
     window.location.reload();
   };
   const navigate = useNavigate();
+
+  const isInStandaloneMode = () =>
+    window.matchMedia("(display-mode: standalone)").matches ||
+    (window.navigator as any).standalone === true;
+
+  useEffect(() => {
+    if (isInStandaloneMode()) {
+      console.log("La PWA está instalada y corriendo en modo standalone");
+    } else {
+      setViewInstall(true);
+    }
+  }, []);
 
   return (
     <ListContainer>
@@ -121,6 +137,7 @@ function ListMenu(_props: Props): React.ReactNode {
           Comprobantes
         </MobileButtonOnly>
       </RoleProtectedComponent>
+      {viewInstall ? <InvertStyledButton onClick={instalarPWA}>Instalar App</InvertStyledButton> : null}
       <InvertStyledButton onClick={logOut}>Cerrar sesión</InvertStyledButton>
     </ListContainer>
   );

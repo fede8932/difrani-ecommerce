@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IMovements, ISelectMovements } from "./redux/reducers/acountReducer";
 
 export const checkActive = (mov: IMovements): boolean => {
@@ -53,3 +54,29 @@ export function selectStylesByDateClient(fechaStr: string){
   if(dias < 32) return "rgba(255, 219, 86, 0.3)"
   return "rgba(255, 86, 106, 0.3)"
 }
+
+let deferredPrompt: any = null;
+
+window.addEventListener('beforeinstallprompt', (e: Event) => {
+  e.preventDefault();
+  deferredPrompt = e as any;
+});
+
+export const instalarPWA = async () => {
+  if (!deferredPrompt) {
+    console.log('No hay evento de instalación disponible');
+    return;
+  }
+
+  deferredPrompt.prompt();
+
+  const { outcome } = await deferredPrompt.userChoice;
+
+  if (outcome === 'accepted') {
+    console.log('PWA instalada correctamente');
+  } else {
+    console.log('El usuario canceló la instalación');
+  }
+
+  deferredPrompt = null;
+};
