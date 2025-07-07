@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from "styled-components";
 import View from "../../components/atoms/view/View";
@@ -27,6 +28,8 @@ import RoleProtectedComponent from "../../protected/RoleProtectedComponent";
 import { breakpoints } from "../../resolutions";
 import { setSearchPage } from "../../redux/reducers/searchInputReducer";
 import CustomSwiper from "../../components/molecules/swiper/CustomSwiper";
+import Banner from "../../components/organisms/banner/Banner";
+import bannerUrl from "../../assets/banner/banner_difrani.jpeg";
 
 interface Props {}
 /*{
@@ -89,6 +92,7 @@ const FilterView = styled(View)<{ justifyContent?: string; top?: string }>`
   padding: 0px 15px 15px 15px;
   flex-wrap: wrap;
   justify-content: center;
+  z-index: 10;
 
   @media (max-width: ${breakpoints.mobileLarge}px) {
     flex-direction: column-reverse;
@@ -246,8 +250,9 @@ function Catalogo(_props: Props): React.ReactNode {
   // }, [dispatch]);
   return (
     <CatalogoContainer>
+        <Banner imageUrl={bannerUrl} />
       <CardProductContainer width="94%">
-        <FilterView width="100%" justifyContent="space-between">
+        <FilterView width="100%" justifyContent="space-between" margin="0px 0px 200px 0px">
           <FilterView width="640px" justifyContent="space-between">
             <Select
               validate={false}
@@ -329,7 +334,7 @@ function Catalogo(_props: Props): React.ReactNode {
               )}
             </DivCont>
           </FilterView>
-          {newsList.length > 0 ? (
+          {newsList.length > 0 && false ? (
             <div
               style={{
                 width: "88%",

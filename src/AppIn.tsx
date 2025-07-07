@@ -25,7 +25,6 @@ import ChangePass from "./components/organisms/changePassForm/ChangePass";
 import Comprobantes from "./views/comprobantes/Comprobantes";
 import BotonFlotante from "./components/atoms/bootnFlotante/BotonFlotante";
 import Sugerencias from "./views/sugerencias/Sugerencias";
-// import InstallPWAToast from "./components/molecules/installPwaButton/InstallPWAToast";
 
 const AppContainer = styled(View)`
   justify-content: space-between;
@@ -77,7 +76,6 @@ function AppIn() {
   }, [dispatch, userState.data]);
   return (
     <AppContainer>
-      {/* <InstallPWAToast /> */}
       <BloquedModal title="Cambiar contraseña">
         <ChangePass />
       </BloquedModal>
