@@ -13,6 +13,7 @@ import sellerReducer from "./reducers/sellerReducer";
 import orderItemsReducer from "./reducers/orderItemsReducer";
 import sellerReceiptReducer from "./reducers/SellerReceipt";
 import sellerClosingReducer from "./reducers/SellerClosing";
+import viewReducer from "./reducers/modeReducer";
 
 const store = configureStore({
   middleware: (getDefaultMiddleware) =>
@@ -31,6 +32,7 @@ const store = configureStore({
     orderItems: orderItemsReducer,
     sellerReceipt: sellerReceiptReducer,
     sellerClosing: sellerClosingReducer,
+    viewState: viewReducer,
   },
 });
 

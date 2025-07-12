@@ -30,6 +30,7 @@ import { setSearchPage } from "../../redux/reducers/searchInputReducer";
 import CustomSwiper from "../../components/molecules/swiper/CustomSwiper";
 import Banner from "../../components/organisms/banner/Banner";
 import bannerUrl from "../../assets/banner/banner_difrani.jpeg";
+import { GetModeState } from "../../redux/reducers/modeReducer";
 
 interface Props {}
 /*{
@@ -121,6 +122,7 @@ const DivCont = styled(View)`
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Catalogo(_props: Props): React.ReactNode {
+  const viewState = useSelector((state: RootState) => state.viewState);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [grid, _setGrid] = useState(false);
   const [newsList, setNewsList] = useState<INews[]>([]);
@@ -248,11 +250,21 @@ function Catalogo(_props: Props): React.ReactNode {
   // useEffect(() => {
   //   getGril();
   // }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(GetModeState());
+  }, [dispatch]);
+
+  console.log(viewState);
   return (
     <CatalogoContainer>
-        <Banner imageUrl={bannerUrl} />
+      {viewState.mode == "BAN" ? <Banner imageUrl={bannerUrl} /> : null}
       <CardProductContainer width="94%">
-        <FilterView width="100%" justifyContent="space-between" margin="0px 0px 200px 0px">
+        <FilterView
+          width="100%"
+          justifyContent="space-between"
+          margin="0px 0px 200px 0px"
+        >
           <FilterView width="640px" justifyContent="space-between">
             <Select
               validate={false}
@@ -334,7 +346,7 @@ function Catalogo(_props: Props): React.ReactNode {
               )}
             </DivCont>
           </FilterView>
-          {newsList.length > 0 && false ? (
+          {newsList.length > 0 && viewState.mode == "OFE" ? (
             <div
               style={{
                 width: "88%",

@@ -85,3 +85,33 @@ export const getAllNews = async (): Promise<any[]> => {
     throw err;
   }
 };
+
+export const getAllBanners = async (): Promise<any[]> => {
+  try {
+    // console.log(clientId);
+    const res: any = await axiosInstances.api.get(
+      `${apiUrl}/api/productos/all/ban`
+    );
+    return res.data;
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
+    throw err;
+  }
+};
+
+export const getView = async (): Promise<any> => {
+  try {
+    // console.log(clientId);
+    const res: any = await axiosInstances.api.get(
+      `${apiUrl}/api/productos/view/mode`
+    );
+    return res.data;
+  } catch (err: any) {
+    if (err.response?.status == 401) {
+      window.location.reload();
+    }
+    throw err;
+  }
+};
