@@ -29,7 +29,6 @@ import { breakpoints } from "../../resolutions";
 import { setSearchPage } from "../../redux/reducers/searchInputReducer";
 import CustomSwiper from "../../components/molecules/swiper/CustomSwiper";
 import Banner from "../../components/organisms/banner/Banner";
-import bannerUrl from "../../assets/banner/banner_difrani.jpeg";
 import { GetModeState } from "../../redux/reducers/modeReducer";
 
 interface Props {}
@@ -255,15 +254,14 @@ function Catalogo(_props: Props): React.ReactNode {
     dispatch(GetModeState());
   }, [dispatch]);
 
-  console.log(viewState);
   return (
     <CatalogoContainer>
-      {viewState.mode == "BAN" ? <Banner imageUrl={bannerUrl} /> : null}
+      {viewState.mode == "BAN" ? <Banner /> : null}
       <CardProductContainer width="94%">
         <FilterView
           width="100%"
           justifyContent="space-between"
-          margin="0px 0px 200px 0px"
+          margin={viewState.mode == "BAN" ? "0px 0px 200px 0px" : ""}
         >
           <FilterView width="640px" justifyContent="space-between">
             <Select
