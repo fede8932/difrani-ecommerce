@@ -27,7 +27,7 @@ const TooltipContent = (props: any) => {
         <div className={styles.tooltipContainer}>
             <h6 className={styles.subtitle}>Referencia: <span>{sale.referencia}</span></h6>
             <h6 className={styles.subtitle}>Descuento: <span>{sale.percentage * 100} %</span></h6>
-            <h6 className={styles.subtitle}>Unidades: <span>{sale.minUnit} </span></h6>
+            <h6 className={styles.subtitle}>Compra mínima: <span>{`${sale.minUnit} unidades`} </span></h6>
         </div>
       ))}
     </div>
