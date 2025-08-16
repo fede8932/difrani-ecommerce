@@ -109,9 +109,18 @@ const FilterView = styled(View)<{ justifyContent?: string; top?: string }>`
 //     hexToRgba(theme.colors[color], opac)};
 // `;
 
-const DivCont = styled(View)`
+const DivCont = styled(View)<{
+  color?: string;
+  margin?: string;
+  padding?: string;
+  radius?: string;
+}>`
   flex-direction: row;
   align-items: flex-start;
+  background-color: ${(props) => props.color || "transparent"};
+  margin: ${(props) => props.margin || "0px"};
+  padding: ${(props) => props.padding || "0px"};
+  border-radius: ${(props) => props.radius || "0px"};
 `;
 // const DivStockCont = styled(View)`
 //   flex-direction: row;
@@ -258,107 +267,193 @@ function Catalogo(_props: Props): React.ReactNode {
     <CatalogoContainer>
       {viewState.mode == "BAN" ? <Banner /> : null}
       <CardProductContainer width="94%">
-        <FilterView
-          width="100%"
-          justifyContent="space-between"
-          margin={viewState.mode == "BAN" ? "0px 0px 200px 0px" : ""}
-        >
-          <FilterView width="640px" justifyContent="space-between">
-            <Select
-              validate={false}
-              placeholder="Filtro por marca del vehículo"
-              width="250px"
-              height="31px"
-              options={[
-                { key: "ALFA ROMEO", value: "alfa-romeo" },
-                { key: "AUDI", value: "audi" },
-                { key: "BMW", value: "bmw" },
-                { key: "CHEVROLET", value: "chevrolet" },
-                { key: "CITROËN", value: "citroen" },
-                { key: "FIAT", value: "fiat" },
-                { key: "FORD", value: "ford" },
-                { key: "HONDA", value: "honda" },
-                { key: "HYUNDAI", value: "hyundai" },
-                { key: "JEEP", value: "jeep" },
-                { key: "KIA", value: "kia" },
-                { key: "LAND ROVER", value: "land-rover" },
-                { key: "LEXUS", value: "lexus" },
-                { key: "MAZDA", value: "mazda" },
-                { key: "MERCEDES-BENZ", value: "mercedes-benz" },
-                { key: "MITSUBISHI", value: "mitsubishi" },
-                { key: "NISSAN", value: "nissan" },
-                { key: "PEUGEOT", value: "peugeot" },
-                { key: "PORSCHE", value: "porsche" },
-                { key: "RENAULT", value: "reno|renault" },
-                { key: "SUBARU", value: "subaru" },
-                { key: "SUZUKI", value: "suzuki" },
-                { key: "TOYOTA", value: "toyota" },
-                { key: "VOLKSWAGEN", value: "vw|volkswagen" },
-                { key: "VOLVO", value: "volvo" },
-              ]}
-              onSelect={(value) => {
-                dispatch(setSearchPage(1));
-                setVehMarc(value);
-              }}
-            />
-            <Select
-              validate={false}
-              placeholder="Filtro por categoría"
-              width="250px"
-              height="31px"
-              options={brandsSelectTab(brandsState)}
-              onSelect={(value) => dispatch(selectBrandById(Number(value)))}
-            />
-            <DivCont>
-              <Popup
-                content="Limpiar criterios"
-                trigger={
-                  <Icon
-                    color="wideText"
-                    size="25px"
-                    active={false}
-                    onClick={resetSearch}
-                  >
-                    filter_alt_off
-                  </Icon>
-                }
+        {viewState.mode != "BAN" ? (
+          <FilterView
+            width="100%"
+            justifyContent="space-between"
+            margin={viewState.mode == "BAN" ? "0px 0px 200px 0px" : ""}
+          >
+            <FilterView width="640px" justifyContent="space-between">
+              <Select
+                validate={false}
+                placeholder="Filtro por marca del vehículo"
+                width="250px"
+                height="31px"
+                options={[
+                  { key: "ALFA ROMEO", value: "alfa-romeo" },
+                  { key: "AUDI", value: "audi" },
+                  { key: "BMW", value: "bmw" },
+                  { key: "CHEVROLET", value: "chevrolet" },
+                  { key: "CITROËN", value: "citroen" },
+                  { key: "FIAT", value: "fiat" },
+                  { key: "FORD", value: "ford" },
+                  { key: "HONDA", value: "honda" },
+                  { key: "HYUNDAI", value: "hyundai" },
+                  { key: "JEEP", value: "jeep" },
+                  { key: "KIA", value: "kia" },
+                  { key: "LAND ROVER", value: "land-rover" },
+                  { key: "LEXUS", value: "lexus" },
+                  { key: "MAZDA", value: "mazda" },
+                  { key: "MERCEDES-BENZ", value: "mercedes-benz" },
+                  { key: "MITSUBISHI", value: "mitsubishi" },
+                  { key: "NISSAN", value: "nissan" },
+                  { key: "PEUGEOT", value: "peugeot" },
+                  { key: "PORSCHE", value: "porsche" },
+                  { key: "RENAULT", value: "reno|renault" },
+                  { key: "SUBARU", value: "subaru" },
+                  { key: "SUZUKI", value: "suzuki" },
+                  { key: "TOYOTA", value: "toyota" },
+                  { key: "VOLKSWAGEN", value: "vw|volkswagen" },
+                  { key: "VOLVO", value: "volvo" },
+                ]}
+                onSelect={(value) => {
+                  dispatch(setSearchPage(1));
+                  setVehMarc(value);
+                }}
               />
-              {listDownloadPending ? (
-                <Loader size="mini" active inline="centered" />
-              ) : (
-                <RoleProtectedComponent accessList={[4]}>
-                  <Popup
-                    content="Descargar lista"
-                    trigger={
-                      <Icon
-                        color="wideText"
-                        size="25px"
-                        active={false}
-                        onClick={downloadList}
-                      >
-                        download
-                      </Icon>
-                    }
-                  />
-                </RoleProtectedComponent>
-              )}
-            </DivCont>
+              <Select
+                validate={false}
+                placeholder="Filtro por categoría"
+                width="250px"
+                height="31px"
+                options={brandsSelectTab(brandsState)}
+                onSelect={(value) => dispatch(selectBrandById(Number(value)))}
+              />
+              <DivCont>
+                <Popup
+                  content="Limpiar criterios"
+                  trigger={
+                    <Icon
+                      color="wideText"
+                      size="25px"
+                      active={false}
+                      onClick={resetSearch}
+                    >
+                      filter_alt_off
+                    </Icon>
+                  }
+                />
+                {listDownloadPending ? (
+                  <Loader size="mini" active inline="centered" />
+                ) : (
+                  <RoleProtectedComponent accessList={[4]}>
+                    <Popup
+                      content="Descargar lista"
+                      trigger={
+                        <Icon
+                          color="wideText"
+                          size="25px"
+                          active={false}
+                          onClick={downloadList}
+                        >
+                          download
+                        </Icon>
+                      }
+                    />
+                  </RoleProtectedComponent>
+                )}
+              </DivCont>
+            </FilterView>
+            {newsList.length > 0 && viewState.mode == "OFE" ? (
+              <div
+                style={{
+                  width: "88%",
+                  marginBottom: "10px",
+                  padding: "15px 25px",
+                  backgroundColor: "white",
+                  borderRadius: "5px",
+                }}
+              >
+                <h2>Ofertas y lanzamientos</h2>
+                <CustomSwiper list={newsList} />
+              </div>
+            ) : null}
           </FilterView>
-          {newsList.length > 0 && viewState.mode == "OFE" ? (
-            <div
-              style={{
-                width: "88%",
-                marginBottom: "10px",
-                padding: "15px 25px",
-                backgroundColor: "white",
-                borderRadius: "5px",
-              }}
-            >
-              <h2>Ofertas y lanzamientos</h2>
-              <CustomSwiper list={newsList} />
-            </div>
-          ) : null}
-        </FilterView>
+        ) : (
+          <div style={{zIndex: 10, width: "100%", display: "flex", justifyContent: "center", alignItems: "end", marginTop: "242px"}}>
+            <FilterView width="640px" justifyContent="space-between">
+              <Select
+                validate={false}
+                placeholder="Filtro por marca del vehículo"
+                width="250px"
+                height="31px"
+                options={[
+                  { key: "ALFA ROMEO", value: "alfa-romeo" },
+                  { key: "AUDI", value: "audi" },
+                  { key: "BMW", value: "bmw" },
+                  { key: "CHEVROLET", value: "chevrolet" },
+                  { key: "CITROËN", value: "citroen" },
+                  { key: "FIAT", value: "fiat" },
+                  { key: "FORD", value: "ford" },
+                  { key: "HONDA", value: "honda" },
+                  { key: "HYUNDAI", value: "hyundai" },
+                  { key: "JEEP", value: "jeep" },
+                  { key: "KIA", value: "kia" },
+                  { key: "LAND ROVER", value: "land-rover" },
+                  { key: "LEXUS", value: "lexus" },
+                  { key: "MAZDA", value: "mazda" },
+                  { key: "MERCEDES-BENZ", value: "mercedes-benz" },
+                  { key: "MITSUBISHI", value: "mitsubishi" },
+                  { key: "NISSAN", value: "nissan" },
+                  { key: "PEUGEOT", value: "peugeot" },
+                  { key: "PORSCHE", value: "porsche" },
+                  { key: "RENAULT", value: "reno|renault" },
+                  { key: "SUBARU", value: "subaru" },
+                  { key: "SUZUKI", value: "suzuki" },
+                  { key: "TOYOTA", value: "toyota" },
+                  { key: "VOLKSWAGEN", value: "vw|volkswagen" },
+                  { key: "VOLVO", value: "volvo" },
+                ]}
+                onSelect={(value) => {
+                  dispatch(setSearchPage(1));
+                  setVehMarc(value);
+                }}
+              />
+              <Select
+                validate={false}
+                placeholder="Filtro por categoría"
+                width="250px"
+                height="31px"
+                options={brandsSelectTab(brandsState)}
+                onSelect={(value) => dispatch(selectBrandById(Number(value)))}
+              />
+              <DivCont color="white" margin="4px 0px 0px 10px" padding="2px 10px" radius="5px">
+                <Popup
+                  content="Limpiar criterios"
+                  trigger={
+                    <Icon
+                      color="wideText"
+                      size="25px"
+                      active={false}
+                      onClick={resetSearch}
+                    >
+                      filter_alt_off
+                    </Icon>
+                  }
+                />
+                {listDownloadPending ? (
+                  <Loader size="mini" active inline="centered" />
+                ) : (
+                  <RoleProtectedComponent accessList={[4]}>
+                    <Popup
+                      content="Descargar lista"
+                      trigger={
+                        <Icon
+                          color="wideText"
+                          size="25px"
+                          active={false}
+                          onClick={downloadList}
+                        >
+                          download
+                        </Icon>
+                      }
+                    />
+                  </RoleProtectedComponent>
+                )}
+              </DivCont>
+            </FilterView>
+          </div>
+        )}
         {catalogState.data.list?.map((product, i) =>
           grid ? (
             <Card key={i} product={product} loading={catalogState.loading} />
