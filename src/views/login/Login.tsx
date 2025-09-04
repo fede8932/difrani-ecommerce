@@ -145,14 +145,14 @@ function Login(_props: Props): React.ReactNode {
         <Form onSubmit={handleSubmit}>
           <h3 style={{ marginBottom: "35px" }}>Iniciar sesión</h3><Logo alt="logo" src={logo} />
           <div style={{ width: "100%" }}>
-            <label>Número de CUIT</label>
+            <label>Usuario</label>
             <Input
               onChange={(value) => setCuit(value)}
               background="background"
               type="text"
               width="380px"
               icon="badge"
-              placeholder="99-99999999-9"
+              placeholder="Ingresá el cuit o usuario"
             />
           </div>
           <div style={{ position: "relative", width: "100%", display: "flex" }}>
