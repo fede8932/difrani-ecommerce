@@ -110,10 +110,10 @@ function Login(_props: Props): React.ReactNode {
     if (cuit == "") {
       setCuitError("* Este campo es obligatorio");
       return;
-    } else if (!cuitValid(cuit)) {
+    } /*else if (!cuitValid(cuit)) {
       setCuitError("* El cuit no tiene un formáto válido");
       return;
-    } else {
+    }*/ else {
       setCuitError("");
     }
     if (pass == "") {
