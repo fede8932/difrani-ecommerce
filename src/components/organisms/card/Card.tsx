@@ -168,7 +168,7 @@ function Card(props: Props): React.ReactNode {
 
   return (
     <CardContainer>
-      {product.sales?.length > 0 || product.brand.sales?.length > 0 ? (
+      {/* {product.sales?.length > 0 || product.brand.sales?.length > 0 ? (
         <Tooltip
           placement="rightBottom"
           title={<TooltipContent product={product} />}
@@ -181,7 +181,7 @@ function Card(props: Props): React.ReactNode {
             </Label>
           </div>
         </Tooltip>
-      ) : null}
+      ) : null} */}
       {loading ? (
         <Skeleton variant="rectangular" width="100%" height="180px" />
       ) : (

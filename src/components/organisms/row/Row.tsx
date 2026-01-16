@@ -166,7 +166,7 @@ function Row(props: Props): React.ReactNode {
   };
   return (
     <RowContainer width="85%" height="185px">
-      {product.sales?.length > 0 || product.brand.sales?.length > 0 ? (
+      {/* {product.sales?.length > 0 || product.brand.sales?.length > 0 ? (
         <Tooltip
           placement="rightBottom"
           title={<TooltipContent product={product} />}
@@ -179,7 +179,7 @@ function Row(props: Props): React.ReactNode {
             </Label>
           </div>
         </Tooltip>
-      ) : null}
+      ) : null} */}
       {loading ? (
         <Skeleton variant="rectangular" width="200px" height="97%" />
       ) : (
