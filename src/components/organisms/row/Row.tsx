@@ -4,7 +4,6 @@ import Img from "../../atoms/img/Img";
 import img from "../../../assets/amortiguador-de-coche.jpg"; // aca va la imagen sin imagen
 import { IProduct } from "../../../redux/reducers/catalogoReducer";
 import Skeleton from "@mui/material/Skeleton";
-import ProductDetails from "../productDetails/ProductDetails";
 import { AddCartItemsState } from "../../../redux/reducers/cartListReducer";
 import { AppDispatch, RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +13,7 @@ import { breakpoints } from "../../../resolutions";
 import { Button, Label } from "semantic-ui-react";
 import { Tooltip } from "antd";
 import TooltipContent from "../../molecules/TooltipContent/TooltipContent";
+import { useNavigate } from "react-router-dom";
 // import Swal from "sweetalert2";
 
 interface Props {
@@ -109,6 +109,7 @@ const StyledDescription = styled.p`
 `;
 
 const MyImg = styled(Img)`
+  cursor: pointer;
   @media (max-width: ${breakpoints.mobileLarge}px) {
     display: none;
   }
@@ -130,6 +131,8 @@ function Row(props: Props): React.ReactNode {
   const dispatch: AppDispatch = useDispatch();
   const discountsState = useSelector((state: RootState) => state.discounts);
   const rentabState = useSelector((state: RootState) => state.rentabilidad);
+
+  const navigate = useNavigate();
 
   const confirmAddCartItem = () => {
     addCartItem();
@@ -157,6 +160,10 @@ function Row(props: Props): React.ReactNode {
         toast.error("Error en el servidor, no se pudo agregar el producto");
       });
   };
+
+  const goToDetail = () => {
+    navigate(`/product/${product.article}`);
+  };
   return (
     <RowContainer width="85%" height="185px">
       {product.sales?.length > 0 || product.brand.sales?.length > 0 ? (
@@ -176,23 +183,22 @@ function Row(props: Props): React.ReactNode {
       {loading ? (
         <Skeleton variant="rectangular" width="200px" height="97%" />
       ) : (
-        <ProductDetails product={product}>
-          <MyImg
-            st={product.stock.stock < 1}
-            src={
-              product?.images.length > 0
-                ? product?.images[0].url
-                : product.equivalence?.images[0]
-                ? product.equivalence.images[0].url
-                : img
-            }
-            alt="foto"
-            width="230px"
-            height="97%"
-            margin="0px 0px 0px 20px"
-            objectFit="contain"
-          />
-        </ProductDetails>
+        <MyImg
+          st={product.stock.stock < 1}
+          src={
+            product?.images.length > 0
+              ? product?.images[0].url
+              : product.equivalence?.images[0]
+              ? product.equivalence.images[0].url
+              : img
+          }
+          alt="foto"
+          width="230px"
+          height="97%"
+          margin="0px 0px 0px 20px"
+          objectFit="contain"
+          onClick={goToDetail}
+        />
       )}
       <DescripCont>
         <StyledDescription>
@@ -206,28 +212,22 @@ function Row(props: Props): React.ReactNode {
               <Skeleton variant="text" width="100%" />
             </>
           ) : (
-            <ProductDetails product={product}>
-              <span>{`${product?.description.toUpperCase()}`}</span>
-            </ProductDetails>
+            <span onClick={goToDetail}>{`${product?.description.toUpperCase()}`}</span>
           )}
         </StyledDescription>
         {loading ? (
           <Skeleton variant="text" width="100px" />
         ) : (
-          <ProductDetails product={product}>
-            <StyledSpan size="18px" weight={500}>
-              Artículo: {product?.article.toUpperCase()}
-            </StyledSpan>
-          </ProductDetails>
+          <StyledSpan size="18px" weight={500} onClick={goToDetail}>
+            Artículo: {product?.article.toUpperCase()}
+          </StyledSpan>
         )}
         {loading ? (
           <Skeleton variant="text" width="100px" />
         ) : (
-          <ProductDetails product={product}>
-            <StyledSpan size="10px" weight={500}>
-              Categoría: {product?.brand.name.toUpperCase()}
-            </StyledSpan>
-          </ProductDetails>
+          <StyledSpan size="10px" weight={500}>
+            Categoría: {product?.brand.name.toUpperCase()}
+          </StyledSpan>
         )}
       </DescripCont>
       <ActionContainer>

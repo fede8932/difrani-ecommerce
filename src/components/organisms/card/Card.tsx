@@ -9,7 +9,6 @@ import {
   SearchEquivalencesState,
 } from "../../../redux/reducers/catalogoReducer";
 import Skeleton from "@mui/material/Skeleton";
-import ProductDetails from "../productDetails/ProductDetails";
 import toast from "react-hot-toast";
 import { AppDispatch, RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +19,7 @@ import PricesProtected from "../../../protected/PricesProtected";
 import { Label } from "semantic-ui-react";
 import { Tooltip } from "antd";
 import TooltipContent from "../../molecules/TooltipContent/TooltipContent";
+import { useNavigate } from "react-router-dom";
 // import Swal from "sweetalert2";
 
 interface Props {
@@ -43,6 +43,10 @@ const CardContainer = styled(View)`
   box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
   -webkit-box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
   -moz-box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
+`;
+
+const ClickableImg = styled(Img)`
+  cursor: pointer;
 `;
 
 const PriceContainer = styled(View)<{ stock: number }>`
@@ -108,8 +112,14 @@ function Card(props: Props): React.ReactNode {
   const discountsState = useSelector((state: RootState) => state.discounts);
   const rentabState = useSelector((state: RootState) => state.rentabilidad);
 
+  const navigate = useNavigate();
+
   const searchEquiv = (id: number) => {
     dispatch(SearchEquivalencesState(id));
+  };
+
+  const goToDetail = () => {
+    navigate(`/product/${product.article}`);
   };
 
   const confirmAddCartItem = () => {
@@ -175,33 +185,30 @@ function Card(props: Props): React.ReactNode {
       {loading ? (
         <Skeleton variant="rectangular" width="100%" height="180px" />
       ) : (
-        <ProductDetails product={product}>
-          <Img
-            st={product.stock.stock < 1}
-            src={
-              product?.images.length > 0
-                ? product?.images[0].url
-                : product.equivalence?.images[0]
-                ? product.equivalence.images[0].url
-                : img
-            }
-            alt="foto"
-            width="100%"
-            height="180px"
-            margin="0px"
-            objectFit="contain"
-          />
-        </ProductDetails>
+        <ClickableImg
+          st={product.stock.stock < 1}
+          src={
+            product?.images.length > 0
+              ? product?.images[0].url
+              : product.equivalence?.images[0]
+              ? product.equivalence.images[0].url
+              : img
+          }
+          alt="foto"
+          width="100%"
+          height="180px"
+          margin="0px"
+          objectFit="contain"
+          onClick={goToDetail}
+        />
       )}
       <DescripCont>
         {loading ? (
           <Skeleton variant="text" width="80px" />
         ) : (
-          <ProductDetails product={product}>
-            <StyledSpan size="18px" weight={500}>
-              <span>{product?.article.toUpperCase()}</span>
-            </StyledSpan>
-          </ProductDetails>
+          <StyledSpan size="18px" weight={500} onClick={goToDetail}>
+            <span>{product?.article.toUpperCase()}</span>
+          </StyledSpan>
         )}
         <StyledDescription>
           {loading ? (
@@ -215,9 +222,9 @@ function Card(props: Props): React.ReactNode {
               <Skeleton variant="text" width="100%" />
             </>
           ) : (
-            <ProductDetails product={product}>
-              <span>{`${product?.brand.name.toUpperCase()}-${product?.description.toUpperCase()}`}</span>
-            </ProductDetails>
+            <span onClick={goToDetail}>
+              {`${product?.brand.name.toUpperCase()}-${product?.description.toUpperCase()}`}
+            </span>
           )}
         </StyledDescription>
       </DescripCont>
@@ -225,14 +232,12 @@ function Card(props: Props): React.ReactNode {
         {loading ? (
           <Skeleton variant="text" width="70px" />
         ) : (
-          <ProductDetails product={product}>
-            <StyledSpan size="15px" color="secundary" weight={700}>
-              $
-              <PricesProtected>
-                {calcularSellPrice(product, discountsState.data, rentabState)}
-              </PricesProtected>
-            </StyledSpan>
-          </ProductDetails>
+          <StyledSpan size="15px" color="secundary" weight={700}>
+            $
+            <PricesProtected>
+              {calcularSellPrice(product, discountsState.data, rentabState)}
+            </PricesProtected>
+          </StyledSpan>
         )}
         <div
           style={{

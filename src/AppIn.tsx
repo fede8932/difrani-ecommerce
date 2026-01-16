@@ -15,6 +15,7 @@ import Contacto from "./views/contacto/Contacto";
 import Pedidos from "./views/pedidos/Pedidos";
 import Resumen from "./views/resumen/Resumen";
 import Carrito from "./views/carrito/Carrito";
+import Producto from "./views/producto/Producto";
 import { GetAllBrandsState } from "./redux/reducers/brandListReducers";
 import RoleProtectedView from "./protected/RoleProtectedView";
 import RoleProtectedComponent from "./protected/RoleProtectedComponent";
@@ -148,6 +149,14 @@ function AppIn() {
             element={
               <RoleProtectedView accessList={[3, 4]}>
                 <Carrito />
+              </RoleProtectedView>
+            }
+          />
+          <Route
+            path="/product/:article"
+            element={
+              <RoleProtectedView accessList={[3, 4]}>
+                <Producto />
               </RoleProtectedView>
             }
           />
