@@ -17,6 +17,7 @@ import RoleProtectedComponent from "../../protected/RoleProtectedComponent";
 import PricesProtected from "../../protected/PricesProtected";
 import { AddCartItemsState } from "../../redux/reducers/cartListReducer";
 import toast from "react-hot-toast";
+import { GetBrandPaymentMethodDiscounts, IBrandPaymentMethodDiscount } from "../../axios/request/brandPaymentDiscountRequest";
 
 const PageContainer = styled(View)`
   width: 100%;
@@ -165,6 +166,29 @@ const OfferItem = styled.li`
   margin-bottom: 4px;
 `;
 
+const PaymentOffersContainer = styled(View)`
+  width: 100%;
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid ${({ theme }) =>
+    hexToRgba(theme.colors.secundary, 0.15)};
+`;
+
+const PaymentOffersTitle = styled.span`
+  display: block;
+  margin-bottom: 8px;
+  color: ${({ theme }) => theme.colors.wideText};
+  font-size: 14px;
+  font-weight: 600;
+`;
+
+const PaymentOfferItem = styled.li`
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 13px;
+  margin-left: 16px;
+  margin-bottom: 4px;
+`;
+
 const ShareRow = styled(View)`
   width: 100%;
   margin-top: 18px;
@@ -213,6 +237,8 @@ function Producto(): React.ReactNode {
 
   const [product, setProduct] = useState<IProduct | null>(productFromState);
   const [value, setValue] = useState("1");
+  const [paymentDiscounts, setPaymentDiscounts] = useState<IBrandPaymentMethodDiscount[]>([]);
+  const [loadingPaymentDiscounts, setLoadingPaymentDiscounts] = useState(false);
 
   useEffect(() => {
     if (!product && article) {
@@ -225,6 +251,30 @@ function Producto(): React.ReactNode {
       );
     }
   }, [dispatch, product, article]);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, []);
+
+  useEffect(() => {
+    const fetchBrandPaymentDiscounts = async () => {
+      if (!product) return;
+      try {
+        setLoadingPaymentDiscounts(true);
+        const discounts = await GetBrandPaymentMethodDiscounts(product.brand.id);
+        setPaymentDiscounts(discounts.filter((d) => d.active));
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoadingPaymentDiscounts(false);
+      }
+    };
+
+    fetchBrandPaymentDiscounts();
+  }, [product]);
 
   useEffect(() => {
     if (!product && article && catalogState.data.list.length > 0) {
@@ -499,6 +549,26 @@ function Producto(): React.ReactNode {
                     )}
                 </ul>
               </OffersContainer>
+              <PaymentOffersContainer>
+                <PaymentOffersTitle>Promociones por medios de pago</PaymentOffersTitle>
+                <ul style={{ margin: 0, padding: 0 }}>
+                  {loadingPaymentDiscounts && (
+                    <PaymentOfferItem>Cargando promociones...</PaymentOfferItem>
+                  )}
+                  {!loadingPaymentDiscounts &&
+                    paymentDiscounts.map((discount) => (
+                      <PaymentOfferItem key={discount.id}>
+                        {discount.paymentMethod}: {discount.percentage * 100}% off
+                        {discount.notes ? ` - ${discount.notes}` : ""}
+                      </PaymentOfferItem>
+                    ))}
+                  {!loadingPaymentDiscounts && paymentDiscounts.length === 0 && (
+                    <PaymentOfferItem>
+                      No hay promociones por medios de pago vigentes para esta marca.
+                    </PaymentOfferItem>
+                  )}
+                </ul>
+              </PaymentOffersContainer>
               <ShareRow>
                 <ShareLabel>Compartir:</ShareLabel>
                 <ShareIcon onClick={handleShareWhatsApp}>
