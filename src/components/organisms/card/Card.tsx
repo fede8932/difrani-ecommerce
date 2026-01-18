@@ -16,9 +16,6 @@ import { AddCartItemsState } from "../../../redux/reducers/cartListReducer";
 import { calcularSellPrice } from "../../../aux/prices";
 import RoleProtectedComponent from "../../../protected/RoleProtectedComponent";
 import PricesProtected from "../../../protected/PricesProtected";
-import { Label } from "semantic-ui-react";
-import { Tooltip } from "antd";
-import TooltipContent from "../../molecules/TooltipContent/TooltipContent";
 import { useNavigate } from "react-router-dom";
 // import Swal from "sweetalert2";
 

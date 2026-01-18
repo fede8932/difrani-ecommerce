@@ -10,9 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { calcularSellPrice } from "../../../aux/prices";
 import { breakpoints } from "../../../resolutions";
-import { Button, Label } from "semantic-ui-react";
-import { Tooltip } from "antd";
-import TooltipContent from "../../molecules/TooltipContent/TooltipContent";
+import { Button } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
 // import Swal from "sweetalert2";
 
