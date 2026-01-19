@@ -265,6 +265,23 @@ function Carrito(_props: Props): React.ReactNode {
             </TableBody>
           </Table>
         </div>
+        {cartState.totalDiscounts > 0 && (
+          <div
+            style={{
+              display: "flex",
+              width: "95%",
+              justifyContent: "flex-end",
+              marginTop: "8px",
+              fontSize: "13px",
+              color: "#4CAF50",
+              fontWeight: "500",
+            }}
+          >
+            <span>
+              ✓ Tendrás un descuento por cantidad al facturar tu orden
+            </span>
+          </div>
+        )}
         <div
           style={{
             display: "flex",
@@ -280,7 +297,7 @@ function Carrito(_props: Props): React.ReactNode {
               $
               {formatNumberToString(
                 calcularBuyTotal(cartState.data, discountsState.data)
-                  .subTotalNumber - cartState.totalDiscounts
+                  .subTotalNumber
               )}{" "}
               + iva
             </span>

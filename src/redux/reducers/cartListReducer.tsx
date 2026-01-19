@@ -120,6 +120,7 @@ const cartSlice = createSlice({
   name: "carrito",
   initialState: initialState,
   reducers: {
+    // Se calcula descuento por cantidad solo para mostrar aviso, no para restar del total
     discounts: (state, action) => {
       const { data, discount } = action.payload;
       state.totalDiscounts = calcDiscounts.calcDiscounts(data, discount);

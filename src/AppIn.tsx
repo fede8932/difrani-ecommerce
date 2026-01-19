@@ -81,7 +81,7 @@ function AppIn() {
         <ChangePass />
       </BloquedModal>
       <Navbar />
-      <View position="relative">
+      <View position="relative" padding="54px 0px 0px 0px">
         <RoleProtectedComponent accessList={[3]}>
           <FilterView displayNone={clientSelectView}>
             <ClientFilter userId={userState.data?.userId} />
