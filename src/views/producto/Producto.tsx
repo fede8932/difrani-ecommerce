@@ -531,7 +531,7 @@ function Producto(): React.ReactNode {
                 />
               </RoleProtectedComponent>
               <OffersContainer>
-                <OffersTitle>Ofertas y promociones</OffersTitle>
+                <OffersTitle>Descuentos por mayor</OffersTitle>
                 <ul style={{ margin: 0, padding: 0 }}>
                   {product.sales?.map((sale) => (
                     <OfferItem key={`prod-${sale.id}`}>
@@ -550,7 +550,7 @@ function Producto(): React.ReactNode {
                 </ul>
               </OffersContainer>
               <PaymentOffersContainer>
-                <PaymentOffersTitle>Promociones por medios de pago</PaymentOffersTitle>
+                <PaymentOffersTitle>Ofertas y promociones</PaymentOffersTitle>
                 <ul style={{ margin: 0, padding: 0 }}>
                   {loadingPaymentDiscounts && (
                     <PaymentOfferItem>Cargando promociones...</PaymentOfferItem>
