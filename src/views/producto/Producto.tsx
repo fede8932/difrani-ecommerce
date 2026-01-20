@@ -17,7 +17,7 @@ import RoleProtectedComponent from "../../protected/RoleProtectedComponent";
 import PricesProtected from "../../protected/PricesProtected";
 import { AddCartItemsState } from "../../redux/reducers/cartListReducer";
 import toast from "react-hot-toast";
-import { GetBrandPaymentMethodDiscounts, IBrandPaymentMethodDiscount } from "../../axios/request/brandPaymentDiscountRequest";
+import { GetAllPaymentMethodDiscounts, IPaymentMethodDiscount } from "../../axios/request/paymentDiscountRequest";
 
 const PageContainer = styled(View)`
   width: 100%;
@@ -237,7 +237,7 @@ function Producto(): React.ReactNode {
 
   const [product, setProduct] = useState<IProduct | null>(productFromState);
   const [value, setValue] = useState("1");
-  const [paymentDiscounts, setPaymentDiscounts] = useState<IBrandPaymentMethodDiscount[]>([]);
+  const [paymentDiscounts, setPaymentDiscounts] = useState<IPaymentMethodDiscount[]>([]);
   const [loadingPaymentDiscounts, setLoadingPaymentDiscounts] = useState(false);
 
   useEffect(() => {
@@ -264,7 +264,7 @@ function Producto(): React.ReactNode {
       if (!product) return;
       try {
         setLoadingPaymentDiscounts(true);
-        const discounts = await GetBrandPaymentMethodDiscounts(product.brand.id);
+        const discounts = await GetAllPaymentMethodDiscounts();
         setPaymentDiscounts(discounts.filter((d) => d.active));
       } catch (error) {
         console.error(error);
@@ -564,7 +564,7 @@ function Producto(): React.ReactNode {
                     ))}
                   {!loadingPaymentDiscounts && paymentDiscounts.length === 0 && (
                     <PaymentOfferItem>
-                      No hay promociones por medios de pago vigentes para esta marca.
+                      No hay promociones por medios de pago vigentes.
                     </PaymentOfferItem>
                   )}
                 </ul>
