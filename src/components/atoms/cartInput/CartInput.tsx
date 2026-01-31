@@ -15,6 +15,15 @@ interface Props {
 const Input = styled.input`
   width: 50px;
   padding: 3px;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    width: 60px;
+    padding: 8px;
+    font-size: 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+  }
 `;
 
 function CartInput(props: Props): React.ReactNode {

@@ -22,7 +22,7 @@ interface Props {
 const RowContainer = styled(View)`
   padding: 8px 5px;
   margin: 10px 6px;
-  border-radius: 2px;
+  border-radius: 8px;
   justify-content: flex-start;
   flex-direction: row;
   background: rgb(247, 255, 250);
@@ -34,6 +34,15 @@ const RowContainer = styled(View)`
   box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
   -webkit-box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
   -moz-box-shadow: 0px 0px 10px -2px rgba(225, 79, 79, 0.33);
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    flex-direction: column;
+    padding: 12px;
+    margin: 8px 4px;
+    height: auto;
+    min-height: 280px;
+    width: 95% !important;
+  }
 `;
 
 // const PriceContainer = styled(View)<{ stock: number }>`
@@ -56,6 +65,19 @@ const ActionContainer = styled(View)`
   span {
     font-size: 16px;
   }
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    width: 100%;
+    padding: 15px 10px 10px;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+
+    span {
+      font-size: 14px;
+      text-align: center;
+    }
+  }
 `;
 
 const DescripCont = styled(View)`
@@ -66,6 +88,14 @@ const DescripCont = styled(View)`
   padding: 15px;
   margin-top: 10px;
   // align-items: center;
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    margin-top: 0;
+    text-align: center;
+  }
 `;
 
 const StyledSpan = styled.span<{
@@ -102,14 +132,36 @@ const StyledDescription = styled.p`
   }
 
   @media (max-width: ${breakpoints.mobileLarge}px) {
-    font-size: 9px;
+    font-size: 14px;
+    height: auto;
+    min-height: 40px;
+    width: 100%;
+    text-align: center;
+    margin-top: 5px;
   }
 `;
 
 const MyImg = styled(Img)`
   cursor: pointer;
+  width: 230px;
+  height: 97%;
+  margin: 0px 0px 0px 20px;
+  object-fit: contain;
+
   @media (max-width: ${breakpoints.mobileLarge}px) {
-    display: none;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 10px;
+    display: block;
+  }
+`;
+
+const StyledButton = styled(Button)`
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    width: 100% !important;
+    padding: 12px !important;
+    font-size: 14px !important;
+    margin-top: 8px !important;
   }
 `;
 
@@ -191,10 +243,6 @@ function Row(props: Props): React.ReactNode {
               : img
           }
           alt="foto"
-          width="230px"
-          height="97%"
-          margin="0px 0px 0px 20px"
-          objectFit="contain"
           onClick={goToDetail}
         />
       )}
@@ -241,7 +289,7 @@ function Row(props: Props): React.ReactNode {
             ${calcularSellPrice(product, discountsState.data, rentabState)}
           </PriceSpan>
         </span>
-        <Button onClick={confirmAddCartItem}>Agregar</Button>
+        <StyledButton onClick={confirmAddCartItem}>Agregar</StyledButton>
       </ActionContainer>
     </RowContainer>
   );

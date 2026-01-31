@@ -71,6 +71,132 @@ const ContactDataContainer = styled(View)`
   }
 `;
 
+const MobileCartContainer = styled(View)`
+  display: none;
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px;
+    height: 480px;
+    overflow-y: auto;
+  }
+`;
+
+const DesktopCartContainer = styled(View)`
+  display: flex;
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    display: none;
+  }
+`;
+
+const MobileCartItem = styled(View)`
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 8px;
+`;
+
+const MobileItemHeader = styled(View)`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+`;
+
+const MobileItemCode = styled.span`
+  font-size: 12px;
+  color: #666;
+  font-weight: 600;
+  background: #f5f5f5;
+  padding: 4px 8px;
+  border-radius: 6px;
+`;
+
+const MobileItemDescription = styled.p`
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin: 8px 0;
+  line-height: 1.4;
+`;
+
+const MobileItemDetails = styled(View)`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+`;
+
+const MobilePriceContainer = styled(View)`
+  align-items: flex-start;
+`;
+
+const MobilePrice = styled.span`
+  font-size: 16px;
+  font-weight: 700;
+  color: #e14f4f;
+`;
+
+const MobileQuantityContainer = styled(View)`
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+`;
+
+const MobileActionsContainer = styled(View)`
+  align-items: center;
+`;
+
+const MobileTotalContainer = styled(View)`
+  background: #f8f9fa;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-top: 8px;
+`;
+
+const MobileTotal = styled.span`
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+`;
+
+const MobileSummaryContainer = styled(View)`
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 16px;
+  }
+`;
+
+const MobileTotalPrice = styled.div`
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+`;
+
+const MobileButtonContainer = styled.div`
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    width: 100%;
+    
+    button {
+      width: 100% !important;
+      height: 48px !important;
+      font-size: 16px !important;
+      border-radius: 8px !important;
+    }
+  }
+`;
+
 const Icon = styled.span<{ active: boolean; size?: string; color?: string }>`
   font-size: ${({ size }) => size || "30px"};
   margin-left: 10px;
@@ -89,6 +215,11 @@ const Icon = styled.span<{ active: boolean; size?: string; color?: string }>`
         : color
         ? hexToRgba(theme.colors[color], 1)
         : theme.colors.primary};
+  }
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    margin-left: 0;
+    font-size: 24px;
   }
 `;
 
@@ -200,32 +331,32 @@ function Carrito(_props: Props): React.ReactNode {
         </View>
       </RoleProtectedComponent>
       <ContactDataContainer>
-        <div
-          style={{ height: "480px", overflowY: "auto" }}
-          className={styles.tableContainer}
-        >
-          <Table selectable unstackable>
-            <TableHeader>
-              <TableRow>
-                <TableHeaderCell>Código</TableHeaderCell>
-                <TableHeaderCell>Descripcion</TableHeaderCell>
-                <TableHeaderCell>Precio s/IVA</TableHeaderCell>
-                <TableHeaderCell>Cantidad</TableHeaderCell>
-                {window.innerWidth > breakpoints.mobileSmall ? (
-                  <TableHeaderCell>Subtotal</TableHeaderCell>
-                ) : null}
-                <TableHeaderCell>Acciones</TableHeaderCell>
-              </TableRow>
-            </TableHeader>
-
-            <TableBody>
-              {cartState.data.map((item, i) => (
-                <TableRow key={i}>
-                  <TableCell>{item.product?.article.toUpperCase()}</TableCell>
-                  <TableCell>
-                    {item.product?.description.toUpperCase()}
-                  </TableCell>
-                  <TableCell>
+        {/* Mobile Layout */}
+        <MobileCartContainer>
+          {cartState.data.map((item, i) => (
+            <MobileCartItem key={i}>
+              <MobileItemHeader>
+                <MobileItemCode>
+                  CÓD: {item.product?.article.toUpperCase()}
+                </MobileItemCode>
+                <Icon
+                  active
+                  className="material-symbols-outlined"
+                  size="24px"
+                  color="alert"
+                  onClick={() => handleDelete(item.id)}
+                >
+                  delete_forever
+                </Icon>
+              </MobileItemHeader>
+              
+              <MobileItemDescription>
+                {item.product?.description.toUpperCase()}
+              </MobileItemDescription>
+              
+              <MobileItemDetails>
+                <MobilePriceContainer>
+                  <MobilePrice>
                     $
                     {calcularBuyPrice(
                       item.product?.price?.price,
@@ -233,38 +364,100 @@ function Carrito(_props: Props): React.ReactNode {
                       item.product?.brand.rentabilidad,
                       discountsState.data
                     )}
-                  </TableCell>
-                  <TableCell>
-                    <CartInput initialValue={item.amount} itemId={item.id} />
-                  </TableCell>
+                  </MobilePrice>
+                </MobilePriceContainer>
+                
+                <MobileQuantityContainer>
+                  <span style={{ fontSize: '12px', color: '#666' }}>Cant:</span>
+                  <CartInput initialValue={item.amount} itemId={item.id} />
+                </MobileQuantityContainer>
+              </MobileItemDetails>
+              
+              <MobileTotalContainer>
+                <MobileTotal>
+                  Subtotal: $
+                  {calcularItemSubTotal(
+                    item.product?.price.price,
+                    item.product?.brand.id,
+                    item.product?.brand.rentabilidad,
+                    discountsState.data,
+                    item.amount
+                  )}
+                </MobileTotal>
+              </MobileTotalContainer>
+            </MobileCartItem>
+          ))}
+        </MobileCartContainer>
+
+        {/* Desktop Layout */}
+        <DesktopCartContainer>
+          <div
+            style={{ height: "480px", overflowY: "auto" }}
+            className={styles.tableContainer}
+          >
+            <Table selectable unstackable>
+              <TableHeader>
+                <TableRow>
+                  <TableHeaderCell>Código</TableHeaderCell>
+                  <TableHeaderCell>Descripcion</TableHeaderCell>
+                  <TableHeaderCell>Precio s/IVA</TableHeaderCell>
+                  <TableHeaderCell>Cantidad</TableHeaderCell>
                   {window.innerWidth > breakpoints.mobileSmall ? (
+                    <TableHeaderCell>Subtotal</TableHeaderCell>
+                  ) : null}
+                  <TableHeaderCell>Acciones</TableHeaderCell>
+                </TableRow>
+              </TableHeader>
+
+              <TableBody>
+                {cartState.data.map((item, i) => (
+                  <TableRow key={i}>
+                    <TableCell>{item.product?.article.toUpperCase()}</TableCell>
+                    <TableCell>
+                      {item.product?.description.toUpperCase()}
+                    </TableCell>
                     <TableCell>
                       $
-                      {calcularItemSubTotal(
-                        item.product?.price.price,
+                      {calcularBuyPrice(
+                        item.product?.price?.price,
                         item.product?.brand.id,
                         item.product?.brand.rentabilidad,
-                        discountsState.data,
-                        item.amount
+                        discountsState.data
                       )}
                     </TableCell>
-                  ) : null}
-                  <TableCell>
-                    <Icon
-                      active
-                      className="material-symbols-outlined"
-                      size="23px"
-                      color="alert"
-                      onClick={() => handleDelete(item.id)}
-                    >
-                      delete_forever
-                    </Icon>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+                    <TableCell>
+                      <CartInput initialValue={item.amount} itemId={item.id} />
+                    </TableCell>
+                    {window.innerWidth > breakpoints.mobileSmall ? (
+                      <TableCell>
+                        $
+                        {calcularItemSubTotal(
+                          item.product?.price.price,
+                          item.product?.brand.id,
+                          item.product?.brand.rentabilidad,
+                          discountsState.data,
+                          item.amount
+                        )}
+                      </TableCell>
+                    ) : null}
+                    <TableCell>
+                      <Icon
+                        active
+                        className="material-symbols-outlined"
+                        size="23px"
+                        color="alert"
+                        onClick={() => handleDelete(item.id)}
+                      >
+                        delete_forever
+                      </Icon>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </DesktopCartContainer>
+        <MobileSummaryContainer>
         {cartState.totalDiscounts > 0 && (
           <div
             style={{
@@ -282,44 +475,48 @@ function Carrito(_props: Props): React.ReactNode {
             </span>
           </div>
         )}
-        <div
-          style={{
-            display: "flex",
-            width: "95%",
-            justifyContent: "flex-end",
-            borderBottom: "2px solid #d8d8d8",
-            marginTop: "10px",
-          }}
-        >
-          <span style={{ fontSize: "15px", fontWeight: "600", color: "white" }}>
-            Total:{" "}
-            <span>
-              $
-              {formatNumberToString(
-                calcularBuyTotal(cartState.data, discountsState.data)
-                  .subTotalNumber
-              )}{" "}
-              + iva
+        <MobileTotalPrice>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              borderBottom: "none",
+              marginTop: "0",
+            }}
+          >
+            <span style={{ fontSize: "18px", fontWeight: "600", color: "white" }}>
+              Total:{" "}
+              <span>
+                $
+                {formatNumberToString(
+                  calcularBuyTotal(cartState.data, discountsState.data)
+                    .subTotalNumber
+                )}{" "}
+                + iva
+              </span>
             </span>
-          </span>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            justifyContent: "center",
-            marginTop: "15px",
-          }}
-        >
-          <Button
-            pending={cartState.loading}
-            color="primary"
-            text="Enviar pedido"
-            height="30px"
-            width="190px"
-            onClick={sendOrder}
-          />
-        </div>
+          </div>
+        </MobileTotalPrice>
+        <MobileButtonContainer>
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              justifyContent: "center",
+              marginTop: "0px",
+            }}
+          >
+            <Button
+              pending={cartState.loading}
+              color="primary"
+              text="Enviar pedido"
+              height="30px"
+              width="190px"
+              onClick={sendOrder}
+            />
+          </div>
+        </MobileButtonContainer>
+      </MobileSummaryContainer>
       </ContactDataContainer>
     </ContactoContainer>
   );

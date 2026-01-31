@@ -56,30 +56,79 @@ const ButtonContainer = styled(View)`
   @media (max-width: ${breakpoints.desktopSmall}px) {
     width: 100%;
   }
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    padding: 5px 10px;
+    gap: 10px;
+  }
 `;
 
 const Search = styled(CustomInput)`
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    width: 200px;
+  }
+
   @media (max-width: ${breakpoints.mobileSmall}px) {
-    width: 85%;
+    width: 150px;
   }
 `;
 
 const ButtonImgContainer = styled(View)`
   flex-direction: row;
   align-items: center;
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
 `;
 
 const Logo = styled(Img)`
   @media (max-width: ${breakpoints.mobileLarge}px) {
     width: 85px;
   }
+
+  @media (max-width: ${breakpoints.mobileSmall}px) {
+    width: 70px;
+  }
 `;
 
-const ButtonSearchContainer = styled(View)`
+const MobileLayout = styled(View)`
+  display: none;
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 8px;
+  }
+
+  @media (max-width: ${breakpoints.mobileSmall}px) {
+    gap: 5px;
+    padding: 0 5px;
+  }
+`;
+
+const DesktopActionsContainer = styled(View)`
   flex-direction: row;
   align-items: center;
   width: 550px;
   justify-content: space-around;
+`;
+
+const DesktopLayout = styled(View)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  @media (max-width: ${breakpoints.mobileLarge}px) {
+    display: none;
+  }
 `;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -111,21 +160,27 @@ function Navbar(_props: Props): React.ReactNode {
   );
 
   const ActionsCont = styled(View)`
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100px;
-    min-width: 100px;
-  `;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100px;
+  min-width: 100px;
+
+  @media (max-width: ${breakpoints.mobileSmall}px) {
+    width: 80px;
+    min-width: 80px;
+  }
+`;
 
   return (
     <NavbarContainer height="54px">
       <ButtonContainer width="100%" height="54px">
-        <ButtonImgContainer>
+        {/* Mobile Layout */}
+        <MobileLayout>
           <Logo
             src={logo}
             alt="logo"
-            width="105px"
-            height="60px"
+            width="85px"
+            height="45px"
             onClick={() => {
               navigate("/");
             }}
@@ -133,59 +188,10 @@ function Navbar(_props: Props): React.ReactNode {
           <Search
             loading={catalogState.loading}
             placeholder="Buscar..."
-            width="300px"
+            width="150px"
             icon="search"
             onChange={handleChange}
           />
-        </ButtonImgContainer>
-        <ButtonSearchContainer>
-          <LinkContainer>
-            <Button
-              invert
-              color="primary"
-              text="Catálogo"
-              height="25px"
-              onClick={() => {
-                navigate("/catalogo");
-              }}
-            />
-            <Button
-              invert
-              color="primary"
-              text="Pedidos"
-              height="25px"
-              onClick={() => {
-                navigate("/pedidos");
-              }}
-            />
-            <Button
-              invert
-              color="primary"
-              text="Transacciones"
-              height="25px"
-              onClick={() => {
-                navigate("/resumen");
-              }}
-            />
-            <Button
-              invert
-              color="primary"
-              text="Sugerencias"
-              height="25px"
-              onClick={() => {
-                navigate("/sugerencias");
-              }}
-            />
-            <Button
-              invert
-              color="primary"
-              text="Contacto"
-              height="25px"
-              onClick={() => {
-                navigate("/contacto");
-              }}
-            />
-          </LinkContainer>
           <ActionsCont>
             <RoleProtectedComponent accessList={[4]}>
               <Rentab>
@@ -212,7 +218,104 @@ function Navbar(_props: Props): React.ReactNode {
               <ListMenu />
             </Menu>
           </ActionsCont>
-        </ButtonSearchContainer>
+        </MobileLayout>
+
+        {/* Desktop Layout */}
+        <DesktopLayout>
+          <ButtonImgContainer>
+            <Logo
+              src={logo}
+              alt="logo"
+              width="105px"
+              height="60px"
+              onClick={() => {
+                navigate("/");
+              }}
+            />
+            <Search
+              loading={catalogState.loading}
+              placeholder="Buscar..."
+              width="300px"
+              icon="search"
+              onChange={handleChange}
+            />
+          </ButtonImgContainer>
+          <DesktopActionsContainer>
+            <LinkContainer>
+              <Button
+                invert
+                color="primary"
+                text="Catálogo"
+                height="25px"
+                onClick={() => {
+                  navigate("/catalogo");
+                }}
+              />
+              <Button
+                invert
+                color="primary"
+                text="Pedidos"
+                height="25px"
+                onClick={() => {
+                  navigate("/pedidos");
+                }}
+              />
+              <Button
+                invert
+                color="primary"
+                text="Transacciones"
+                height="25px"
+                onClick={() => {
+                  navigate("/resumen");
+                }}
+              />
+              <Button
+                invert
+                color="primary"
+                text="Sugerencias"
+                height="25px"
+                onClick={() => {
+                  navigate("/sugerencias");
+                }}
+              />
+              <Button
+                invert
+                color="primary"
+                text="Contacto"
+                height="25px"
+                onClick={() => {
+                  navigate("/contacto");
+                }}
+              />
+            </LinkContainer>
+            <ActionsCont>
+              <RoleProtectedComponent accessList={[4]}>
+                <Rentab>
+                  <IconButton icon="settings" size="24px" />
+                </Rentab>
+              </RoleProtectedComponent>
+              <RoleProtectedComponent accessList={[3, 4]}>
+                <ItemsCount>
+                  {data?.cartId ? (
+                    <IconButton
+                      icon="production_quantity_limits"
+                      size="24px"
+                      onClick={() => {
+                        navigate("/carrito");
+                      }}
+                    />
+                  ) : null}
+                </ItemsCount>
+              </RoleProtectedComponent>
+              <Menu
+                position="left"
+                button={<IconButton icon="person_3" size="24px" />}
+              >
+                <ListMenu />
+              </Menu>
+            </ActionsCont>
+          </DesktopActionsContainer>
+        </DesktopLayout>
       </ButtonContainer>
     </NavbarContainer>
   );
