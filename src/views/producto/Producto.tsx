@@ -106,9 +106,56 @@ const ImageContainer = styled(View)`
   justify-content: flex-start;
 `;
 
-const StockText = styled.span`
-  color: ${({ theme }) => theme.colors.wideText};
+const StockLabel = styled.span<{ status: 'in-stock' | 'limited' | 'out-of-stock' }>`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 6px;
   font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  
+  ${({ status, theme }) => {
+    switch (status) {
+      case 'in-stock':
+        return `
+          background: ${hexToRgba('#10b981', 0.1)};
+          color: #059669;
+          border: 1px solid ${hexToRgba('#10b981', 0.3)};
+        `;
+      case 'limited':
+        return `
+          background: ${hexToRgba('#f59e0b', 0.1)};
+          color: #d97706;
+          border: 1px solid ${hexToRgba('#f59e0b', 0.3)};
+        `;
+      case 'out-of-stock':
+        return `
+          background: ${hexToRgba('#ef4444', 0.1)};
+          color: #dc2626;
+          border: 1px solid ${hexToRgba('#ef4444', 0.3)};
+        `;
+    }
+  }}
+  
+  &::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    
+    ${({ status }) => {
+      switch (status) {
+        case 'in-stock':
+          return 'background: #10b981;';
+        case 'limited':
+          return 'background: #f59e0b;';
+        case 'out-of-stock':
+          return 'background: #ef4444;';
+      }
+    }}
+  }
 `;
 
 const HeaderLeft = styled(View)`
@@ -215,6 +262,16 @@ const ShareIcon = styled.span`
     color: ${({ theme }) => hexToRgba(theme.colors.primary, 0.8)};
   }
 `;
+
+const getStockStatus = (stock: number): { status: 'in-stock' | 'limited' | 'out-of-stock', message: string } => {
+  if (stock === 0) {
+    return { status: 'out-of-stock', message: 'Sin stock' };
+  } else if (stock < 50) {
+    return { status: 'limited', message: 'Stock limitado' };
+  } else {
+    return { status: 'in-stock', message: 'Artículo en stock' };
+  }
+};
 
 function Producto(): React.ReactNode {
   const { article } = useParams();
@@ -400,11 +457,14 @@ function Producto(): React.ReactNode {
           </BreadText>
         </HeaderLeft>
         <HeaderRight>
-          {product && (
-            <StockText>
-              Stock disponible: {product.stock?.stock ?? 0}
-            </StockText>
-          )}
+          {product && (() => {
+            const stockInfo = getStockStatus(product.stock?.stock ?? 0);
+            return (
+              <StockLabel status={stockInfo.status}>
+                {stockInfo.message}
+              </StockLabel>
+            );
+          })()}
         </HeaderRight>
       </HeaderBar>
       <ContentContainer>
