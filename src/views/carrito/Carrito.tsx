@@ -147,9 +147,6 @@ const MobileQuantityContainer = styled(View)`
   gap: 8px;
 `;
 
-const MobileActionsContainer = styled(View)`
-  align-items: center;
-`;
 
 const MobileTotalContainer = styled(View)`
   background: #f8f9fa;

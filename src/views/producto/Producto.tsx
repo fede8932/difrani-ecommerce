@@ -116,7 +116,7 @@ const StockLabel = styled.span<{ status: 'in-stock' | 'limited' | 'out-of-stock'
   font-weight: 600;
   letter-spacing: 0.3px;
   
-  ${({ status, theme }) => {
+  ${({ status }) => {
     switch (status) {
       case 'in-stock':
         return `
