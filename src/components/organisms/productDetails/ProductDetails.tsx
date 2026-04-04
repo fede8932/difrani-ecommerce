@@ -129,7 +129,7 @@ const Detail = (props: any): React.ReactNode => {
           {product?.description}
         </span>
         <TextTitleDetail>
-          Precio de lista:
+          Precio de costo:
           <TextDetail>
             $
             <PricesProtected>
@@ -138,7 +138,7 @@ const Detail = (props: any): React.ReactNode => {
           </TextDetail>
         </TextTitleDetail>
         <TextTitleDetail>
-          Precio de lista con IVA:
+          Precio de costo con IVA:
           <TextDetail>
             $
             <PricesProtected>

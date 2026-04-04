@@ -499,7 +499,7 @@ function Producto(): React.ReactNode {
               </Title>
               <Subtitle>{product.description}</Subtitle>
               <TextTitleDetail>
-                Precio de lista:
+                Precio de costo:
                 <TextDetail>
                   $
                   <PricesProtected>
@@ -508,7 +508,7 @@ function Producto(): React.ReactNode {
                 </TextDetail>
               </TextTitleDetail>
               <TextTitleDetail>
-                Precio de lista con IVA:
+                Precio de costo con IVA:
                 <TextDetail>
                   $
                   <PricesProtected>
